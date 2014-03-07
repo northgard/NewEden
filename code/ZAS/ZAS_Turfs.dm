@@ -3,7 +3,7 @@
 /turf/var/zone/zone
 
 /turf/assume_air(datum/gas_mixture/giver) //use this for machines to adjust air
-	del(giver)
+	//del(giver)
 	return 0
 
 /turf/return_air()
