@@ -594,7 +594,7 @@ client
 				for(var/obj/Obj in world)
 					if(Obj.type == O_type)
 						i++
-						del(Obj)
+						addDeleteQueue(Obj)
 				if(!i)
 					usr << "No objects of this type exist"
 					return
@@ -605,7 +605,7 @@ client
 				for(var/obj/Obj in world)
 					if(istype(Obj,O_type))
 						i++
-						del(Obj)
+						addDeleteQueue(Obj)
 				if(!i)
 					usr << "No objects of this type exist"
 					return
@@ -813,9 +813,9 @@ client
 
 	else if(href_list["addverb"])
 		if(!check_rights(R_DEBUG))      return
-		
+
 		var/mob/living/H = locate(href_list["addverb"])
-		
+
 		if(!istype(H))
 			usr << "This can only be done to instances of type /mob/living"
 			return
@@ -831,7 +831,7 @@ client
 				possibleverbs += typesof(/mob/living/silicon/proc,/mob/living/silicon/ai/proc,/mob/living/silicon/ai/verb)
 		possibleverbs -= H.verbs
 		possibleverbs += "Cancel" 								// ...And one for the bottom
-		
+
 		var/verb = input("Select a verb!", "Verbs",null) as anything in possibleverbs
 		if(!H)
 			usr << "Mob doesn't exist anymore"
@@ -840,7 +840,7 @@ client
 			return
 		else
 			H.verbs += verb
-		
+
 	else if(href_list["remverb"])
 		if(!check_rights(R_DEBUG))      return
 
@@ -858,7 +858,7 @@ client
 		else
 			H.verbs -= verb
 
-	
+
 
 	else if(href_list["regenerateicons"])
 		if(!check_rights(0))	return

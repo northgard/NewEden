@@ -273,7 +273,7 @@ var/global/list/uneatable = list(
 			O.z = 2
 		else
 			A.ex_act(1.0)
-			if(A) del(A)
+			if(A) addDeleteQueue(A)
 		gain = 2
 	else if(isturf(A))
 		var/turf/T = A
@@ -492,7 +492,7 @@ var/global/list/uneatable = list(
 		A:gib()
 	else if(istype(A,/obj/))
 		A:ex_act(1.0)
-		if(A) del(A)
+		if(A) addDeleteQueue(A)
 	else if(isturf(A))
 		var/turf/T = A
 		if(T.intact)
