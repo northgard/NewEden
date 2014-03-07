@@ -325,6 +325,29 @@ datum
 						human.update_mutantrace()
 				..()
 				return
+		vmutationtoxin
+			name = "Vox Mutation Toxin"
+			id = "vmutationtoxin"
+			description = "A corruptive toxin."
+			reagent_state = LIQUID
+			color = "#23BC5E" // rgb: 19, 188, 94
+			overdose = REAGENTS_OVERDOSE
+
+			on_mob_life(var/mob/living/M as mob)
+				if(!M) M = holder.my_atom
+				if(ishuman(M))
+					var/mob/living/carbon/human/human = M
+					M << "\red Your flesh rapidly mutates!"
+					human.update_mutantrace()
+					human.dna.mutantrace = "vox"
+					human.set_species("Vox")
+					human.flavor_text = ""
+					human.add_language("Vox-pidgin")
+					human.h_style = "Short Vox Quills"
+					human.f_style = "Shaved"
+					human.regenerate_icons()
+				..()
+				return
 
 		aslimetoxin
 			name = "Advanced Mutation Toxin"
@@ -1102,6 +1125,94 @@ datum
 					if(M.getToxLoss() && prob(80)) M.adjustToxLoss(-1*REM)
 				..()
 				return
+
+		quadcordrazine
+			name = "Quadcordrazine"
+			id = "quadcordrazine"
+			description = "Quadcordrazine is a highly potent broad spectrum rejuvenator. Highly damaging in large amounts."
+			reagent_state = LIQUID
+			color = "#C8A5DC" // rgb: 200, 165, 220
+
+
+			on_mob_life(var/mob/living/M as mob)
+				if(M.stat == 2.0)
+					return
+				if(!M) M = holder.my_atom
+				var/amount = volume
+
+				switch(amount)
+					if(1 to 4)
+						if(M.getOxyLoss()) M.adjustOxyLoss(-10*amount)
+						if(M.getBruteLoss()) M.heal_organ_damage(10*amount,0)
+						if(M.getFireLoss()) M.heal_organ_damage(0,10*amount)
+						if(M.getToxLoss()) M.adjustToxLoss(-10*amount)
+						M.reagents.remove_all_type(/datum/reagent/quadcordrazine, volume + volume, 0, 1)
+					if(5 to 7)
+						if(M.getOxyLoss()) M.adjustOxyLoss(-7*amount)
+						if(M.getBruteLoss()) M.heal_organ_damage(7*amount,0)
+						if(M.getFireLoss()) M.heal_organ_damage(0,7*amount)
+						if(M.getToxLoss()) M.adjustToxLoss(-7*amount)
+						M.reagents.remove_all_type(/datum/reagent/quadcordrazine, volume + volume, 0, 1)
+					if(8 to 11)
+						if(M.getOxyLoss()) M.adjustOxyLoss(-4*amount)
+						if(M.getBruteLoss()) M.heal_organ_damage(4*amount,0)
+						if(M.getFireLoss() ) M.heal_organ_damage(0,4*amount)
+						if(M.getToxLoss() ) M.adjustToxLoss(-4*amount)
+						M.reagents.remove_all_type(/datum/reagent/quadcordrazine, volume + volume, 0, 1)
+					if(12 to 15)
+						if(M.getOxyLoss()) M.adjustOxyLoss(-2*amount)
+						if(M.getBruteLoss()) M.heal_organ_damage(2*amount,0)
+						if(M.getFireLoss()) M.heal_organ_damage(0,2*amount)
+						if(M.getToxLoss()) M.adjustToxLoss(-2*amount)
+						M.reagents.remove_all_type(/datum/reagent/quadcordrazine, volume + volume, 0, 1)
+					if(16 to 19)
+						M.adjustOxyLoss(6*amount)
+						M.take_organ_damage(6*amount,0)
+						M.take_organ_damage(0,6*amount)
+						M.adjustToxLoss(6*amount)
+						M.reagents.remove_all_type(/datum/reagent/quadcordrazine, volume + volume, 0, 1)
+					if(20 to 22)
+						if(!M) M = holder.my_atom ///This can even heal dead people.
+						M << "You feel rejuvenated."
+						if(M.getOxyLoss()) M.adjustOxyLoss(-10*amount)
+						if(M.getBruteLoss()) M.heal_organ_damage(10*amount,0)
+						if(M.getFireLoss()) M.heal_organ_damage(0,10*amount)
+						if(M.getToxLoss()) M.adjustToxLoss(-10*amount)
+						M.reagents.remove_all_type(/datum/reagent/toxin, 100*amount, 0, 1)
+						M.setCloneLoss(0)
+						M.setOxyLoss(0)
+						M.radiation = 0
+						M.hallucination = 0
+						M.setBrainLoss(0)
+						M.disabilities = 0
+						M.sdisabilities = 0
+						M.eye_blurry = 0
+						M.eye_blind = 0
+						M.SetWeakened(0)
+						M.SetStunned(0)
+						M.SetParalysis(0)
+						M.silent = 0
+						M.dizziness = 0
+						M.drowsyness = 0
+						M.stuttering = 0
+						M.confused = 0
+						M.sleeping = 0
+						M.jitteriness = 0
+						for(var/datum/disease/D in M.viruses)
+							D.spread = "Remissive"
+							D.stage--
+							if(D.stage < 1)
+								D.cure()
+						M.reagents.remove_all_type(/datum/reagent/quadcordrazine, volume + volume, 0, 1)
+
+					if(23 to INFINITY)
+						M << "You feel your body beginning to explode from the inside!"
+						M.gib()
+
+
+				..()
+				return
+
 
 		anti_toxin
 			name = "Anti-Toxin (Dylovene)"
