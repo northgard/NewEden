@@ -34,6 +34,9 @@
 	//Emergency Fix
 	load_mods()
 	//end-emergency fix
+	createPool("fire", /obj/fire)
+	PrecacheObjects()
+	deleteQueue()
 
 	src.update_status()
 

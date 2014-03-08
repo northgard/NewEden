@@ -111,9 +111,25 @@
 			message_a = "<i>[message_a]</i>"
 		//This appears copied from carbon/living say.dm so the istype check for mob is probably not needed. Appending for src is also not needed as the game will check that automatically.
 		rendered = "<span class='game say'><span class='name'>[GetVoice()]</span>[alt_name] whispers, <span class='message'>\"[message_a]\"</span></span>"
+		var/accent = "en-us"
+		var/voice = "m7"
+		var/speed = 175
+		var/pitch = 0
+		if(src.client && src.client.prefs)
+			accent = src.client.prefs.accent
+			voice = "whisper"
+			speed = src.client.prefs.talkspeed
+			pitch = src.client.prefs.pitch
+		src:texttospeech(message, speed, pitch, accent, "+[voice]", 5)
 
 		for (var/mob/M in heard_a)
 			M.show_message(rendered, 2)
+			if(fexists("sound/playervoices/[src.ckey].ogg"))
+				if(M.client)
+					if(M.client.prefs)
+						if(M.client.prefs.toggles & SOUND_VOICES)
+							playsound(src.loc, "sound/playervoices/[src.ckey].ogg", 70, 1)
+
 
 	if (length(heard_b))
 		var/message_b

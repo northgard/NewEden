@@ -371,6 +371,22 @@ var/list/department_radio_keys = list(
 	for(var/mob/M in hearers(5, src))
 		if(M != src && is_speaking_radio)
 			M:show_message("<span class='notice'>[src] talks into [used_radios.len ? used_radios[1] : "radio"]</span>")
+	if(message_mode == null)
+		var/accent = "en-us"
+		var/voice = "m7"
+		var/speed = 175
+		var/pitch = 0
+		var/echo = 10
+		if(istype(src, /mob/living/silicon/ai))
+			echo = 90
+		if(istype(src, /mob/living/silicon/robot))
+			echo = 60
+		if(src.client && src.client.prefs)
+			accent = src.client.prefs.accent
+			voice = src.client.prefs.voice
+			speed = src.client.prefs.talkspeed
+			pitch = src.client.prefs.pitch
+		src:texttospeech(message, speed, pitch, accent, "+[voice]", echo)
 
 	var/rendered = null
 
@@ -384,6 +400,11 @@ var/list/department_radio_keys = list(
 		rendered = "<span class='game say'><span class='name'>[GetVoice()]</span>[alt_name] <span class='message'>[message_a]</span></span>"
 		var/rendered_ghost = "<span class='game say'><span class='name'>[GetVoice()]</span>[alt_name] <span class='message'>[message_ghost]</span></span>"
 		for (var/mob/M in heard_a)
+			if(message_mode == null && fexists("sound/playervoices/[src.ckey].ogg"))
+				if(M.client)
+					if(M.client.prefs)
+						if(M.client.prefs.toggles & SOUND_VOICES)
+							playsound(src.loc, "sound/playervoices/[src.ckey].ogg", 70, 0, 5, 1)
 			if(M.client)
 				if(hascall(M,"show_message"))
 					var/deaf_message = ""

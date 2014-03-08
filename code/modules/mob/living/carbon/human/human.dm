@@ -1278,3 +1278,70 @@
 		W.update_icon()
 		W.message = message
 		W.add_fingerprint(src)
+
+
+/mob/living/carbon/human/verb/snapNeck()
+	set category = "Object"
+	set name = "Snap Neck"
+	set desc = "Snap the neck of someone you're choking to death."
+	var/necksnapsound = 'sound/effects/necksnap.ogg'
+	if(!isliving(usr) || usr.next_move > world.time)
+		return
+	usr.next_move = world.time + 20
+
+	if(usr.stat == 1)
+		usr << "You are unconcious and cannot do that!"
+		return
+
+	if(usr.restrained())
+		usr << "You are restrained and cannot do that!"
+		return
+	var/obj/item/weapon/grab/G = null
+	if(usr.l_hand != null && istype(usr.l_hand, /obj/item/weapon/grab))
+		G = usr.l_hand
+	if(usr.r_hand != null && istype(usr.r_hand, /obj/item/weapon/grab))
+		G = usr.r_hand
+	if(G == null)
+		usr << "You need to be choking someone to death to use this."
+		return
+	if(!G.affecting || !istype(G.affecting, /mob/living/carbon))
+		usr << "\red You need a proper target!"
+	if(G.state < 4)
+		usr << "\red You need a better grip to do that!"
+		return
+	else if(G.state >= 4)
+		visible_message("\red [G.assailant] is getting ready to snap the neck of [G.affecting]...")
+		spawn(-1)
+		spawn(50)
+			if(!G || G.state < 4)
+				usr << "\red Failed to snap their neck!"
+			if(G.state >= 4)
+				if(prob(75))
+					var/mob/living/carbon/affecting2 = G.affecting
+					visible_message("\red [G.assailant] snaps [G.affecting]'s neck!")
+					playsound(src, necksnapsound, 100, 1)
+					affecting2.adjustOxyLoss(200)
+					affecting2.Weaken(5)
+					affecting2.Stun(5)
+					spawn(5)
+						affecting2.emote("gasp")
+						affecting2.emote("twitch")
+						spawn(15)
+							affecting2.emote("gasp")
+							spawn(10)
+								affecting2.emote("twitch")
+								affecting2.death(0)
+				else
+					var/mob/living/carbon/affecting2 = G.affecting
+					visible_message("\red [G.assailant] doesn't fully snap [G.affecting]'s neck!")
+					playsound(src, necksnapsound, 80, 1)
+					spawn(2)
+						playsound(src, necksnapsound, 60, 1)
+					affecting2.adjustOxyLoss(50)
+					affecting2.emote("scream")
+					affecting2.Weaken(5)
+					affecting2.Stun(5)
+					spawn(10)
+						affecting2.emote("twitch")
+						spawn(40)
+							affecting2.emote("twitch")

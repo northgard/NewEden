@@ -859,6 +859,7 @@
 #include "code\modules\mob\mob_movement.dm"
 #include "code\modules\mob\mob_transformation_simple.dm"
 #include "code\modules\mob\say.dm"
+#include "code\modules\mob\texttospeech.dm"
 #include "code\modules\mob\transform_procs.dm"
 #include "code\modules\mob\update_icons.dm"
 #include "code\modules\mob\dead\death.dm"
@@ -1342,5 +1343,5 @@
 #include "code\ZAS\ZAS_Zones.dm"
 #include "interface\interface.dm"
 #include "interface\skin.dmf"
-#include "maps\tgstation2.dmm"
+#include "maps\tgstation2_eden1.dmm"
 // END_INCLUDE

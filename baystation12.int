@@ -1,11 +1,11 @@
 // BEGIN_INTERNALS
 /*
 MAP_ICON_TYPE: 0
+WINDOW: code\game\jobs\job\civilian.dm;code\hub.dm;code\world.dm;code\ZAS\Fire.dm;code\datums\datumvars.dm;code\optimization\deletes.dm;code\optimization\lighting.dm;code\optimization\precache.dm;code\game\objects\effects\effect_system.dm;maps\tgstation2_eden1.dmm;code\modules\mob\mob.dm;code\modules\mob\texttospeech.dm;code\game\machinery\telecomms\broadcaster.dm;code\game\objects\items\devices\PDA\radio.dm;code\game\objects\items\devices\radio\radio.dm;code\modules\client\preferences.dm;code\modules\client\preferences_savefile.dm;code\modules\client\preferences_toggles.dm;code\modules\mob\living\carbon\human\human.dm;code\modules\mob\living\carbon\human\whisper.dm;code\modules\mob\living\carbon\human\say.dm;code\modules\mob\living\say.dm;code\setup.dm
 LAST_COMPILE_VERSION: 501.1217
-WINDOW: code\game\jobs\job\civilian.dm;code\hub.dm;code\world.dm;code\ZAS\Fire.dm;code\datums\datumvars.dm;code\optimization\deletes.dm;code\optimization\lighting.dm;code\optimization\precache.dm;code\game\objects\effects\effect_system.dm;code\modules\admin\admin_verbs.dm;code\modules\power\singularity\singularity.dm;code\modules\projectiles\guns\energy.dm;code\modules\projectiles\projectile\energy.dm;code\modules\reagents\Chemistry-Reagents.dm;code\modules\reagents\Chemistry-Recipes.dm
-DIR: code code\datums code\game code\game\jobs code\game\jobs\job code\game\objects code\game\objects\effects code\modules code\modules\admin code\modules\power code\modules\power\singularity code\modules\projectiles code\modules\projectiles\guns code\modules\projectiles\projectile code\modules\reagents code\optimization code\ZAS 
-FILE: code\modules\reagents\Chemistry-Reagents.dm
-LAST_COMPILE_TIME: 1394214075
+DIR: code code\game code\game\jobs code\game\jobs\job code\game\machinery code\game\machinery\telecomms code\game\objects code\game\objects\effects code\game\objects\items code\game\objects\items\devices code\game\objects\items\devices\PDA code\game\objects\items\devices\radio code\modules code\modules\client code\modules\mob code\modules\mob\living code\modules\mob\living\carbon code\modules\mob\living\carbon\human code\modules\power\singularity code\modules\projectiles code\optimization 
+FILE: code\setup.dm
+LAST_COMPILE_TIME: 1394214860
 AUTO_FILE_DIR: OFF
 */
 // END_INTERNALS
