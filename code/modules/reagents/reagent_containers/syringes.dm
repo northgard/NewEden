@@ -392,6 +392,15 @@
 		mode = SYRINGE_INJECT
 		update_icon()
 
+/obj/item/weapon/reagent_containers/syringe/voxtoxin
+	name = "Syringe (vox)"
+	desc = "Contains voxtoxin"
+	New()
+		..()
+		reagents.add_reagent("vmutationtoxin", 15)
+		mode = SYRINGE_INJECT
+		update_icon()
+
 /obj/item/weapon/reagent_containers/syringe/antitoxin
 	name = "Syringe (anti-toxin)"
 	desc = "Contains anti-toxins."

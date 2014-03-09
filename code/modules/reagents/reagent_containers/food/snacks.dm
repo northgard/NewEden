@@ -1551,6 +1551,8 @@
 					new /mob/living/carbon/monkey/unathi(get_turf(src))
 				if("skrell")
 					new /mob/living/carbon/monkey/skrell(get_turf(src))
+				if("vox")
+					new /mob/living/carbon/human/vox(get_turf(src))
 		else
 			new /mob/living/carbon/monkey(get_turf(src))
 		del(src)
@@ -1590,6 +1592,13 @@
 /obj/item/weapon/reagent_containers/food/snacks/monkeycube/wrapped/neaeracube
 	name = "neaera cube"
 	monkey_type ="skrell"
+
+/obj/item/weapon/reagent_containers/food/snacks/monkeycube/voxcube
+	name = "vox cube"
+	monkey_type = "vox"
+/obj/item/weapon/reagent_containers/food/snacks/monkeycube/wrapped/voxcube
+	name = "vox cube"
+	monkey_type = "vox"
 
 
 /obj/item/weapon/reagent_containers/food/snacks/spellburger

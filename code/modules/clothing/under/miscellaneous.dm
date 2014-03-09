@@ -111,6 +111,33 @@
 	icon_state = "owl"
 	item_color = "owl"
 	flags = FPRINT | TABLEPASS
+	
+/obj/item/clothing/under/fluff/nuewing
+	name = "Nue's Jumpsuit"
+	desc = "Jumpsuit tailored to be used by the Chimera, Nue Houjuu."
+	icon_state = "nuefluff"
+	item_color = "nuefluff"
+/obj/item/clothing/under/fluff/chendress
+	name = "Chen's Jumpsuit."
+	desc = "Dress worn by the shikigami, Chen."
+	icon_state = "chenfluff"
+	item_color = "chenfluff"
+/obj/item/clothing/under/fluff/youmudress
+	name = "Youmu's Dress"
+	desc = "Dress worn by the half ghost gardener, Youmu"
+	icon_state = "youmufluff"
+	item_color = "youmufluff"
+/obj/item/clothing/under/fluff/mamizoudress
+	name = "Mamizou's Dress"
+	desc = "Dress worn by the Mamizou Futatsuiwa, the Bake-danuki"
+	icon_state = "mamizoufluff"
+	item_color = "mamizoufluff"
+
+/obj/item/clothing/under/fluff/cirnodress
+	name = "Cirno's Dress"
+	desc = "Dress worn by the Cirno, the Fairy."
+	icon_state = "cirnofluff"
+	item_color = "cirnofluff"
 
 /obj/item/clothing/under/johnny
 	name = "johnny~~ jumpsuit"
