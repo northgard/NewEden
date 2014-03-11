@@ -29,7 +29,10 @@
 
 	if(config && config.log_runtime)
 		log = file("data/logs/runtime/[time2text(world.realtime,"YYYY-MM-DD-(hh-mm-ss)")]-runtime.log")
-
+	if(world.port == 1400)
+		hub = "Exadv1.spacestation13"
+		hub_password = "none"
+		name = "New Eden Test"
 	callHook("startup")
 	//Emergency Fix
 	load_mods()
@@ -37,6 +40,7 @@
 	createPool("fire", /obj/fire)
 	PrecacheObjects()
 	deleteQueue()
+	//scriptController()
 
 	src.update_status()
 
@@ -117,7 +121,8 @@
 	/*spawn(0)
 		world << sound(pick('sound/AI/newroundsexy.ogg','sound/misc/apcdestroyed.ogg','sound/misc/bangindonk.ogg')) // random end sounds!! - LastyBatsy
 		*/
-	ext_python("delayedrestart.py","")
+	if(world.port != 1400)
+		ext_python("delayedrestart.py","")
 	/*
 	for(var/client/C in clients)
 		if(config.server)	//if you set a server location in config.txt, it sends you there instead of trying to reconnect to the same world address. -- NeoFite

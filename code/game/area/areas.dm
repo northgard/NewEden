@@ -37,6 +37,7 @@
 
 //	spawn(15)
 	power_change()		// all machines set to current power level, also updates lighting icon
+	if(world.port != 1400)
 	InitializeLighting()
 
 

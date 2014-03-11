@@ -1,4 +1,3 @@
-// Module used for fast interprocess communication between BYOND and other processes
 
 /datum/socket_talk
 	var
@@ -17,10 +16,20 @@
 		receive_raw()
 			if(enabled)
 				return call("DLLSocket.so","recv_message")()
-		send_log(var/log, var/message)
-			return send_raw("type=log&log=[log]&message=[message]")
-		send_keepalive()
-			return send_raw("type=keepalive")
+
+var/datum/socket_talk/socket_talk = new()
+
+var/list/sendQueue = list("start")
+
+/proc/processSocket(message)
+	world << message
+
+/proc/scriptController()
+	spawn while(1)
+		processSocket(socket_talk:receive_raw())
+		if(sendQueue.len > 0)
+			for(var/message in sendQueue)
+				socket_talk:send_raw(message)
+		sleep(1)
 
 
-var/global/datum/socket_talk/socket_talk

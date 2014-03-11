@@ -23,6 +23,7 @@ soxpath = "C:/Program Files (x86)/sox-14-4-1/"
 oggencpath = "C:/Program Files (x86)/WinVorbis/"
 
 text = string.replace(text, "39", "'")
+text = string.replace(text, "\%", " percent")
 
 command = "\""+espeakpath+"espeak.exe\" -w "+playervoicespath+""+ckey+"u.wav -v"+accent+""+voice+" \""+text+"\" -p "+pitch+" -s "+speed+" -a 100"
 # First we make the voice file, sounds/playervoice/keyu.wav

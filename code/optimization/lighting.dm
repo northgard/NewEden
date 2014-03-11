@@ -57,11 +57,13 @@ atom/proc/SetOpacity(var/new_opacity)
 
 area
 	var/lighting_use_dynamic = 1 //for legacy problems
+	luminosity = 1
 
 /turf
 	var/list/lightquadrants = list()
 	var/lighting_lumcount = 0
 	var/lighting_changed = 0
+	luminosity = 1
 
 /turf/New()
 	..()
