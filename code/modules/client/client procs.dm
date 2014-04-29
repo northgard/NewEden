@@ -90,11 +90,13 @@
 	///////////
 	//CONNECT//
 	///////////
+
+/client/Command(command)
+	//do nothing
+
 /client/New(TopicData)
 	TopicData = null							//Prevent calls to client.Topic from connect
 
-	if(connection != "seeker")					//Invalid connection type.
-		return null
 	if(byond_version < MIN_CLIENT_VERSION)		//Out of date client.
 		return null
 
@@ -242,7 +244,7 @@
 //send resources to the client. It's here in its own proc so we can move it around easiliy if need be
 /client/proc/send_resources()
 //	preload_vox() //Causes long delays with initial start window and subsequent windows when first logged in.
-	
+
 	// Send NanoUI resources to this client
 	nanomanager.send_resources(src)
 

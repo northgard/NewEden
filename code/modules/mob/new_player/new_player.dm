@@ -83,9 +83,10 @@
 				totalPlayers = 0
 				totalPlayersReady = 0
 				for(var/mob/new_player/player in player_list)
-					stat("[player.key]", (player.ready)?("(Playing)"):(null))
-					totalPlayers++
-					if(player.ready)totalPlayersReady++
+					if(player.computer_id)
+						stat("[player.key]", (player.ready)?("(Playing)"):(null))
+						totalPlayers++
+						if(player.ready)totalPlayersReady++
 
 	Topic(href, href_list[])
 		if(!client)	return 0

@@ -400,6 +400,14 @@
 		reagents.add_reagent("vmutationtoxin", 15)
 		mode = SYRINGE_INJECT
 		update_icon()
+/obj/item/weapon/reagent_containers/syringe/xenotoxin
+	name = "Syringe (alien sentinel)"
+	desc = "Contains xenotoxin"
+	New()
+		..()
+		reagents.add_reagent("xmutationtoxin", 15)
+		mode = SYRINGE_INJECT
+		update_icon()
 
 /obj/item/weapon/reagent_containers/syringe/antitoxin
 	name = "Syringe (anti-toxin)"

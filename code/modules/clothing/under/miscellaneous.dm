@@ -111,7 +111,7 @@
 	icon_state = "owl"
 	item_color = "owl"
 	flags = FPRINT | TABLEPASS
-	
+
 /obj/item/clothing/under/fluff/nuewing
 	name = "Nue's Jumpsuit"
 	desc = "Jumpsuit tailored to be used by the Chimera, Nue Houjuu."
@@ -400,3 +400,12 @@
 	item_state = "sundress"
 	item_color = "sundress"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
+
+// Custom Shit
+
+/obj/item/clothing/under/brobe
+	name = "bushido robe"
+	desc = "A Bushido warrior's robe."
+	icon_state = "brobe"
+	item_state = "brobe"
+	armor = list(melee = 25)

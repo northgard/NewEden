@@ -40,7 +40,6 @@
 	createPool("fire", /obj/fire)
 	PrecacheObjects()
 	deleteQueue()
-	//scriptController()
 
 	src.update_status()
 

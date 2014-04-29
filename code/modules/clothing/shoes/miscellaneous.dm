@@ -133,3 +133,9 @@
 	flags = NOSLIP
 	slowdown = SHOES_SLOWDOWN+1
 	species_restricted = null
+
+/obj/item/clothing/shoes/bsandals
+	name = "Geta"
+	desc = "Japanese sandals."
+	icon_state = "bsandals"
+	item_state = "bsandals"

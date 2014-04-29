@@ -69,3 +69,13 @@
 	armor = list(melee = 62, bullet = 50, laser = 50,energy = 35, bomb = 10, bio = 2, rad = 0)
 	flags_inv = HIDEEARS
 	siemens_coefficient = 0.7
+
+/obj/item/clothing/head/helmet/knight
+	name = "knight helmet"
+	desc = "A helmet fit for a gentleman."
+	icon_state = "knight_helm_icon"
+	item_state = "knight_helm"
+	flags = FPRINT|TABLEPASS|HEADCOVERSEYES
+	armor = list(melee = 82, bullet = 15, laser = 5,energy = 5, bomb = 5, bio = 2, rad = 0)
+	flags_inv = HIDEEARS
+	siemens_coefficient = 0.7

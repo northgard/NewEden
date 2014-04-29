@@ -17,25 +17,28 @@ echo = sys.argv[4]
 speed = sys.argv[5]
 text = sys.argv[6]
 ckey = sys.argv[7]
-espeakpath = "C:/Program Files (x86)/eSpeak/command_line/"
+
 playervoicespath = "C:/Users/Administrator/Desktop/updated/sound/playervoices/"
-soxpath = "C:/Program Files (x86)/sox-14-4-1/"
-oggencpath = "C:/Program Files (x86)/WinVorbis/"
+
 
 text = string.replace(text, "39", "'")
-text = string.replace(text, "\%", " percent")
 
-command = "\""+espeakpath+"espeak.exe\" -w "+playervoicespath+""+ckey+"u.wav -v"+accent+""+voice+" \""+text+"\" -p "+pitch+" -s "+speed+" -a 100"
+command = "espeak -w {}{}u.wav -v{}{} \"{}\" -p {} -s {} -a 100".format(playervoicespath, ckey, accent,voice,text,pitch,speed)
+
 # First we make the voice file, sounds/playervoice/keyu.wav
 call(command, shell=True)
-command2 = "\""+soxpath+"sox.exe\" "+playervoicespath+""+ckey+"u.wav \""+playervoicespath+""+ckey+".wav\" echo 1 0.5 "+echo+" .5"
+print(command)
+command2 = "sox "+playervoicespath+""+ckey+"u.wav \""+playervoicespath+""+ckey+".wav\" echo 1 0.5 "+echo+" .5"
 # Now we apply effects to it, like echo (there's lots of other effects too)
 call(command2, shell=True)
+print(command2)
 #remove the old keyu.wav
-os.remove(playervoicespath+""+ckey+"u.wav")
-command3 = "\""+oggencpath+"OggEnc.exe\" "+playervoicespath+""+ckey+".wav"
+#os.remove("\"{}{}u.wav\"".format(playervoicespath, ckey))
+command3 = "OggEnc {}{}.wav".format(playervoicespath, ckey)
 #Now we turn key.wav into key.ogg to reduce bandwidth
 call(command3, shell=True)
+print(command3)
 #delete the wav
-os.remove(playervoicespath+""+ckey+".wav")
+#os.remove(playervoicespath+""+ckey+".wav")
+
 sys.exit()

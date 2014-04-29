@@ -5,7 +5,7 @@ import sys, os, math,time,random
 
 
 #num = int(sys.argv[1])
-num= = 1
+num = 1
 count = 5
 
 os.system("start taskkill /F /im telnet.exe")
@@ -20,6 +20,6 @@ if num:
 
 	if count > 0:
 		for x in range(1, count + 1):
-			os.system("start /min telnet 127.0.0.1 1300")	
+			os.system("start /min C:\Windows\System32\telnet.exe 127.0.0.1 1300")	
 sys.exit()
 

@@ -348,6 +348,20 @@ datum
 					human.regenerate_icons()
 				..()
 				return
+		xmutationtoxin
+			name = "Xeno Mutation Toxin"
+			id = "xmutationtoxin"
+			description = "A corruptive toxin."
+			reagent_state = LIQUID
+			color = "#23BC5E" // rgb: 19, 188, 94
+			overdose = REAGENTS_OVERDOSE
+
+			on_mob_life(var/mob/living/M as mob)
+				if(!M) M = holder.my_atom
+				if(ishuman(M))
+					M:Alienize()
+				..()
+				return
 
 		aslimetoxin
 			name = "Advanced Mutation Toxin"

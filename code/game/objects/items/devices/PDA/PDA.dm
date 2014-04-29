@@ -66,6 +66,11 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	default_cartridge = /obj/item/weapon/cartridge/engineering
 	icon_state = "pda-e"
 
+/obj/item/device/pda/engineering/goragh
+	default_cartridge = /obj/item/weapon/cartridge/engineering
+	icon_state = "pda-e-goragh"
+	desc = "An old, worn out PDA. It's missing paint and has exposed circuitry."
+
 /obj/item/device/pda/security
 	default_cartridge = /obj/item/weapon/cartridge/security
 	icon_state = "pda-s"
@@ -337,7 +342,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		return
 
 	lastmode = mode
-		
+
 	var/title = "Personal Data Assistant"
 
 	var/data[0]  // This is the data that will be sent to the PDA
@@ -366,7 +371,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		if(mode in cartmodes)
 			data["records"] = cartridge.create_NanoUI_values()
 
-		if(mode == 0)	
+		if(mode == 0)
 			cartdata["name"] = cartridge.name
 			cartdata["access"] = list(\
 					"access_security" = cartridge.access_security,\
