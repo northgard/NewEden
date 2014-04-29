@@ -200,7 +200,7 @@ BLIND     // can't see anything
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 50)
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
 	cold_protection = HEAD
-	min_cold_protection_temperature = SPACE_HELMET_MIN_COLD_PROTECITON_TEMPERATURE
+	min_cold_protection_temperature = SPACE_HELMET_MIN_COLD_PROTECTION_TEMPERATURE
 	siemens_coefficient = 0.9
 	species_restricted = list("exclude","Diona","Vox")
 
@@ -219,7 +219,7 @@ BLIND     // can't see anything
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 50)
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	cold_protection = UPPER_TORSO | LOWER_TORSO | LEGS | FEET | ARMS | HANDS
-	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECITON_TEMPERATURE
+	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
 	siemens_coefficient = 0.9
 	species_restricted = list("exclude","Diona","Vox")
 
@@ -241,6 +241,9 @@ BLIND     // can't see anything
 		*/
 	var/obj/item/clothing/tie/hastie = null
 	var/displays_id = 1
+	var/rolled_down = 0
+	var/basecolor
+
 
 /obj/item/clothing/under/attackby(obj/item/I, mob/user)
 	if(!hastie && istype(I, /obj/item/clothing/tie))
@@ -306,6 +309,21 @@ BLIND     // can't see anything
 		if(3)
 			usr << "Your suit will now report your vital lifesigns as well as your coordinate position."
 	..()
+
+/obj/item/clothing/under/verb/rollsuit()
+	set name = "Roll Down Jumpsuit"
+	set category = "Object"
+	set src in usr
+	if(!istype(usr, /mob/living)) return
+	if(usr.stat) return
+
+	if(copytext(item_color,-2) != "_d")
+		basecolor = item_color
+	if(basecolor + "_d_s" in icon_states('icons/mob/uniform.dmi'))
+		item_color = item_color == "[basecolor]" ? "[basecolor]_d" : "[basecolor]"
+		usr.update_inv_w_uniform()
+	else
+		usr << "<span class='notice'>You cannot roll down the uniform!</span>"
 
 /obj/item/clothing/under/verb/removetie()
 	set name = "Remove Accessory"

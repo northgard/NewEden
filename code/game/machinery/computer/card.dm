@@ -108,7 +108,7 @@
 		header += "<hr>"
 
 		var/jobs_all = ""
-		var/list/alljobs = (istype(src,/obj/machinery/computer/card/centcom)? get_all_centcom_jobs() : get_all_jobs()) + "Custom"
+		var/list/alljobs = (istype(src,/obj/machinery/computer/card/centcom)? get_all_centcom_jobs() : joblist) + "Custom"
 		for(var/job in alljobs)
 			jobs_all += "<a href='?src=\ref[src];choice=assign;assign_target=[job]'>[replacetext(job, " ", "&nbsp")]</a> " //make sure there isn't a line break in the middle of a job
 
@@ -255,7 +255,7 @@
 			if (authenticated)
 				var/t1 = href_list["assign_target"]
 				if(t1 == "Custom")
-					var/temp_t = copytext(sanitize(input("Enter a custom job assignment.","Assignment")),1,MAX_MESSAGE_LEN)
+					var/temp_t = copytext(sanitize(input("Enter a custom job assignment.","Assignment")),1,45)
 					//let custom jobs function as an impromptu alt title, mainly for sechuds
 					if(temp_t && modify)
 						modify.assignment = temp_t

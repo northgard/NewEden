@@ -78,20 +78,18 @@
 		if(reagents)								//Handle ingestion of the reagent.
 			playsound(M.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
 			if(reagents.total_volume)
-				reagents.reaction(M, INGEST)
-				spawn(5)
-					if(reagents.total_volume > bitesize)
-						/*
-						 * I totally cannot understand what this code supposed to do.
-						 * Right now every snack consumes in 2 bites, my popcorn does not work right, so I simplify it. -- rastaf0
-						var/temp_bitesize =  max(reagents.total_volume /2, bitesize)
-						reagents.trans_to(M, temp_bitesize)
-						*/
-						reagents.trans_to(M, bitesize)
-					else
-						reagents.trans_to(M, reagents.total_volume)
-					bitecount++
-					On_Consume(M)
+				if(reagents.total_volume > bitesize)
+					/*
+					 * I totally cannot understand what this code supposed to do.
+					 * Right now every snack consumes in 2 bites, my popcorn does not work right, so I simplify it. -- rastaf0
+					var/temp_bitesize =  max(reagents.total_volume /2, bitesize)
+					reagents.trans_to(M, temp_bitesize)
+					*/
+					reagents.trans_to_ingest(M, bitesize)
+				else
+					reagents.trans_to_ingest(M, reagents.total_volume)
+				bitecount++
+				On_Consume(M)
 			return 1
 
 	return 0
@@ -670,10 +668,10 @@
 		reagents.add_reagent("nutriment", 3)
 		src.bitesize = 6
 
-/obj/item/weapon/reagent_containers/food/snacks/faggot
-	name = "Faggot"
-	desc = "A great meal all round. Not a cord of wood."
-	icon_state = "faggot"
+/obj/item/weapon/reagent_containers/food/snacks/meatball
+	name = "meatball"
+	desc = "A great meal all round."
+	icon_state = "meatball"
 	filling_color = "#DB0000"
 
 	New()
@@ -1229,7 +1227,7 @@
 		bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/spagetti
-	name = "Spagetti"
+	name = "Spaghetti"
 	desc = "A bundle of raw spaghetti."
 	icon_state = "spagetti"
 	filling_color = "#EDDD00"
@@ -1818,7 +1816,7 @@
 		bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/boiledspagetti
-	name = "Boiled Spagetti"
+	name = "Boiled Spaghetti"
 	desc = "A plain dish of noodles, this sucks."
 	icon_state = "spagettiboiled"
 	trash = /obj/item/trash/plate
@@ -1854,7 +1852,7 @@
 		bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/pastatomato
-	name = "Spagetti"
+	name = "Spaghetti"
 	desc = "Spaghetti and crushed tomatoes. Just like your abusive father used to make!"
 	icon_state = "pastatomato"
 	trash = /obj/item/trash/plate
@@ -1867,7 +1865,7 @@
 		bitesize = 4
 
 /obj/item/weapon/reagent_containers/food/snacks/meatballspagetti
-	name = "Spagetti & Meatballs"
+	name = "Spaghetti & Meatballs"
 	desc = "Now thats a nic'e meatball!"
 	icon_state = "meatballspagetti"
 	trash = /obj/item/trash/plate
@@ -2846,7 +2844,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/bun/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	// Bun + meatball = burger
-	if(istype(W,/obj/item/weapon/reagent_containers/food/snacks/faggot))
+	if(istype(W,/obj/item/weapon/reagent_containers/food/snacks/meatball))
 		new /obj/item/weapon/reagent_containers/food/snacks/monkeyburger(src)
 		user << "You make a burger."
 		del(W)
@@ -2917,7 +2915,7 @@
 		..()
 		reagents.add_reagent("nutriment", 2)
 
-/obj/item/weapon/reagent_containers/food/snacks/rawfaggot
+/obj/item/weapon/reagent_containers/food/snacks/rawmeatball
 	name = "raw meatball"
 	desc = "A raw meatball."
 	icon = 'icons/obj/food_ingredients.dmi'

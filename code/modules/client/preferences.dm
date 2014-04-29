@@ -54,6 +54,7 @@ datum/preferences
 	var/age = 30						//age of character
 	var/b_type = "A+"					//blood type (not-chooseable)
 	var/underwear = 1					//underwear type
+	var/undershirt = 1					//undershirt type
 	var/backbag = 2						//backpack type
 	var/h_style = "Bald"				//Hair type
 	var/r_hair = 0						//Hair color
@@ -346,6 +347,8 @@ datum/preferences
 		else
 			dat += "Underwear: <a href ='?_src_=prefs;preference=underwear;task=input'><b>[underwear_f[underwear]]</b></a><br>"
 
+		dat += "Undershirt: <a href='?_src_=prefs;preference=undershirt;task=input'><b>[undershirt_t[undershirt]]</b></a><br>"
+
 		dat += "Backpack Type:<br><a href ='?_src_=prefs;preference=bag;task=input'><b>[backbaglist[backbag]]</b></a><br>"
 
 		dat += "Nanotrasen Relation:<br><a href ='?_src_=prefs;preference=nt_relation;task=input'><b>[nanotrasen_relation]</b></a><br>"
@@ -560,6 +563,8 @@ datum/preferences
 		return
 
 	proc/SetAntagoptions(mob/user)
+		if(uplinklocation == "")
+			uplinklocation = "PDA"
 		var/HTML = "<body>"
 		HTML += "<tt><center>"
 		HTML += "<b>Antagonist Options</b> <hr />"
@@ -851,6 +856,9 @@ datum/preferences
 					if("underwear")
 						underwear = rand(1,underwear_m.len)
 						ShowChoices(user)
+					if("undershirt")
+						undershirt = rand(1,undershirt_t.len)
+						ShowChoices(user)
 					if("eyes")
 						r_eyes = rand(0,255)
 						g_eyes = rand(0,255)
@@ -1040,6 +1048,15 @@ datum/preferences
 						var/new_underwear = input(user, "Choose your character's underwear:", "Character Preference")  as null|anything in underwear_options
 						if(new_underwear)
 							underwear = underwear_options.Find(new_underwear)
+						ShowChoices(user)
+
+					if("undershirt")
+						var/list/undershirt_options
+						undershirt_options = undershirt_t
+
+						var/new_undershirt = input(user, "Choose your character's undershirt:", "Character Preference") as null|anything in undershirt_options
+						if (new_undershirt)
+							undershirt = undershirt_options.Find(new_undershirt)
 						ShowChoices(user)
 
 					if("eyes")
@@ -1318,6 +1335,10 @@ datum/preferences
 		if(underwear > underwear_m.len || underwear < 1)
 			underwear = 0 //I'm sure this is 100% unnecessary, but I'm paranoid... sue me. //HAH NOW NO MORE MAGIC CLONING UNDIES
 		character.underwear = underwear
+
+		if(undershirt > undershirt_t.len || undershirt < 1)
+			undershirt = 0
+		character.undershirt = undershirt
 
 		if(backbag > 4 || backbag < 1)
 			backbag = 1 //Same as above

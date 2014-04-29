@@ -4,7 +4,7 @@
 	voice_name = "unknown"
 	icon = 'icons/mob/human.dmi'
 	icon_state = "body_m_s"
-	var/list/hud_list = list()
+	var/list/hud_list[9]
 	var/datum/species/species //Contains icon generation and language information, set during New().
 	var/embedded_flag	  //To check if we've need to roll for damage on movement while an item is imbedded in us.
 
@@ -54,8 +54,16 @@
 		dna = new /datum/dna(null)
 		dna.species=species.name
 
-	for(var/i=0;i<7;i++) // 2 for medHUDs and 5 for secHUDs
-		hud_list += image('icons/mob/hud.dmi', src, "hudunknown")
+	hud_list[HEALTH_HUD]      = image('icons/mob/hud.dmi', src, "hudhealth100")
+	hud_list[STATUS_HUD]      = image('icons/mob/hud.dmi', src, "hudhealthy")
+	hud_list[ID_HUD]          = image('icons/mob/hud.dmi', src, "hudunknown")
+	hud_list[WANTED_HUD]      = image('icons/mob/hud.dmi', src, "hudblank")
+	hud_list[IMPLOYAL_HUD]    = image('icons/mob/hud.dmi', src, "hudblank")
+	hud_list[IMPCHEM_HUD]     = image('icons/mob/hud.dmi', src, "hudblank")
+	hud_list[IMPTRACK_HUD]    = image('icons/mob/hud.dmi', src, "hudblank")
+	hud_list[SPECIALROLE_HUD] = image('icons/mob/hud.dmi', src, "hudblank")
+	hud_list[STATUS_HUD_OOC]  = image('icons/mob/hud.dmi', src, "hudhealthy")
+		
 
 	..()
 
@@ -553,6 +561,7 @@
 										modified = 1
 
 										spawn()
+											hud_updateflag |= 1 << WANTED_HUD
 											if(istype(usr,/mob/living/carbon/human))
 												var/mob/living/carbon/human/U = usr
 												U.handle_regular_hud_updates()
@@ -1087,7 +1096,7 @@
 	var/tdamage = 0
 	var/ticks = 0
 	while (germs < 2501 && ticks < 100000 && round(damage/10)*20)
-		diary << "VIRUS TESTING: [ticks] : germs [germs] tdamage [tdamage] prob [round(damage/10)*20]"
+		log_misc("VIRUS TESTING: [ticks] : germs [germs] tdamage [tdamage] prob [round(damage/10)*20]")
 		ticks++
 		if (prob(round(damage/10)*20))
 			germs++

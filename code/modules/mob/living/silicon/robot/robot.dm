@@ -42,6 +42,7 @@
 	var/emagged = 0
 	var/wiresexposed = 0
 	var/locked = 1
+	var/has_power = 1
 	var/list/req_access = list(access_robotics)
 	var/ident = 0
 	//var/list/laws = list()
@@ -126,6 +127,18 @@
 		var/datum/robot_component/cell_component = components["power cell"]
 		cell_component.wrapped = cell
 		cell_component.installed = 1
+	
+	hud_list[HEALTH_HUD]      = image('icons/mob/hud.dmi', src, "hudblank")
+	hud_list[STATUS_HUD]      = image('icons/mob/hud.dmi', src, "hudhealth100")
+	hud_list[ID_HUD]          = image('icons/mob/hud.dmi', src, "hudblank")
+	hud_list[WANTED_HUD]      = image('icons/mob/hud.dmi', src, "hudblank")
+	hud_list[IMPLOYAL_HUD]    = image('icons/mob/hud.dmi', src, "hudblank")
+	hud_list[IMPCHEM_HUD]     = image('icons/mob/hud.dmi', src, "hudblank")
+	hud_list[IMPTRACK_HUD]    = image('icons/mob/hud.dmi', src, "hudblank")
+	hud_list[SPECIALROLE_HUD] = image('icons/mob/hud.dmi', src, "hudblank")
+	
+
+	
 
 	playsound(loc, 'sound/voice/liveagain.ogg', 75, 1)
 

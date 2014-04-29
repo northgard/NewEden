@@ -37,7 +37,11 @@
 		/mob/living/simple_animal/cow,
 		/mob/living/simple_animal/hostile/retaliate/goat,
 		/obj/machinery/computer/centrifuge,
-		/obj/machinery/sleeper	)
+		/obj/machinery/sleeper,
+		/obj/machinery/smartfridge/,
+		/obj/machinery/biogenerator,
+		/obj/machinery/hydroponics,
+		/obj/machinery/constructable_frame)
 
 	New()
 		..()
@@ -120,6 +124,9 @@
 			return
 
 		else if(istype(target, /obj/machinery/bunsen_burner))
+			return
+
+		else if(istype(target, /obj/machinery/smartfridge))
 			return
 
 		else if(istype(target, /obj/machinery/radiocarbon_spectrometer))
@@ -273,6 +280,13 @@
 			user.put_in_hands(new /obj/item/weapon/bucket_sensor)
 			user.drop_from_inventory(src)
 			del(src)
+			
+	update_icon()
+		overlays.Cut()
+
+		if (!is_open_container())
+			var/image/lid = image(icon, src, "lid_[initial(icon_state)]")
+			overlays += lid
 
 // vials are defined twice, what?
 /*

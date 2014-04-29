@@ -10,7 +10,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	icon = 'icons/obj/pda.dmi'
 	icon_state = "pda"
 	item_state = "electronic"
-	w_class = 1.0
+	w_class = 2.0
 	flags = FPRINT | TABLEPASS
 	slot_flags = SLOT_ID | SLOT_BELT
 
@@ -335,10 +335,11 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 /obj/item/device/pda/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
 	ui_tick++
+	var/datum/nanoui/old_ui = nanomanager.get_open_ui(user, src, "main")
 	var/auto_update = 1
 	if(mode in no_auto_update)
 		auto_update = 0
-	if(mode == lastmode && ui_tick % 5 && mode in update_every_five)
+	if(old_ui && (mode == lastmode && ui_tick % 5 && mode in update_every_five))
 		return
 
 	lastmode = mode

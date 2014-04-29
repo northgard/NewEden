@@ -469,8 +469,6 @@ datum
 				playsound(location, 'sound/effects/smoke.ogg', 50, 1, -3)
 				spawn(0)
 					S.start()
-					sleep(10)
-					S.start()
 				holder.clear_reagents()
 				return
 
@@ -858,7 +856,7 @@ datum
 					var/list/flashers = list()
 					for(var/mob/living/carbon/human/M in viewers(TO, null))
 						if(M:eyecheck() <= 0)
-							flick("e_flash", M.flash) // flash dose faggots
+							flick("e_flash", M.flash)
 							flashers += M
 
 					var/y_distance = TO.y - FROM.y
