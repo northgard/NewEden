@@ -12,40 +12,39 @@
 	real_name = "Test Dummy"
 	status_flags = GODMODE|CANPUSH
 
-/mob/living/carbon/human/skrell/New(var/new_loc)
+/mob/living/carbon/human/skrell/New()
 	h_style = "Skrell Male Tentacles"
-	..(new_loc, "Skrell")
+	set_species("Skrell")
+	..()
 
-/mob/living/carbon/human/tajaran/New(var/new_loc)
+/mob/living/carbon/human/tajaran/New()
 	h_style = "Tajaran Ears"
-	..(new_loc, "Tajaran")
+	set_species("Tajaran")
+	..()
 
-/mob/living/carbon/human/unathi/New(var/new_loc)
+/mob/living/carbon/human/unathi/New()
 	h_style = "Unathi Horns"
-	..(new_loc, "Unathi")
+	set_species("Unathi")
+	..()
 
-/mob/living/carbon/human/vox/New(var/new_loc)
+/mob/living/carbon/human/vox/New()
 	h_style = "Short Vox Quills"
-	..(new_loc, "Vox")
+	set_species("Vox")
+	..()
 
-/mob/living/carbon/human/voxarmalis/New(var/new_loc)
-	h_style = "Bald"
-	..(new_loc, "Vox Armalis")
+/mob/living/carbon/human/diona/New()
+	species = new /datum/species/diona(src)
+	..()
 
-/mob/living/carbon/human/diona/New(var/new_loc)
-	..(new_loc, "Diona")
-
-/mob/living/carbon/human/machine/New(var/new_loc)
+/mob/living/carbon/human/machine/New()
 	h_style = "blue IPC screen"
-	..(new_loc, "Machine")
+	set_species("Machine")
+	..()
 
-/mob/living/carbon/human/New(var/new_loc, var/new_species = null)
+/mob/living/carbon/human/New()
 
 	if(!species)
-		if(new_species)
-			set_species(new_species)
-		else
-			set_species()
+		set_species()
 
 	var/datum/reagents/R = new/datum/reagents(1000)
 	reagents = R
@@ -64,7 +63,7 @@
 	hud_list[IMPTRACK_HUD]    = image('icons/mob/hud.dmi', src, "hudblank")
 	hud_list[SPECIALROLE_HUD] = image('icons/mob/hud.dmi', src, "hudblank")
 	hud_list[STATUS_HUD_OOC]  = image('icons/mob/hud.dmi', src, "hudhealthy")
-
+		
 
 	..()
 
@@ -72,6 +71,7 @@
 		dna.real_name = real_name
 
 	prev_gender = gender // Debug for plural genders
+	make_organs()
 	make_blood()
 
 /mob/living/carbon/human/Bump(atom/movable/AM as mob|obj, yes)
@@ -98,18 +98,6 @@
 						src << "\red [tmob] is restraining [M], you cannot push past"
 					now_pushing = 0
 					return
-
-		//Leaping mobs just land on the tile, no pushing, no anything.
-		if(status_flags & LEAPING)
-			loc = tmob.loc
-			status_flags &= ~LEAPING
-			now_pushing = 0
-			return
-
-		if(istype(tmob,/mob/living/silicon/robot/drone)) //I have no idea why the hell this isn't already happening. How do mice do it?
-			loc = tmob.loc
-			now_pushing = 0
-			return
 
 		//BubbleWrap: people in handcuffs are always switched around as if they were on 'help' intent to prevent a person being pulled from being seperated from their puller
 		if((tmob.a_intent == "help" || tmob.restrained()) && (a_intent == "help" || src.restrained()) && tmob.canmove && canmove) // mutual brohugs all around!
@@ -403,9 +391,6 @@
 
 
 /mob/living/carbon/human/show_inv(mob/user as mob)
-	var/obj/item/clothing/under/suit = null
-	if (istype(w_uniform, /obj/item/clothing/under))
-		suit = w_uniform
 
 	user.set_machine(src)
 	var/dat = {"
@@ -420,22 +405,21 @@
 	<BR><B>Right Ear:</B> <A href='?src=\ref[src];item=r_ear'>[(r_ear ? r_ear : "Nothing")]</A>
 	<BR><B>Head:</B> <A href='?src=\ref[src];item=head'>[(head ? head : "Nothing")]</A>
 	<BR><B>Shoes:</B> <A href='?src=\ref[src];item=shoes'>[(shoes ? shoes : "Nothing")]</A>
-	<BR><B>Belt:</B> <A href='?src=\ref[src];item=belt'>[(belt ? belt : "Nothing")]</A> [((istype(wear_mask, /obj/item/clothing/mask) && istype(belt, /obj/item/weapon/tank) && !( internal )) ? text(" <A href='?src=\ref[];item=internal'>Set Internal</A>", src) : "")]
-	<BR><B>Uniform:</B> <A href='?src=\ref[src];item=uniform'>[(w_uniform ? w_uniform : "Nothing")]</A> [(suit) ? ((suit.has_sensor == 1) ? text(" <A href='?src=\ref[];item=sensor'>Sensors</A>", src) : "") :]
+	<BR><B>Belt:</B> <A href='?src=\ref[src];item=belt'>[(belt ? belt : "Nothing")]</A>
+	<BR><B>Uniform:</B> <A href='?src=\ref[src];item=uniform'>[(w_uniform ? w_uniform : "Nothing")]</A>
 	<BR><B>(Exo)Suit:</B> <A href='?src=\ref[src];item=suit'>[(wear_suit ? wear_suit : "Nothing")]</A>
 	<BR><B>Back:</B> <A href='?src=\ref[src];item=back'>[(back ? back : "Nothing")]</A> [((istype(wear_mask, /obj/item/clothing/mask) && istype(back, /obj/item/weapon/tank) && !( internal )) ? text(" <A href='?src=\ref[];item=internal'>Set Internal</A>", src) : "")]
 	<BR><B>ID:</B> <A href='?src=\ref[src];item=id'>[(wear_id ? wear_id : "Nothing")]</A>
-	<BR><B>Suit Storage:</B> <A href='?src=\ref[src];item=s_store'>[(s_store ? s_store : "Nothing")]</A> [((istype(wear_mask, /obj/item/clothing/mask) && istype(s_store, /obj/item/weapon/tank) && !( internal )) ? text(" <A href='?src=\ref[];item=internal'>Set Internal</A>", src) : "")]
+	<BR><B>Suit Storage:</B> <A href='?src=\ref[src];item=s_store'>[(s_store ? s_store : "Nothing")]</A>
 	<BR>[(handcuffed ? text("<A href='?src=\ref[src];item=handcuff'>Handcuffed</A>") : text("<A href='?src=\ref[src];item=handcuff'>Not Handcuffed</A>"))]
 	<BR>[(legcuffed ? text("<A href='?src=\ref[src];item=legcuff'>Legcuffed</A>") : text(""))]
-	<BR>[(suit) ? ((suit.hastie) ? text(" <A href='?src=\ref[];item=tie'>Remove Accessory</A>", src) : "") :]
 	<BR>[(internal ? text("<A href='?src=\ref[src];item=internal'>Remove Internal</A>") : "")]
 	<BR><A href='?src=\ref[src];item=splints'>Remove Splints</A>
 	<BR><A href='?src=\ref[src];item=pockets'>Empty Pockets</A>
 	<BR><A href='?src=\ref[user];refresh=1'>Refresh</A>
 	<BR><A href='?src=\ref[user];mach_close=mob[name]'>Close</A>
 	<BR>"}
-	user << browse(dat, text("window=mob[name];size=340x540"))
+	user << browse(dat, text("window=mob[name];size=340x480"))
 	onclose(user, "mob[name]")
 	return
 
@@ -876,10 +860,6 @@
 	return
 
 /mob/living/carbon/human/proc/vomit()
-
-	if(species.flags & IS_SYNTHETIC)
-		return //Machines don't throw up.
-
 	if(!lastpuke)
 		lastpuke = 1
 		src << "<spawn class='warning'>You feel nauseous..."
@@ -1222,7 +1202,7 @@
 	else
 		usr << "\blue [self ? "Your" : "[src]'s"] pulse is [src.get_pulse(GETPULSE_HAND)]."
 
-/mob/living/carbon/human/proc/set_species(var/new_species, var/force_organs)
+/mob/living/carbon/human/proc/set_species(var/new_species)
 
 	if(!dna)
 		if(!new_species)
@@ -1240,9 +1220,6 @@
 		remove_language(species.language)
 
 	species = all_species[new_species]
-
-	if(force_organs || !organs || !organs.len)
-		species.create_organs(src)
 
 	if(species.language)
 		add_language(species.language)
@@ -1311,123 +1288,69 @@
 		W.message = message
 		W.add_fingerprint(src)
 
-/mob/living/carbon/human/can_inject(var/mob/user, var/error_msg, var/target_zone)
-	. = 1
 
-	if(!user)
-		target_zone = pick("chest","chest","chest","left leg","right leg","left arm", "right arm", "head")
-	else if(!target_zone)
-		target_zone = user.zone_sel.selecting
+/mob/living/carbon/human/verb/snapNeck()
+	set category = "Object"
+	set name = "Snap Neck"
+	set desc = "Snap the neck of someone you're choking to death."
+	var/necksnapsound = 'sound/effects/necksnap.ogg'
+	if(!isliving(usr) || usr.next_move > world.time)
+		return
+	usr.next_move = world.time + 20
 
-	switch(target_zone)
-		if("head")
-			if(head && head.flags & THICKMATERIAL)
-				. = 0
-		else
-			if(wear_suit && wear_suit.flags & THICKMATERIAL)
-				. = 0
-	if(!. && error_msg && user)
- 		// Might need re-wording.
-		user << "<span class='alert'>There is no exposed flesh or thin material [target_zone == "head" ? "on their head" : "on their body"] to inject into.</span>"
-
-
-//Putting a couple of procs here that I don't know where else to dump.
-//Mostly going to be used for Vox and Vox Armalis, but other human mobs might like them (for adminbuse).
-
-/mob/living/carbon/human/proc/leap()
-	set category = "IC"
-	set name = "Leap"
-	set desc = "Leap at a target and grab them aggressively."
-
-	if(last_special > world.time)
+	if(usr.stat == 1)
+		usr << "You are unconcious and cannot do that!"
 		return
 
-	if(stat || paralysis || stunned || weakened || lying)
-		src << "You cannot leap in your current state."
+	if(usr.restrained())
+		usr << "You are restrained and cannot do that!"
 		return
-
-	var/list/choices = list()
-	for(var/mob/living/M in view(6,src))
-		if(!istype(M,/mob/living/silicon))
-			choices += M
-	choices -= src
-
-	var/mob/living/T = input(src,"Who do you wish to leap at?") in null|choices
-
-	if(!T || !src || src.stat) return
-
-	if(get_dist(get_turf(T), get_turf(src)) > 6) return
-
-	last_special = world.time + 100
-	status_flags |= LEAPING
-
-	src.visible_message("<span class='warning'><b>\The [src]</b> leaps at [T]!</span>")
-	src.throw_at(get_step(get_turf(T),get_turf(src)), 5, 1)
-	playsound(src.loc, 'sound/voice/shriek1.ogg', 50, 1)
-
-	sleep(5)
-
-	if(status_flags & LEAPING) status_flags &= ~LEAPING
-
-	if(!src.Adjacent(T))
-		src << "\red You miss!"
+	var/obj/item/weapon/grab/G = null
+	if(usr.l_hand != null && istype(usr.l_hand, /obj/item/weapon/grab))
+		G = usr.l_hand
+	if(usr.r_hand != null && istype(usr.r_hand, /obj/item/weapon/grab))
+		G = usr.r_hand
+	if(G == null)
+		usr << "You need to be choking someone to death to use this."
 		return
-
-	T.Weaken(5)
-
-	var/use_hand = "left"
-	if(l_hand)
-		if(r_hand)
-			src << "\red You need to have one hand free to grab someone."
-			return
-		else
-			use_hand = "right"
-
-	src.visible_message("<span class='warning'><b>\The [src]</b> seizes [T] aggressively!</span>")
-
-	var/obj/item/weapon/grab/G = new(src,T)
-	if(use_hand == "left")
-		l_hand = G
-	else
-		r_hand = G
-
-	G.state = GRAB_AGGRESSIVE
-	G.icon_state = "grabbed1"
-	G.synch()
-
-/mob/living/carbon/human/proc/gut()
-	set category = "IC"
-	set name = "Gut"
-	set desc = "While grabbing someone aggressively, rip their guts out or tear them apart."
-
-	if(last_special > world.time)
+	if(!G.affecting || !istype(G.affecting, /mob/living/carbon))
+		usr << "\red You need a proper target!"
+	if(G.state < 4)
+		usr << "\red You need a better grip to do that!"
 		return
-
-	if(stat || paralysis || stunned || weakened || lying)
-		src << "\red You cannot do that in your current state."
-		return
-
-	var/obj/item/weapon/grab/G = locate() in src
-	if(!G || !istype(G))
-		src << "\red You are not grabbing anyone."
-		return
-
-	if(G.state < GRAB_AGGRESSIVE)
-		src << "\red You must have an aggressive grab to gut your prey!"
-		return
-
-	last_special = world.time + 50
-
-	visible_message("<span class='warning'><b>\The [src]</b> rips viciously at \the [G.affecting]'s body with its claws!</span>")
-
-	if(istype(G.affecting,/mob/living/carbon/human))
-		var/mob/living/carbon/human/H = G.affecting
-		H.apply_damage(50,BRUTE)
-		if(H.stat == 2)
-			H.gib()
-	else
-		var/mob/living/M = G.affecting
-		if(!istype(M)) return //wut
-		M.apply_damage(50,BRUTE)
-		if(M.stat == 2)
-			M.gib()
+	else if(G.state >= 4)
+		visible_message("\red [G.assailant] is getting ready to snap the neck of [G.affecting]...")
+		spawn(-1)
+		spawn(50)
+			if(!G || G.state < 4)
+				usr << "\red Failed to snap their neck!"
+			if(G.state >= 4)
+				if(prob(75))
+					var/mob/living/carbon/affecting2 = G.affecting
+					visible_message("\red [G.assailant] snaps [G.affecting]'s neck!")
+					playsound(src, necksnapsound, 100, 1)
+					affecting2.adjustOxyLoss(200)
+					affecting2.Weaken(5)
+					affecting2.Stun(5)
+					spawn(5)
+						affecting2.emote("gasp")
+						affecting2.emote("twitch")
+						spawn(15)
+							affecting2.emote("gasp")
+							spawn(10)
+								affecting2.emote("twitch")
+								affecting2.death(0)
+				else
+					var/mob/living/carbon/affecting2 = G.affecting
+					visible_message("\red [G.assailant] doesn't fully snap [G.affecting]'s neck!")
+					playsound(src, necksnapsound, 80, 1)
+					spawn(2)
+						playsound(src, necksnapsound, 60, 1)
+					affecting2.adjustOxyLoss(50)
+					affecting2.emote("scream")
+					affecting2.Weaken(5)
+					affecting2.Stun(5)
+					spawn(10)
+						affecting2.emote("twitch")
+						spawn(40)
+							affecting2.emote("twitch")

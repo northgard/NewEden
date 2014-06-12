@@ -1,5 +1,5 @@
 #define SAVEFILE_VERSION_MIN	8
-#define SAVEFILE_VERSION_MAX	11
+#define SAVEFILE_VERSION_MAX	12
 
 //handles converting savefiles to new formats
 //MAKE SURE YOU KEEP THIS UP TO DATE!
@@ -130,6 +130,11 @@
 	S["backbag"]			>> backbag
 	S["b_type"]				>> b_type
 
+	S["accent"]				>> accent
+	S["voice"]				>> voice
+	S["pitch"]				>> pitch
+	S["talkspeed"]			>> talkspeed
+
 	//Jobs
 	S["alternate_option"]	>> alternate_option
 	S["job_civilian_high"]	>> job_civilian_high
@@ -192,6 +197,11 @@
 	undershirt		= sanitize_integer(undershirt, 1, undershirt_t.len, initial(undershirt))
 	backbag			= sanitize_integer(backbag, 1, backbaglist.len, initial(backbag))
 	b_type			= sanitize_text(b_type, initial(b_type))
+	accent			= sanitize_text(accent, initial(accent))
+	voice			= sanitize_text(voice, initial(voice))
+	pitch			= sanitize_text(pitch, initial(pitch))
+	talkspeed		= sanitize_text(talkspeed, initial(talkspeed))
+
 
 	alternate_option = sanitize_integer(alternate_option, 0, 2, initial(alternate_option))
 	job_civilian_high = sanitize_integer(job_civilian_high, 0, 65535, initial(job_civilian_high))
@@ -246,6 +256,10 @@
 	S["undershirt"]			<< undershirt
 	S["backbag"]			<< backbag
 	S["b_type"]				<< b_type
+	S["accent"]				<< accent
+	S["voice"]				<< voice
+	S["pitch"]				<< pitch
+	S["talkspeed"]			<< talkspeed
 
 	//Jobs
 	S["alternate_option"]	<< alternate_option

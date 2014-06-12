@@ -29,11 +29,17 @@
 
 	if(config && config.log_runtime)
 		log = file("data/logs/runtime/[time2text(world.realtime,"YYYY-MM-DD-(hh-mm-ss)")]-runtime.log")
-
+	if(world.port == 1400)
+		hub = "Exadv1.spacestation13"
+		hub_password = "none"
+		name = "New Eden Test"
 	callHook("startup")
 	//Emergency Fix
 	load_mods()
 	//end-emergency fix
+	createPool("fire", /obj/fire)
+	PrecacheObjects()
+	deleteQueue()
 
 	src.update_status()
 
@@ -191,12 +197,15 @@ var/world_topic_spam_protect_time = world.timeofday
 	/*spawn(0)
 		world << sound(pick('sound/AI/newroundsexy.ogg','sound/misc/apcdestroyed.ogg','sound/misc/bangindonk.ogg')) // random end sounds!! - LastyBatsy
 		*/
+	if(world.port != 1400)
+		ext_python("delayedrestart.py","")
+	/*
 	for(var/client/C in clients)
 		if(config.server)	//if you set a server location in config.txt, it sends you there instead of trying to reconnect to the same world address. -- NeoFite
 			C << link("byond://[config.server]")
 		else
 			C << link("byond://[world.address]:[world.port]")
-
+	*/
 	..(reason)
 
 
@@ -277,63 +286,25 @@ var/world_topic_spam_protect_time = world.timeofday
 				D.associate(directory[ckey])
 
 /world/proc/update_status()
-	var/s = ""
+        var/s = ""
 
-	if (config && config.server_name)
-		s += "<b>[config.server_name]</b> &#8212; "
+        if (config && config.server_name)
+                s += "<b><a href=\"http://newedenstation.com\">[config.server_name]</a></b><br>"
 
-	s += "<b>[station_name()]</b>";
-	s += " ("
-	s += "<a href=\"http://\">" //Change this to wherever you want the hub to link to.
-//	s += "[game_version]"
-	s += "Default"  //Replace this with something else. Or ever better, delete it and uncomment the game version.
-	s += "</a>"
-	s += ")"
+        s += "<font color=\"green\"><b>Modified BS12, Light-Medium Roleplay</b></font><img src = \"http://i.imgur.com/otfnSmX.gif\"></img>"
 
-	var/list/features = list()
+        var/n = 0
+        for (var/mob/M in player_list)
+                if (M.client && M.computer_id)
+                        n++
 
-	if(ticker)
-		if(master_mode)
-			features += master_mode
-	else
-		features += "<b>STARTING</b>"
-
-	if (!enter_allowed)
-		features += "closed"
-
-	features += abandon_allowed ? "respawn" : "no respawn"
-
-	if (config && config.allow_vote_mode)
-		features += "vote"
-
-	if (config && config.allow_ai)
-		features += "AI allowed"
-
-	var/n = 0
-	for (var/mob/M in player_list)
-		if (M.client)
-			n++
-
-	if (n > 1)
-		features += "~[n] players"
-	else if (n > 0)
-		features += "~[n] player"
-
-	/*
-	is there a reason for this? the byond site shows 'hosted by X' when there is a proper host already.
-	if (host)
-		features += "hosted by <b>[host]</b>"
-	*/
-
-	if (!host && config && config.hostedby)
-		features += "hosted by <b>[config.hostedby]</b>"
-
-	if (features)
-		s += ": [list2text(features, ", ")]"
-
-	/* does this help? I do not know */
-	if (src.status != s)
-		src.status = s
+        if (n > 1)
+                s += "<br>We have <font color=\"green\"><a><b>[n]</b></a> players</font><br>"
+        else if (n > 0)
+                s += "<br>We have <font color=\"green\"><a><b>[n]</b></a> player</font><br>"
+        /* does this help? I do not know */
+        if (src.status != s)
+                src.status = s
 
 #define FAILED_DB_CONNECTION_CUTOFF 5
 var/failed_db_connections = 0

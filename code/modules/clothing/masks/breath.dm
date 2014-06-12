@@ -43,7 +43,6 @@
 	icon_state = "voxmask"
 	item_state = "voxmask"
 	permeability_coefficient = 0.01
-	species_restricted = list("Vox")
 
 	toggle()
 		set category = "Object"
@@ -51,3 +50,57 @@
 		set src in usr
 
 		usr << "You can't really adjust this mask - it's moulded to your beak!"
+
+/obj/item/clothing/mask/breath/vox/mob_can_equip(M as mob, slot)
+	var/mob/living/carbon/human/V = M
+	if(V.species.name != "Vox")
+		V << "<span class='warning'>This clearly isn't designed for your species!</span>"
+		return 0
+
+	return ..()
+
+	
+/obj/item/clothing/mask/breath/fluff/youmu
+	desc = "A white wig."
+	name = "Youmu's wig"
+	icon_state = "youmuwigfluff"
+	item_state = "youmuwigfluff"
+	permeability_coefficient = 0.01
+	w_class = 2
+	flags = FPRINT|TABLEPASS|BLOCKHEADHAIR|MASKINTERNALS|MASKCOVERSMOUTH
+	toggle()
+		set category = "Object"
+		set name = "Adjust mask"
+		set src in usr
+
+		usr << "You can't adjust this mask - it's a wig!"
+
+/obj/item/clothing/mask/breath/fluff/mamizou
+	desc = "A brown wig with a leaf and ears."
+	name = "Mamizou's wig"
+	icon_state = "mamizouwigfluff"
+	item_state = "mamizouwigfluff"
+	permeability_coefficient = 0.01
+	w_class = 2
+	flags = FPRINT|TABLEPASS|BLOCKHEADHAIR|MASKINTERNALS|MASKCOVERSMOUTH
+	toggle()
+		set category = "Object"
+		set name = "Adjust mask"
+		set src in usr
+
+		usr << "You can't adjust this mask - it's a wig!"
+
+/obj/item/clothing/mask/breath/fluff/cirno
+	desc = "A light blue wig a blue bow and ice wings."
+	name = "Cirno's wig"
+	icon_state = "cirnowigfluff"
+	item_state = "cirnowigfluff"
+	permeability_coefficient = 0.01
+	w_class = 2
+	flags = FPRINT|TABLEPASS|BLOCKHEADHAIR|MASKINTERNALS|MASKCOVERSMOUTH
+	toggle()
+		set category = "Object"
+		set name = "Adjust mask"
+		set src in usr
+
+		usr << "You can't adjust this mask - it's a wig!"

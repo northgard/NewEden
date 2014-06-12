@@ -26,6 +26,63 @@
 		"/obj/item/device/analyzer",
 		"/obj/item/taperoll/engineering")
 
+/obj/item/weapon/storage/belt/utility/update_icon()
+	overlays = list() //resets list
+	underlays = list()
+	for(var/obj/item/tool in contents)
+		var/slot = contents.Find(tool)
+		var/image/toolimg
+		var/overlayed = 1
+		if(istype(tool, /obj/item/weapon/crowbar))
+			toolimg = image('icons/obj/belticons.dmi',"crowbar")
+		if(istype(tool, /obj/item/weapon/screwdriver))
+			toolimg = image('icons/obj/belticons.dmi',"screwdriver"+tool.item_color)
+		if(istype(tool, /obj/item/weapon/weldingtool))
+			toolimg = image('icons/obj/belticons.dmi',"weldingtool")
+		if(istype(tool, /obj/item/weapon/wirecutters))
+			toolimg = image('icons/obj/belticons.dmi',"wirecutters"+tool.item_color)
+		if(istype(tool, /obj/item/weapon/wrench))
+			toolimg = image('icons/obj/belticons.dmi',"wrench")
+		if(istype(tool, /obj/item/device/multitool))
+			toolimg = image('icons/obj/belticons.dmi',"multitool")
+		if(istype(tool, /obj/item/device/flashlight))
+			toolimg = image('icons/obj/belticons.dmi',"flashlight")
+		if(istype(tool, /obj/item/weapon/cable_coil))
+			toolimg = image('icons/obj/belticons.dmi',tool.item_color+"wire")
+		if(istype(tool, /obj/item/device/t_scanner))
+			toolimg = image('icons/obj/belticons.dmi',"t-scanner")
+		if(istype(tool, /obj/item/device/analyzer))
+			toolimg = image('icons/obj/belticons.dmi',"analyzer")
+		if(istype(tool, /obj/item/taperoll/engineering))
+			toolimg = image('icons/obj/belticons.dmi',"taperoll")
+		if(slot == 1)
+			toolimg.pixel_x = 0
+			toolimg.pixel_y = 0
+		if(slot == 2)
+			toolimg.pixel_x = 6
+			toolimg.pixel_y = 1
+		if(slot == 3)
+			overlayed = 0
+			toolimg.pixel_x = 6
+			toolimg.pixel_y = 6
+		if(slot == 4)
+			overlayed = 0
+			toolimg.pixel_x = 0
+			toolimg.pixel_y = 7
+		if(slot == 5)
+			overlayed = 0
+			toolimg.pixel_x = -6
+			toolimg.pixel_y = 6
+		if(slot == 6)
+			toolimg.pixel_x = -9
+			toolimg.pixel_y = 2
+		if(slot == 7)
+			toolimg.pixel_x = -5
+			toolimg.pixel_y = 0
+		if(overlayed == 1)
+			overlays += toolimg
+		else
+			underlays += toolimg
 
 /obj/item/weapon/storage/belt/utility/full/New()
 	..()

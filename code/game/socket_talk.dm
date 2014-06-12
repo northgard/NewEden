@@ -2,10 +2,10 @@
 
 /datum/socket_talk
 	var
-		enabled = 0
+		enabled = 1
 	New()
 		..()
-		src.enabled = config.socket_talk
+		src.enabled = 1
 
 		if(enabled)
 			call("DLLSocket.so","establish_connection")("127.0.0.1","8019")

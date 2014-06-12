@@ -44,6 +44,7 @@
 
 
 /atom/proc/assume_air(datum/gas_mixture/giver)
+	//del(giver)
 	return null
 
 /atom/proc/remove_air(amount)

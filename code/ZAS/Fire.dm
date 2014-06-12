@@ -36,7 +36,8 @@ turf/simulated/hotspot_expose(exposed_temperature, exposed_volume, soh)
 
 		if(! (locate(/obj/fire) in src))
 
-			new /obj/fire(src,1000)
+			var/obj/fire/fireobj = unpool("fire", /obj/fire)
+			fireobj.init(src,1000)
 
 	return igniting
 
@@ -62,10 +63,9 @@ turf/simulated/hotspot_expose(exposed_temperature, exposed_volume, soh)
 	var/turf/simulated/S = loc
 
 	if(!istype(S))
-		del src
-
+		return
 	if(!S.zone)
-		del src
+		return
 
 	var/datum/gas_mixture/air_contents = S.return_air()
 	//get liquid fuels on the ground.
@@ -86,7 +86,7 @@ turf/simulated/hotspot_expose(exposed_temperature, exposed_volume, soh)
 	//check if there is something to combust
 	if(!air_contents.check_recombustability(liquid))
 		//del src
-		RemoveFire()
+		pool("fire", src)
 
 	//get a firelevel and set the icon
 	firelevel = air_contents.calculate_firelevel(liquid)
@@ -126,7 +126,8 @@ turf/simulated/hotspot_expose(exposed_temperature, exposed_volume, soh)
 				//Spread the fire.
 				if(!(locate(/obj/fire) in enemy_tile))
 					if( prob( 50 + 50 * (firelevel/vsc.fire_firelevel_multiplier) ) && S.CanPass(null, enemy_tile, 0,0) && enemy_tile.CanPass(null, S, 0,0))
-						new/obj/fire(enemy_tile,firelevel)
+						var/obj/fire/fireobj = unpool("fire", /obj/fire)
+						fireobj.init(enemy_tile,firelevel)
 
 	//seperate part of the present gas
 	//this is done to prevent the fire burning all gases in a single pass
@@ -150,34 +151,21 @@ turf/simulated/hotspot_expose(exposed_temperature, exposed_volume, soh)
 ///////////////////////////////// FLOW HAS BEEN REMERGED /// feel free to delete the fire again from here on //////////////////////////////////////////////////////////////////
 
 
-/obj/fire/New(newLoc,fl)
-	..()
-
-	if(!istype(loc, /turf))
-		del src
-
+/obj/fire/unpooled()
 	dir = pick(cardinal)
 	SetLuminosity(3)
-	firelevel = fl
-	air_master.active_hotspots.Add(src)
 
-
-/obj/fire/Del()
+/obj/fire/pooled()
 	if (istype(loc, /turf/simulated))
 		SetLuminosity(0)
-
-		loc = null
-	air_master.active_hotspots.Remove(src)
-
+	if(air_master && air_master.active_hotspots)
+		air_master.active_hotspots.Remove(src)
 	..()
 
-/obj/fire/proc/RemoveFire()
-	if (istype(loc, /turf/simulated))
-		SetLuminosity(0)
-		loc = null
-	air_master.active_hotspots.Remove(src)
-
-
+/obj/fire/proc/init(newLoc, fl)
+	firelevel = fl
+	air_master.active_hotspots.Add(src)
+	loc = newLoc
 
 turf/simulated/var/fire_protection = 0 //Protects newly extinguished tiles from being overrun again.
 turf/proc/apply_fire_protection()

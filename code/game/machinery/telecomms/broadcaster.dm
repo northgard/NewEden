@@ -45,6 +45,43 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 			return
 		recentmessages.Add(signal_message)
 
+		if(signal.data["type"] == 0)
+			var/message = signal.data["message"]
+			var/accent = "en-us"
+			var/voice = "m7"
+			var/speed = 175
+			var/pitch = 0
+			var/echo = 10
+			var/mob/themob = signal.data["mob"]
+			if(istype(themob, /mob/living/silicon/ai))
+				echo = 90
+			if(istype(themob, /mob/living/silicon/robot))
+				echo = 60
+			if(themob.client && themob.client.prefs)
+				accent = themob.client.prefs.accent
+				voice = themob.client.prefs.voice
+				speed = themob.client.prefs.talkspeed
+				pitch = themob.client.prefs.pitch
+			themob:texttospeech(message, speed, pitch, accent, "+[voice]", echo)
+		if(signal.data["type"] == 2)
+			var/message = signal.data["message"]
+			var/accent = "en-us"
+			var/voice = "m7"
+			var/speed = 175
+			var/pitch = 0
+			var/echo = 10
+			var/mob/themob = signal.data["mob"]
+			if(istype(themob, /mob/living/silicon/ai))
+				echo = 90
+			if(istype(themob, /mob/living/silicon/robot))
+				echo = 60
+			if(themob.client && themob.client.prefs)
+				accent = themob.client.prefs.accent
+				voice = themob.client.prefs.voice
+				speed = themob.client.prefs.talkspeed
+				pitch = themob.client.prefs.pitch
+			themob:texttospeech(message, speed, pitch, accent, "+[voice]", echo)
+
 		if(signal.data["slow"] > 0)
 			sleep(signal.data["slow"]) // simulate the network lag if necessary
 
@@ -294,7 +331,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 
 		if(istype(R, /mob/new_player)) // we don't want new players to hear messages. rare but generates runtimes.
 			continue
-			
+
 		// Ghosts hearing all radio chat don't want to hear syndicate intercepts, they're duplicates
 		if(data == 3 && istype(R, /mob/dead/observer) && R.client && (R.client.prefs.toggles & CHAT_GHOSTRADIO))
 			continue
@@ -459,11 +496,29 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 			for (var/mob/R in heard_masked)
 				R.hear_radio(message,verbage, speaking, part_a, part_b, M, 0, name)
 
+				if(fexists("sound/playervoices/[M.ckey].ogg"))
+					var/sound_file = file("sound/playervoices/[M.ckey].ogg")
+					var/sound/voice2 = sound(sound_file, wait = 1, channel = 0)
+					voice2.status = SOUND_STREAM
+					if(R.client)
+						if(R.client.prefs)
+							if(R.client.prefs.toggles & SOUND_VOICES)
+								R << voice2
+
 		/* --- Process all the mobs that heard the voice normally (understood) --- */
 
 		if (length(heard_normal))
 			for (var/mob/R in heard_normal)
 				R.hear_radio(message, verbage, speaking, part_a, part_b, M, 0, realname)
+
+				if(fexists("sound/playervoices/[M.ckey].ogg"))
+					var/sound_file = file("sound/playervoices/[M.ckey].ogg")
+					var/sound/voice2 = sound(sound_file, wait = 1, channel = 0)
+					voice2.status = SOUND_STREAM
+					if(R.client)
+						if(R.client.prefs)
+							if(R.client.prefs.toggles & SOUND_VOICES)
+								R << voice2
 
 		/* --- Process all the mobs that heard the voice normally (did not understand) --- */
 
@@ -665,12 +720,34 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 	 /* ###### Send the message ###### */
 
 		/* --- Process all the mobs that heard the voice normally (understood) --- */
+		var/accent = "en-us"
+		var/voice = "m7"
+		var/speed = 175
+		var/pitch = 0
+		var/echo = 30
+		if(M.client && M.client.prefs)
+			accent = M.client.prefs.accent
+			voice = M.client.prefs.voice
+			speed = M.client.prefs.talkspeed
+			pitch = M.client.prefs.pitch
+		if(istype(M, /mob/living/silicon/ai))
+			echo += 40
+		src:texttospeech(text, speed, pitch, accent, "+[voice]", echo)
 
 		if (length(heard_normal))
 			var/rendered = "[part_a][source][part_b]\"[text]\"[part_c]"
 
 			for (var/mob/R in heard_normal)
 				R.show_message(rendered, 2)
+				if(fexists("sound/playervoices/[M.ckey].ogg"))
+					var/sound_file = file("sound/playervoices/[M.ckey].ogg")
+					var/sound/voice2 = sound(sound_file, wait = 1, channel = 0)
+					voice2.status = SOUND_STREAM
+					if(R.client)
+						if(R.client.prefs)
+							if(R.client.prefs.toggles & SOUND_VOICES)
+								R << voice2
+
 
 		/* --- Process all the mobs that heard a garbled voice (did not understand) --- */
 			// Displays garbled message (ie "f*c* **u, **i*er!")

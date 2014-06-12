@@ -47,6 +47,7 @@
 	g_amt = 0
 	m_amt = 75
 	attack_verb = list("stabbed")
+	item_color = "red"
 
 	suicide_act(mob/user)
 		viewers(user) << pick("\red <b>[user] is stabbing the [src.name] into \his temple! It looks like \he's trying to commit suicide.</b>", \
@@ -58,24 +59,31 @@
 		if ("red")
 			icon_state = "screwdriver2"
 			item_state = "screwdriver"
+			item_color = "red"
 		if ("blue")
 			icon_state = "screwdriver"
 			item_state = "screwdriver_blue"
+			item_color = "blue"
 		if ("purple")
 			icon_state = "screwdriver3"
 			item_state = "screwdriver_purple"
+			item_color = "purple"
 		if ("brown")
 			icon_state = "screwdriver4"
 			item_state = "screwdriver_brown"
+			item_color = "brown"
 		if ("green")
 			icon_state = "screwdriver5"
 			item_state = "screwdriver_green"
+			item_color = "green"
 		if ("cyan")
 			icon_state = "screwdriver6"
 			item_state = "screwdriver_cyan"
+			item_color = "cyan"
 		if ("yellow")
 			icon_state = "screwdriver7"
 			item_state = "screwdriver_yellow"
+			item_color = "yellow"
 
 	if (prob(75))
 		src.pixel_y = rand(0, 16)
@@ -106,11 +114,13 @@
 	m_amt = 80
 	origin_tech = "materials=1;engineering=1"
 	attack_verb = list("pinched", "nipped")
+	item_color = "red"
 
 /obj/item/weapon/wirecutters/New()
 	if(prob(50))
 		icon_state = "cutters-y"
 		item_state = "cutters_yellow"
+		item_color = "yellow"
 
 /obj/item/weapon/wirecutters/attack(mob/living/carbon/C as mob, mob/user as mob)
 	if((C.handcuffed) && (istype(C.handcuffed, /obj/item/weapon/handcuffs/cable)))

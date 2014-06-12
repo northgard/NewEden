@@ -1,25 +1,8 @@
 // OS-specific networking includes
 // -------------------------------
-#ifdef __WIN32
-    #include <winsock2.h>
-    typedef int socklen_t;
-#else
-    extern "C" {
-    #include <sys/types.h>
-    #include <sys/socket.h>
-    #include <netinet/in.h>
-    #include <arpa/inet.h>
-    #include <netdb.h>
-    #include <fcntl.h>
-    #include <stdlib.h>
-    #include <string.h>
-    }
+#include <winsock2.h>
+typedef int socklen_t;
 
-    typedef int SOCKET;
-    typedef sockaddr_in SOCKADDR_IN;
-    typedef sockaddr SOCKADDR;
-    #define SOCKET_ERROR -1
-#endif
 
 // Socket used for all communications
 SOCKET sock;
@@ -36,11 +19,9 @@ char return_buffer[BUFFER_SIZE];
 
 const char* SUCCESS = "1\0"; // string representing success
 
-#ifdef __WIN32
-    #define DLL_EXPORT __declspec(dllexport)
-#else
-    #define DLL_EXPORT __attribute__ ((visibility ("default")))
-#endif
+
+#define DLL_EXPORT __declspec(dllexport)
+
 
 // arg1: ip(in the xx.xx.xx.xx format)
 // arg2: port(a short)
@@ -56,20 +37,18 @@ extern "C" DLL_EXPORT const char* establish_connection(int n, char *v[])
 
     // set up network stuff
     // --------------------
-    #ifdef __WIN32
-        WSADATA wsa;
-        WSAStartup(MAKEWORD(2,0),&wsa);
-    #endif
+
+    WSADATA wsa;
+    WSAStartup(MAKEWORD(2,0),&wsa);
+
     sock = socket(AF_INET,SOCK_DGRAM,0);
 
     // make the socket non-blocking
     // ----------------------------
-    #ifdef __WIN32
-        unsigned long iMode=1;
-        ioctlsocket(sock,FIONBIO,&iMode);
-    #else
-        fcntl(sock, F_SETFL, O_NONBLOCK);
-    #endif
+
+    unsigned long iMode=1;
+    ioctlsocket(sock,FIONBIO,&iMode);
+
 
     // establish a connection to the server
     // ------------------------------------
@@ -131,3 +110,4 @@ extern "C" DLL_EXPORT const char* recv_message(int n, char *v[])
 
     return 0;
 }
+

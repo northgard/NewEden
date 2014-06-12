@@ -197,13 +197,13 @@
 
 
 //Griff //BS12 EDIT
-/*
+
 /datum/job/clown
 	title = "Clown"
 	flag = CLOWN
 	department_flag = CIVILIAN
 	faction = "Station"
-	total_positions = 1
+	total_positions = 2
 	spawn_positions = 1
 	supervisors = "the head of personnel"
 	selection_color = "#dddddd"
@@ -268,7 +268,6 @@
 		H.mind.special_verbs += /client/proc/mimewall
 		H.miming = 1
 		return 1
-*/
 
 
 /datum/job/janitor

@@ -17,4 +17,3 @@
 		user << "\blue You are not using this to lay wire..."
 	return
 
-

@@ -243,3 +243,11 @@
 	flags = FPRINT | TABLEPASS | BLOCKHAIR
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
 	siemens_coefficient = 2.0
+
+/obj/item/clothing/head/bhat
+	name = "straw hat"
+	desc = "A straw hat appearing japanese in origin."
+	icon_state = "bhat"
+	flags = FPRINT | TABLEPASS | HEADCOVERSEYES
+	item_state = "bhat"
+	flags_inv = HIDEEARS|HIDEEYES

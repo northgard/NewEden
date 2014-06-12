@@ -66,6 +66,11 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	default_cartridge = /obj/item/weapon/cartridge/engineering
 	icon_state = "pda-e"
 
+/obj/item/device/pda/engineering/goragh
+	default_cartridge = /obj/item/weapon/cartridge/engineering
+	icon_state = "pda-e-goragh"
+	desc = "An old, worn out PDA. It's missing paint and has exposed circuitry."
+
 /obj/item/device/pda/security
 	default_cartridge = /obj/item/weapon/cartridge/security
 	icon_state = "pda-s"

@@ -227,3 +227,14 @@
 					"\blue You draw \the [holstered], pointing it at the ground.")
 				usr.put_in_hands(holstered)
 			holstered = null
+
+/obj/item/clothing/suit/armor/knight
+	name = "knight armor"
+	desc = "Standard security gear circa 1347."
+	icon_state = "knight_oversuit_icon"
+	item_state = "knight_oversuit"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
+	slowdown = 1
+	armor = list(melee = 80, bullet = 10, laser = 10, energy = 10, bomb = 0, bio = 0, rad = 0)
+	flags_inv = HIDEJUMPSUIT
+	siemens_coefficient = 0.5
