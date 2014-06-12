@@ -218,12 +218,12 @@
 
 /datum/species/vox/handle_post_spawn(var/mob/living/carbon/human/H)
 
-	H.verbs += /mob/living/carbon/human/proc/leap
+	//H.verbs += /mob/living/carbon/human/proc/leap
 	..()
 
 /datum/species/vox/armalis/handle_post_spawn(var/mob/living/carbon/human/H)
 
-	H.verbs += /mob/living/carbon/human/proc/gut
+	//H.verbs += /mob/living/carbon/human/proc/gut
 	..()
 
 /datum/species/vox/armalis

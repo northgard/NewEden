@@ -63,7 +63,7 @@
 	hud_list[IMPTRACK_HUD]    = image('icons/mob/hud.dmi', src, "hudblank")
 	hud_list[SPECIALROLE_HUD] = image('icons/mob/hud.dmi', src, "hudblank")
 	hud_list[STATUS_HUD_OOC]  = image('icons/mob/hud.dmi', src, "hudhealthy")
-		
+
 
 	..()
 
@@ -71,7 +71,7 @@
 		dna.real_name = real_name
 
 	prev_gender = gender // Debug for plural genders
-	make_organs()
+	//make_organs()
 	make_blood()
 
 /mob/living/carbon/human/Bump(atom/movable/AM as mob|obj, yes)

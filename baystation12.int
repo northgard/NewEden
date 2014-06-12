@@ -1,8 +1,10 @@
 // BEGIN_INTERNALS
 /*
 MAP_ICON_TYPE: 0
+WINDOW: icons\mob\feet.dmi;icons\mob\feet (2).dmi;icons\mob\head.dmi;icons\mob\head (2).dmi;icons\mob\items_lefthand.dmi;icons\mob\items_lefthand (2).dmi;icons\mob\items_righthand (2).dmi;icons\mob\items_righthand.dmi;icons\mob\uniform.dmi;baystation12.dme
 LAST_COMPILE_VERSION: 501.1217
-DIR: code code\datums\diseases code\defines\procs code\eden code\game code\game\objects\items code\game\objects\items\devices\PDA code\game\objects\items\weapons code\game\objects\items\weapons\storage code\modules code\modules\clothing code\modules\clothing\head code\modules\clothing\shoes code\modules\clothing\suits code\modules\clothing\under icons icons\mob icons\obj icons\obj\clothing 
+DIR: code code\datums icons icons\mob 
+FILE: baystation12.dme
 LAST_COMPILE_TIME: 1398563631
 AUTO_FILE_DIR: ON
 */
