@@ -240,6 +240,8 @@
 				else
 					var/obj/A = new holder.buildmode.objholder (get_turf(object))
 					A.dir = holder.builddir.dir
+					log_admin("[key_name(usr)] has spawned a [holder.buildmode.objholder] using buildmode.")
+					message_admins("[key_name(usr)] has spawned a [holder.buildmode.objholder] using buildmode.")
 			else if(pa.Find("right"))
 				if(isobj(object)) del(object)
 

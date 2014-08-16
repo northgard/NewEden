@@ -83,6 +83,27 @@ var/list/department_radio_keys = list(
 
 /mob/living/say(var/message, var/datum/language/speaking = null, var/verb="says", var/alt_name="", var/italics=0, var/message_range = world.view, var/list/used_radios = list())
 
+	var/accent = "en-us"
+	var/voice = "m7"
+	var/speed = 175
+	var/pitch = 0
+	var/echo = 10
+	var/name = ""
+	if(istype(src, /mob/living/silicon/ai))
+		echo = 90
+	if(istype(src, /mob/living/silicon/robot))
+		echo = 60
+	if(src.client && src.client.prefs)
+		accent = src.client.prefs.accent
+		voice = src.client.prefs.voice
+		speed = src.client.prefs.talkspeed
+		pitch = src.client.prefs.pitch
+	if(src.ckey == "" || !src.ckey)
+		name = "\ref[src]"
+	else
+		name = src.ckey
+	src:texttospeech(message, speed, pitch, accent, "+[voice]", echo, name)
+
 	var/turf/T = get_turf(src)
 
 	var/list/listening = list()
@@ -103,7 +124,7 @@ var/list/department_radio_keys = list(
 				var/obj/O = I
 				hearturfs += O.locs[1]
 				objects |= O
-		
+
 		for(var/mob/M in player_list)
 			if(M.stat == DEAD && M.client && (M.client.prefs.toggles & CHAT_GHOSTEARS))
 				listening |= M
@@ -113,7 +134,7 @@ var/list/department_radio_keys = list(
 
 		for(var/obj/O in objects)
 			spawn(0)
-				O.hear_talk(src, message, verb, speaking)	
+				O.hear_talk(src, message, verb, speaking)
 
 	var/speech_bubble_test = say_test(message)
 	var/image/speech_bubble = image('icons/mob/talk.dmi',src,"h[speech_bubble_test]")

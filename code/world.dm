@@ -1,10 +1,14 @@
+/atom
+	color = "#CCCCCC"
+
 /world
 	mob = /mob/new_player
 	turf = /turf/space
 	area = /area
 	view = "15x15"
-	cache_lifespan = 0	//stops player uploaded stuff from being kept in the rsc past the current session
+	cache_lifespan = 30	//stops player uploaded stuff from being kept in the rsc past the current session
 
+var/global/datum/IRCController/IRCController = new()
 
 
 #define RECOMMENDED_VERSION 501
@@ -40,6 +44,7 @@
 	createPool("fire", /obj/fire)
 	PrecacheObjects()
 	deleteQueue()
+	ircInterface()
 
 	src.update_status()
 
@@ -77,7 +82,7 @@ var/world_topic_spam_protect_time = world.timeofday
 
 /world/Topic(T, addr, master, key)
 	diary << "TOPIC: \"[T]\", from:[addr], master:[master], key:[key][log_end]"
-	
+
 	if (T == "ping")
 		var/x = 1
 		for (var/client/C)
@@ -133,7 +138,7 @@ var/world_topic_spam_protect_time = world.timeofday
 		var/input[] = params2list(T)
 		if(input["key"] != config.comms_password)
 			if(world_topic_spam_protect_ip == addr && abs(world_topic_spam_protect_time - world.time) < 50)
-				
+
 				spawn(50)
 					world_topic_spam_protect_time = world.time
 					return "Bad Key (Throttled)"
@@ -142,9 +147,9 @@ var/world_topic_spam_protect_time = world.timeofday
 			world_topic_spam_protect_ip = addr
 
 			return "Bad Key"
-		
+
 		var/client/C
-		
+
 		for(var/client/K in clients)
 			if(K.ckey == input["adminmsg"])
 				C = K
@@ -161,7 +166,7 @@ var/world_topic_spam_protect_time = world.timeofday
 		C << 'sound/effects/adminhelp.ogg'
 		C << message
 
-		
+
 		for(var/client/A in admins)
 			if(A != C)
 				A << amessage
@@ -188,9 +193,9 @@ var/world_topic_spam_protect_time = world.timeofday
 			return "Bad Key"
 
 		return show_player_info_irc(input["notes"])
-		
 
-		
+
+
 
 
 /world/Reboot(var/reason)
@@ -280,7 +285,7 @@ var/world_topic_spam_protect_time = world.timeofday
 				var/title = "Moderator"
 				if(config.mods_are_mentors) title = "Mentor"
 				var/rights = admin_ranks[title]
-				
+
 				var/ckey = copytext(line, 1, length(line)+1)
 				var/datum/admins/D = new /datum/admins(title, rights, ckey)
 				D.associate(directory[ckey])

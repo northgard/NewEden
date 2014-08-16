@@ -1,0 +1,7 @@
+# depslib dependency file v1.0
+1403137751 source:c:\users\administrator\desktop\bs12\lib\dllsocket\main.cpp
+	<iostream>
+	<cstring>
+	<string>
+	<windows.h>
+

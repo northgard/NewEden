@@ -42,3 +42,22 @@
 						healths.icon_state = "health5"
 			else
 				healths.icon_state = "health6"
+
+
+/mob/living/carbon/alien/humanoid/sentinel/alice
+	icon = 'icons/mob/ExtraXenos.dmi'
+	name = "Alice"
+	caste = "alice"
+	maxHealth = 250
+	health = 250
+	storedPlasma = 250
+	max_plasma = 500
+	icon_state = "alice_s"
+	plasma_rate = 10
+
+/mob/living/carbon/alien/humanoid/sentinel/alice/New()
+	var/datum/reagents/R = new/datum/reagents(250)
+	reagents = R
+	R.my_atom = src
+	verbs.Add(/mob/living/carbon/alien/humanoid/proc/corrosive_acid,/mob/living/carbon/alien/humanoid/proc/neurotoxin)
+	..()

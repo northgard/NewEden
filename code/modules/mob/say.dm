@@ -152,6 +152,9 @@
 //returns the message mode string or null for no message mode.
 /mob/proc/parse_message_mode(var/message)
 	if(length(message) >= 1 && copytext(message,1,2) == ";")
+		src.radiotalk = 1
+		spawn(25)
+			src.radiotalk = 0
 		return "headset"
 
 	if(length(message) >= 2)

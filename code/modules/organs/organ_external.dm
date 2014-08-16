@@ -230,8 +230,8 @@ This function completely restores a damaged organ to perfect condition.
 			if(W.amount == 1 && W.started_healing())
 				W.open_wound(damage)
 				if(prob(25))
-					owner.visible_message("\red The wound on [owner.name]'s [display_name] widens with a nasty ripping voice.",\
-					"\red The wound on your [display_name] widens with a nasty ripping voice.",\
+					owner.visible_message("\red The wound on [owner.name]'s [display_name] widens with a nasty ripping sound.",\
+					"\red The wound on your [display_name] widens with a nasty ripping sound.",\
 					"You hear a nasty ripping noise, as if flesh is being torn apart.")
 				return
 

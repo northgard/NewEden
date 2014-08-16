@@ -1,3 +1,5 @@
+/mob/var/radiotalk = 0
+
 /mob/Del()//This makes sure that mobs with clients/keys are not just deleted from the game.
 	mob_list -= src
 	dead_mob_list -= src
@@ -1008,7 +1010,7 @@ mob/proc/yank_out_object()
 	set name = "Change voice accent"
 	set desc = "Change your accent."
 	if(src && src.client && src.client.prefs)
-		var/new_accent = input(src, "Choose your accent. en-us:American, en:British, en-sc:Scottish", "Character Preference") as null|anything in list("en-us", "en", "en-sc")
+		var/new_accent = input(src, "Choose your accent. Note that mb- voices are gender-specfic", "Character Preference") as null|anything in list("en-us", "en", "en-sc", "mb-de2", "mb-de5", "mb-de6", "mb-ee1", "mb-es1", "mb-es2", "mb-fr1", "mb-sw1", "mb-sw2", "mb-us1", "mb-us2", "mb-us3", "mb-ro1", "mb-tr1", "mb-tr2", "mb-mx1", "mb-mx2", "mb-it3", "mb-it4", "mb-hu1", "mb-nl2")
 		if(new_accent)
 			src.client.prefs.accent = new_accent
 

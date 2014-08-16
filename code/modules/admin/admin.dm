@@ -5,7 +5,14 @@ var/global/floorIsLava = 0
 
 ////////////////////////////////
 /proc/message_admins(var/msg)
+	var/list/irccommand = list()
+	irccommand["command"] = "privmsg"
+	irccommand["nick"] = "#adminlog"
+	irccommand["message"] = "ADMIN LOG: [msg]"
+	IRCController.writeCommand(irccommand)
 	msg = "<span class=\"admin\"><span class=\"prefix\">ADMIN LOG:</span> <span class=\"message\">[msg]</span></span>"
+
+
 	log_adminwarn(msg)
 	for(var/client/C in admins)
 		if(R_ADMIN & C.holder.rights)
@@ -13,6 +20,10 @@ var/global/floorIsLava = 0
 
 /proc/msg_admin_attack(var/text) //Toggleable Attack Messages
 	log_attack(text)
+	var/list/irccommand = list()
+	irccommand["command"] = "privmsg"
+	irccommand["nick"] = "#attacklog"
+	irccommand["message"] = "ATTACK: [text]"
 	var/rendered = "<span class=\"admin\"><span class=\"prefix\">ATTACK:</span> <span class=\"message\">[text]</span></span>"
 	for(var/client/C in admins)
 		if(R_ADMIN & C.holder.rights)
@@ -1007,6 +1018,7 @@ var/global/floorIsLava = 0
 		new chosen(usr.loc)
 
 	log_admin("[key_name(usr)] spawned [chosen] at ([usr.x],[usr.y],[usr.z])")
+	message_admins("[key_name(usr)] spawned [chosen] at ([usr.x],[usr.y],[usr.z])")
 	feedback_add_details("admin_verb","SA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 

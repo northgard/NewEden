@@ -45,7 +45,17 @@
 			src << "<span class='name'>[speaker_name]</span>[alt_name] talks but you cannot hear them."
 	else
 		src << "<span class='game say'><span class='name'>[speaker_name]</span>[alt_name] [track][verb], <span class='message'><span class='[style]'>\"[message]\"</span></span></span>"
-
+		if(src.client.prefs.toggles & SOUND_VOICES)
+			spawn(10)
+				if(speaker.radiotalk == 0 && src.client)
+					if(src.client.prefs)
+						var/name = ""
+						if(!speaker.ckey)
+							name = "\ref[speaker]"
+						else
+							name = speaker.ckey
+						if(fexists("sound/playervoices/[name].ogg"))
+							playsound(src.loc, "sound/playervoices/[name].ogg", 90, 0, 5, 1)
 
 /mob/proc/hear_radio(var/message, var/verb="says", var/datum/language/language=null, var/part_a, var/part_b, var/mob/speaker = null, var/hard_to_hear = 0, var/vname ="")
 
@@ -138,10 +148,25 @@
 	if(sdisabilities & DEAF || ear_deaf)
 		if(prob(20))
 			src << "<span class='warning'>You feel your headset vibrate but can hear nothing from it!</span>"
-	else if(track)
-		src << "[part_a][track][part_b][verb], <span class=\"[style]\">\"[message]\"</span></span></span>"
 	else
-		src << "[part_a][speaker_name][part_b][verb], <span class=\"[style]\">\"[message]\"</span></span></span>"
+		if(track)
+			src << "[part_a][track][part_b][verb], <span class=\"[style]\">\"[message]\"</span></span></span>"
+		else
+			src << "[part_a][speaker_name][part_b][verb], <span class=\"[style]\">\"[message]\"</span></span></span>"
+		var/name2 = ""
+		if(!speaker.ckey)
+			name2 = "\ref[speaker]"
+		else
+			name2 = speaker.ckey
+		if(src.client.prefs.toggles & SOUND_VOICES)
+			spawn(10)
+				if(fexists("sound/playervoices/[name2].ogg"))
+					var/sound_file = file("sound/playervoices/[name2].ogg")
+					var/sound/voice2 = sound(sound_file, wait = 1, channel = 0)
+					voice2.status = SOUND_STREAM
+					if(src.client)
+						if(src.client.prefs)
+							src << voice2
 
 /mob/proc/hear_sleep(var/message)
 	var/heard = ""

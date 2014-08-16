@@ -55,6 +55,9 @@
 	if(copytext(message,1,2) == ";")
 		message_mode = "general"  			// I don't know why but regular radio = fuck you we ain't broadcasting, pAI mode was what was in old say code.
 		message = trim(copytext(message,2))
+		src.radiotalk = 1
+		spawn(25)
+			src.radiotalk = 0
 
 	else if(length(message) >= 2)
 		var/channel_prefix = copytext(message, 1 ,3)

@@ -218,54 +218,10 @@
 
 /datum/species/vox/handle_post_spawn(var/mob/living/carbon/human/H)
 
-	//H.verbs += /mob/living/carbon/human/proc/leap
+	H.verbs += /mob/living/carbon/human/proc/leap
 	..()
 
-/datum/species/vox/armalis/handle_post_spawn(var/mob/living/carbon/human/H)
 
-	//H.verbs += /mob/living/carbon/human/proc/gut
-	..()
-
-/datum/species/vox/armalis
-	name = "Vox Armalis"
-	icobase = 'icons/mob/human_races/r_armalis.dmi'
-	deform = 'icons/mob/human_races/r_armalis.dmi'
-	language = "Vox-pidgin"
-	attack_verb = "slash"
-
-	warning_low_pressure = 50
-	hazard_low_pressure = 0
-
-	cold_level_1 = 80
-	cold_level_2 = 50
-	cold_level_3 = 0
-
-	heat_level_1 = 2000
-	heat_level_2 = 3000
-	heat_level_3 = 4000
-
-	brute_mod = 0.2
-	burn_mod = 0.2
-
-	eyes = "blank_eyes"
-	breath_type = "nitrogen"
-	poison_type = "oxygen"
-
-	flags = NO_SCAN | NO_BLOOD | HAS_TAIL | NO_PAIN | IS_WHITELISTED
-
-	blood_color = "#2299FC"
-	flesh_color = "#808D11"
-
-	tail = "armalis_tail"
-	icon_template = 'icons/mob/human_races/r_armalis.dmi'
-
-	sprite_sheets = list(
-		"suit" = 'icons/mob/species/armalis/suit.dmi',
-		"gloves" = 'icons/mob/species/armalis/gloves.dmi',
-		"feet" = 'icons/mob/species/armalis/feet.dmi',
-		"head" = 'icons/mob/species/armalis/head.dmi',
-		"held" = 'icons/mob/species/armalis/held.dmi'
-		)
 
 /datum/species/vox/create_organs(var/mob/living/carbon/human/H)
 
@@ -362,3 +318,24 @@
 
 	blood_color = "#1F181F"
 	flesh_color = "#575757"
+
+/datum/species/avian
+	name = "Avian"
+	icobase = 'icons/mob/human_races/r_avian.dmi'
+	deform = 'icons/mob/human_races/r_def_avian.dmi'
+	language = "Avian"
+	attack_verb = "scratch"
+	punch_damage = 5
+	darksight = 8
+
+	cold_level_1 = 200 //Default 260
+	cold_level_2 = 140 //Default 200
+	cold_level_3 = 80 //Default 120
+
+	heat_level_1 = 330 //Default 360
+	heat_level_2 = 380 //Default 400
+	heat_level_3 = 800 //Default 1000
+
+	primitive = /mob/living/carbon/monkey
+
+	flags = IS_WHITELISTED

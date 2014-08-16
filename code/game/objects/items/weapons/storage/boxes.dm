@@ -90,6 +90,29 @@
 		new /obj/item/weapon/reagent_containers/syringe( src )
 		new /obj/item/weapon/reagent_containers/syringe( src )
 
+/obj/item/weapon/storage/box/syringes/half
+	name = "box of half-sized syringes"
+	desc = "A box full of half-sized syringes."
+	desc = "A biohazard alert warning is printed on the box"
+	icon_state = "syringe"
+	storage_slots
+	New()
+		..()
+		new /obj/item/weapon/reagent_containers/syringe/half( src )
+		new /obj/item/weapon/reagent_containers/syringe/half( src )
+		new /obj/item/weapon/reagent_containers/syringe/half( src )
+		new /obj/item/weapon/reagent_containers/syringe/half( src )
+		new /obj/item/weapon/reagent_containers/syringe/half( src )
+		new /obj/item/weapon/reagent_containers/syringe/half( src )
+		new /obj/item/weapon/reagent_containers/syringe/half( src )
+		new /obj/item/weapon/reagent_containers/syringe/half( src )
+		new /obj/item/weapon/reagent_containers/syringe/half( src )
+		new /obj/item/weapon/reagent_containers/syringe/half( src )
+		new /obj/item/weapon/reagent_containers/syringe/half( src )
+		new /obj/item/weapon/reagent_containers/syringe/half( src )
+		new /obj/item/weapon/reagent_containers/syringe/half( src )
+		new /obj/item/weapon/reagent_containers/syringe/half( src )
+
 /obj/item/weapon/storage/box/beakers
 	name = "box of beakers"
 	icon_state = "beaker"

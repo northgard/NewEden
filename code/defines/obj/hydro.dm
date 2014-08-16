@@ -353,6 +353,24 @@
 	potency = 20
 	growthstages = 3
 
+/obj/item/seeds/cannabisseed
+	name = "pack of cannabis seeds"
+	desc = ""
+	icon_state = "seed-cannabis"
+	mypath = "/obj/item/seeds/cannabisseed"
+	species = "cannabis"
+	plantname = "Cannabis Plants"
+	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/cannabis"
+	lifespan = 50
+	endurance = 20
+	maturation = 5
+	production = 3
+	yield = 7
+	plant_type = 0
+	oneharvest = 0
+	potency = 10
+	growthstages = 5
+
 /obj/item/seeds/poppyseed
 	name = "pack of poppy seeds"
 	desc = "These seeds grow into poppies."

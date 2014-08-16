@@ -29,8 +29,16 @@
 	set desc = "donation information"
 	set hidden = 1
 
+
 	src << "\blue This server is run entirely by player contributions. We need you, our community, to donate to support this server which many of you spend a lot of time on. Servers aren't free. Donations are made via PayPal. <a href=\"https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=LML8YEFPBT2ZA\">HERE is the donation link.</a> Donations are a minimum of $5 USD. Donators will recieve a custom cosmetic item for their character, or have a good item idea added to the game. Donators will also recieve any VIP benefits which may be added in the future. Please put your key in the donation note so I will know who it was that donated. Thank you for taking the time to read about contributing to the server. <br>  Jaggerestep - Host"
 
+/client/verb/reconnect()
+	set name = "Reconnect to Server"
+	set desc = "reconnect to the server"
+	set hidden = 0
+	set category = "OOC"
+	src << "\blue Reconnecting to the server."
+	src << link("byond://newedenstation.com:1300")
 
 #define RULES_FILE "config/rules.html"
 /client/verb/rules()

@@ -34,10 +34,17 @@
 
 /var/lastspeak = ""
 
-/mob/proc/texttospeech(var/text, var/speed, var/pitch, var/accent, var/voice, var/echo)
+/mob/proc/texttospeech(var/text, var/speed, var/pitch, var/accent, var/voice, var/echo, var/name)
 	text = texttospeechstrip(text)
 	lastspeak = text
-	ext_python("voice.py", "\"[accent]\" \"[voice]\" \"[pitch]\" \"[echo]\" \"[speed]\" \"[text]\" \"[src.ckey]\"")
+	if (!name)
+		if(!src.ckey || src.ckey == "")
+			name = "\ref[src]"
+		else
+			name = src.ckey
+
+	ext_python("voice.py", "\"[accent]\" \"[voice]\" \"[pitch]\" \"[echo]\" \"[speed]\" \"[text]\" \"[name]\" \"[src.type]\"")
+
 
 /mob/proc/halltexttospeech(var/text, var/speed, var/pitch, var/accent, var/voice, var/echo)
 	text = texttospeechstrip(text)

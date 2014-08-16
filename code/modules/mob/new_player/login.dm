@@ -1,3 +1,5 @@
+
+
 /mob/new_player/Login()
 	update_Login_details()	//handles setting lastKnownIP and computer_id for use by the ban systems as well as checking for multikeying
 	if(join_motd)
@@ -16,7 +18,6 @@
 
 	sight |= SEE_TURFS
 	player_list |= src
-
 /*
 	var/list/watch_locations = list()
 	for(var/obj/effect/landmark/landmark in landmarks_list)

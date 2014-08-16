@@ -155,17 +155,13 @@
 	item_state = "bkatana"
 	flags = FPRINT | TABLEPASS | CONDUCT
 	slot_flags = SLOT_BELT | SLOT_BACK
-	force = 65
-	throwforce = 50
+	force = 10
+	throwforce = 5
 	w_class = 3
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
-	suicide_act(mob/user)
-		viewers(user) << "\red <b>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku with a buster sword!</b>"
-		return(BRUTELOSS)
 
-/obj/item/weapon/bkatana/IsShield()
-		return 1
+
 
 /obj/item/weapon/katana/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)

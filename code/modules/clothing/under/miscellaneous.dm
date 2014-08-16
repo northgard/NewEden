@@ -139,6 +139,12 @@
 	icon_state = "cirnofluff"
 	item_color = "cirnofluff"
 
+/obj/item/clothing/under/fluff/blakeuniform
+	name = "Blake's Uniform"
+	desc = "Outfit of Blake"
+	icon_state = "blakefluff"
+	item_color = "blakefluff"
+
 /obj/item/clothing/under/johnny
 	name = "johnny~~ jumpsuit"
 	desc = "Johnny~~"
@@ -408,4 +414,4 @@
 	desc = "A Bushido warrior's robe."
 	icon_state = "brobe"
 	item_state = "brobe"
-	armor = list(melee = 25)
+	item_color = "brobe"

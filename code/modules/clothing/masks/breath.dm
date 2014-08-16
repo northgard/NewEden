@@ -59,7 +59,7 @@
 
 	return ..()
 
-	
+
 /obj/item/clothing/mask/breath/fluff/youmu
 	desc = "A white wig."
 	name = "Youmu's wig"
@@ -74,6 +74,41 @@
 		set src in usr
 
 		usr << "You can't adjust this mask - it's a wig!"
+
+/obj/item/clothing/mask/breath/fluff/blake
+	desc = "A black wig with a bow"
+	name = "Blake's wig"
+	icon_state = "blakewigfluff"
+	item_state = "blakewigfluff"
+	permeability_coefficient = 0.01
+	w_class = 2
+	var/ears = 0
+	flags = FPRINT|TABLEPASS|BLOCKHEADHAIR|MASKINTERNALS|MASKCOVERSMOUTH
+	toggle()
+		set category = "Object"
+		set name = "Adjust mask"
+		set src in usr
+
+		usr << "You can't adjust this mask - it's a wig!"
+	verb/adjust()
+		set category = "Object"
+		set name = "Adjust Bow"
+		set src in usr
+
+		if(usr.canmove && !usr.stat && !usr.restrained())
+			if(!src.ears)
+				src.ears = !src.ears
+				gas_transfer_coefficient = 1 //gas is now escaping to the turf and vice versa
+
+				icon_state = "blakewigfluffears"
+				usr << "You remove your bow from your ears."
+
+			else
+				src.ears = !src.ears
+				gas_transfer_coefficient = 0.10
+				icon_state = "blakewigfluff"
+				usr << "You put your bow back over your ears."
+		usr.update_inv_wear_mask()
 
 /obj/item/clothing/mask/breath/fluff/mamizou
 	desc = "A brown wig with a leaf and ears."

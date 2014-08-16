@@ -96,7 +96,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 							  signal.data["vmask"], signal.data["vmessage"],
 							  signal.data["radio"], signal.data["message"],
 							  signal.data["name"], signal.data["job"],
-							  signal.data["realname"], signal.data["vname"],, 
+							  signal.data["realname"], signal.data["vname"],,
 							  signal.data["compression"], signal.data["level"], signal.frequency,
 							  signal.data["verb"], signal.data["language"]	)
 
@@ -491,19 +491,10 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 
 
 	  	/* --- Process all the mobs that heard a masked voice (understood) --- */
-
 		if (length(heard_masked))
 			for (var/mob/R in heard_masked)
 				R.hear_radio(message,verbage, speaking, part_a, part_b, M, 0, name)
 
-				if(fexists("sound/playervoices/[M.ckey].ogg"))
-					var/sound_file = file("sound/playervoices/[M.ckey].ogg")
-					var/sound/voice2 = sound(sound_file, wait = 1, channel = 0)
-					voice2.status = SOUND_STREAM
-					if(R.client)
-						if(R.client.prefs)
-							if(R.client.prefs.toggles & SOUND_VOICES)
-								R << voice2
 
 		/* --- Process all the mobs that heard the voice normally (understood) --- */
 
@@ -511,14 +502,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 			for (var/mob/R in heard_normal)
 				R.hear_radio(message, verbage, speaking, part_a, part_b, M, 0, realname)
 
-				if(fexists("sound/playervoices/[M.ckey].ogg"))
-					var/sound_file = file("sound/playervoices/[M.ckey].ogg")
-					var/sound/voice2 = sound(sound_file, wait = 1, channel = 0)
-					voice2.status = SOUND_STREAM
-					if(R.client)
-						if(R.client.prefs)
-							if(R.client.prefs.toggles & SOUND_VOICES)
-								R << voice2
+
 
 		/* --- Process all the mobs that heard the voice normally (did not understand) --- */
 
@@ -736,17 +720,22 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 
 		if (length(heard_normal))
 			var/rendered = "[part_a][source][part_b]\"[text]\"[part_c]"
-
+			var/name = ""
+			if(!M.ckey)
+				name = "\ref[M]"
+			else
+				name = M.ckey
 			for (var/mob/R in heard_normal)
 				R.show_message(rendered, 2)
-				if(fexists("sound/playervoices/[M.ckey].ogg"))
-					var/sound_file = file("sound/playervoices/[M.ckey].ogg")
-					var/sound/voice2 = sound(sound_file, wait = 1, channel = 0)
-					voice2.status = SOUND_STREAM
-					if(R.client)
-						if(R.client.prefs)
-							if(R.client.prefs.toggles & SOUND_VOICES)
-								R << voice2
+				spawn(10)
+					if(fexists("sound/playervoices/[name].ogg"))
+						var/sound_file = file("sound/playervoices/[name].ogg")
+						var/sound/voice2 = sound(sound_file, wait = 1, channel = 0)
+						voice2.status = SOUND_STREAM
+						if(R.client)
+							if(R.client.prefs)
+								if(R.client.prefs.toggles & SOUND_VOICES)
+									R << voice2
 
 
 		/* --- Process all the mobs that heard a garbled voice (did not understand) --- */

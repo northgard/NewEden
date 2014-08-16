@@ -1,11 +1,11 @@
 // BEGIN_INTERNALS
 /*
 MAP_ICON_TYPE: 0
-WINDOW: icons\mob\feet.dmi;icons\mob\feet (2).dmi;icons\mob\head.dmi;icons\mob\head (2).dmi;icons\mob\items_lefthand.dmi;icons\mob\items_lefthand (2).dmi;icons\mob\items_righthand (2).dmi;icons\mob\items_righthand.dmi;icons\mob\uniform.dmi;baystation12.dme
-LAST_COMPILE_VERSION: 501.1217
-DIR: code code\datums icons icons\mob 
-FILE: baystation12.dme
-LAST_COMPILE_TIME: 1398563631
+WINDOW: maps\tgstation2-eden-new-1.dmm;icons\mob\human.dmi;icons\mob\uniform.dmi;icons\mob\head.dmi;icons\mob\mask.dmi;code\modules\clothing\under\miscellaneous.dm;code\modules\customitems\item_spawning.dm;code\modules\detectivework\detective_work.dm;code\modules\mob\mob.dm;code\modules\mob\living\carbon\monkey\diona.dm;code\modules\mob\living\simple_animal\borer.dm;code\modules\projectiles\projectile\special.dm;code\WorkInProgress\Sigyn\Softcurity\secure_closet.dm;code\game\mecha\mecha_construction_paths.dm;code\modules\clothing\masks\breath.dm;code\modules\clothing\clothing.dm;icons\obj\clothing\masks.dmi;icons\obj\clothing\uniforms.dmi;icons\mob\alien.dmi;code\modules\mob\living\carbon\alien\humanoid\caste\sentinel.dm;icons\mob\ExtraXenos.dmi;icons\turf\floors.dmi;code\world.dm;code\game\machinery\telecomms\broadcaster.dm;code\game\objects\items\devices\radio\radio.dm;code\modules\client\preferences.dm;code\modules\client\preferences_toggles.dm;code\modules\mob\hear_say.dm;code\modules\mob\living\carbon\human\whisper.dm;code\modules\flufftext\NewHallucination.dm
+LAST_COMPILE_VERSION: 506.1247
+DIR: code code\_onclick\hud code\datums\spells code\defines\obj code\game code\game\gamemodes\epidemic code\game\gamemodes\extended code\game\jobs code\game\jobs\job code\game\machinery code\game\machinery\telecomms code\game\mecha code\game\mecha\equipment code\game\mecha\equipment\tools code\game\objects code\game\objects\items code\game\objects\items\devices code\game\objects\items\devices\radio code\game\objects\items\weapons code\game\objects\items\weapons\implants code\game\objects\items\weapons\storage code\game\turfs code\game\turfs\simulated code\game\turfs\unsimulated code\modules code\modules\admin\verbs code\modules\client code\modules\clothing\masks code\modules\clothing\suits code\modules\clothing\under code\modules\flufftext code\modules\mob code\modules\mob\dead code\modules\mob\dead\observer code\modules\mob\living code\modules\mob\living\carbon code\modules\mob\living\carbon\alien code\modules\mob\living\carbon\alien\humanoid code\modules\mob\living\carbon\alien\humanoid\caste code\modules\mob\living\carbon\human code\modules\mob\living\carbon\monkey code\modules\mob\living\silicon code\modules\mob\living\silicon\robot code\modules\mob\living\simple_animal code\modules\power\singularity code\modules\projectiles code\modules\projectiles\guns code\modules\projectiles\guns\energy code\modules\projectiles\projectile code\modules\reagents\reagent_containers code\modules\virus2 code\TriDimension code\WorkInProgress code\WorkInProgress\Sigyn code\WorkInProgress\Sigyn\Softcurity code\ZAS icons\mob icons\obj\clothing icons\Testing icons\turf maps 
+FILE: code\modules\mob\hear_say.dm
+LAST_COMPILE_TIME: 1408034775
 AUTO_FILE_DIR: ON
 */
 // END_INTERNALS

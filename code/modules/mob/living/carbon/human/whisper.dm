@@ -124,11 +124,12 @@
 
 		for (var/mob/M in heard_a)
 			M.show_message(rendered, 2)
-			if(fexists("sound/playervoices/[src.ckey].ogg"))
-				if(M.client)
-					if(M.client.prefs)
-						if(M.client.prefs.toggles & SOUND_VOICES)
-							playsound(src.loc, "sound/playervoices/[src.ckey].ogg", 70, 1)
+			spawn(10)
+				if(fexists("sound/playervoices/[src.ckey].ogg"))
+					if(M.client)
+						if(M.client.prefs)
+							if(M.client.prefs.toggles & SOUND_VOICES)
+								playsound(src.loc, "sound/playervoices/[src.ckey].ogg", 70, 1)
 
 
 	if (length(heard_b))

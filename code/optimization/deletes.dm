@@ -9,4 +9,4 @@ var/global/list/deletes = list()
 	set name = "Check Deletes"
 	if(!check_rights(R_DEBUG)) return
 	for(var/d in deletes)
-		usr << "[d] deleted [deletes[d]] time(s)"
+		usr << "[d] deletecd [deletes[d]] time(s)"
