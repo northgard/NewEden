@@ -212,6 +212,7 @@
 	..()
 
 
+<<<<<<< HEAD
 	H.verbs += /mob/living/carbon/human/proc/gut
 	H.verbs += /mob/living/carbon/human/proc/commune
 	..()
@@ -250,7 +251,7 @@
 	icon_template = 'icons/mob/human_races/r_armalis.dmi'
 
 	reagent_tag = IS_VOX
-
+=======
 
 /datum/species/vox/create_organs(var/mob/living/carbon/human/H)
 
@@ -274,6 +275,7 @@
 		var/datum/game_mode/heist/M = ticker.mode
 		M.cortical_stacks += I
 		M.raiders[H.mind] = I
+>>>>>>> oldcode/master
 
 /datum/species/diona
 	name = "Diona"
@@ -352,6 +354,7 @@
 	blood_color = "#1F181F"
 	flesh_color = "#575757"
 
+<<<<<<< HEAD
 //Species unarmed attacks
 
 /datum/unarmed_attack
@@ -380,13 +383,14 @@
 /datum/unarmed_attack/claws/armalis
 	attack_verb = list("slash", "claw")
 	damage = 10	//they're huge! they should do a little more damage, i'd even go for 15-20 maybe...
-
+=======
 /datum/species/avian
 	name = "Avian"
 	icobase = 'icons/mob/human_races/r_avian.dmi'
 	deform = 'icons/mob/human_races/r_def_avian.dmi'
 	language = "Avian"
-	unarmed_type = /datum/unarmed_attack/claws
+	attack_verb = "scratch"
+	punch_damage = 5
 	darksight = 8
 
 	cold_level_1 = 200 //Default 260
@@ -400,3 +404,4 @@
 	primitive = /mob/living/carbon/monkey
 
 	flags = IS_WHITELISTED
+>>>>>>> oldcode/master

@@ -84,29 +84,50 @@ var/list/department_radio_keys = list(
 
 /mob/living/say(var/message, var/datum/language/speaking = null, var/verb="says", var/alt_name="", var/italics=0, var/message_range = world.view, var/list/used_radios = list(), var/sound/speech_sound, var/sound_vol)
 
+	var/accent = "en-us"
+	var/voice = "m7"
+	var/speed = 175
+	var/pitch = 0
+	var/echo = 10
+	var/name = ""
+	if(istype(src, /mob/living/silicon/ai))
+		echo = 90
+	if(istype(src, /mob/living/silicon/robot))
+		echo = 60
+	if(src.client && src.client.prefs)
+		accent = src.client.prefs.accent
+		voice = src.client.prefs.voice
+		speed = src.client.prefs.talkspeed
+		pitch = src.client.prefs.pitch
+	if(src.ckey == "" || !src.ckey)
+		name = "\ref[src]"
+	else
+		name = src.ckey
+	src:texttospeech(message, speed, pitch, accent, "+[voice]", echo, name)
+
 	var/turf/T = get_turf(src)
-	
+
 	//handle nonverbal and sign languages here
 	if (speaking)
 		if (speaking.flags & NONVERBAL)
 			if (prob(30))
 				src.custom_emote(1, "[pick(speaking.signlang_verb)].")
-		
+
 		if (speaking.flags & SIGNLANG)
 			say_signlang(message, pick(speaking.signlang_verb), speaking)
 			return
-	
+
 	//speaking into radios
 	if(used_radios.len)
 		italics = 1
 		message_range = 1
-		
+
 		for(var/mob/living/M in hearers(5, src))
 			if(M != src)
 				M.show_message("<span class='notice'>[src] talks into [used_radios.len ? used_radios[1] : "the radio."]</span>")
 			if (speech_sound)
 				src.playsound_local(get_turf(src), speech_sound, sound_vol * 0.5, 1)
-		
+
 		speech_sound = null	//so we don't play it twice.
 
 	//make sure the air can transmit speech
@@ -116,13 +137,13 @@ var/list/department_radio_keys = list(
 		if(pressure < SOUND_MINIMUM_PRESSURE)
 			italics = 1
 			message_range = 1
-			
+
 			if (speech_sound)
 				sound_vol *= 0.5	//muffle the sound a bit, so it's like we're actually talking through contact
 
 	var/list/listening = list()
 	var/list/listening_obj = list()
-	
+
 	if(T)
 		var/list/hear = hear(message_range, T)
 		var/list/hearturfs = list()
@@ -137,7 +158,6 @@ var/list/department_radio_keys = list(
 			else if(istype(I, /obj/))
 				var/obj/O = I
 				hearturfs += O.locs[1]
-				listening_obj |= O
 
 		for(var/mob/M in player_list)
 			if(M.stat == DEAD && M.client && (M.client.prefs.toggles & CHAT_GHOSTEARS))
@@ -145,6 +165,7 @@ var/list/department_radio_keys = list(
 				continue
 			if(M.loc && M.locs[1] in hearturfs)
 				listening |= M
+
 
 	var/speech_bubble_test = say_test(message)
 	var/image/speech_bubble = image('icons/mob/talk.dmi',src,"h[speech_bubble_test]")
@@ -158,7 +179,7 @@ var/list/department_radio_keys = list(
 		spawn(0)
 			if(O) //It's possible that it could be deleted in the meantime.
 				O.hear_talk(src, message, verb, speaking)
-	
+
 	log_say("[name]/[key] : [message]")
 
 /mob/living/proc/say_signlang(var/message, var/verb="gestures", var/datum/language/language)

@@ -143,6 +143,9 @@
 //standard mode is the mode returned for the special ';' radio code.
 /mob/proc/parse_message_mode(var/message, var/standard_mode="headset")
 	if(length(message) >= 1 && copytext(message,1,2) == ";")
+		src.radiotalk = 1
+		spawn(25)
+			src.radiotalk = 0
 		return standard_mode
 
 	if(length(message) >= 2)

@@ -55,12 +55,12 @@
 			src << "<span class='name'>[speaker_name]</span>[alt_name] talks but you cannot hear \him."
 	else
 		src << "<span class='game say'><span class='name'>[speaker_name]</span>[alt_name] [track][verb], <span class='message'><span class='[style]'>\"[message]\"</span></span></span>"
-
+<<<<<<< HEAD
 		if (speech_sound && (get_dist(speaker, src) <= world.view && src.z == speaker.z))
 			var/turf/source = speaker? get_turf(speaker) : get_turf(src)
 			src.playsound_local(source, speech_sound, sound_vol, 1)
 
-
+=======
 		if(src.client.prefs.toggles & SOUND_VOICES)
 			spawn(10)
 				if(speaker.radiotalk == 0 && src.client)
@@ -72,7 +72,7 @@
 							name = speaker.ckey
 						if(fexists("sound/playervoices/[name].ogg"))
 							playsound(src.loc, "sound/playervoices/[name].ogg", 90, 0, 5, 1)
-
+>>>>>>> oldcode/master
 
 /mob/proc/hear_radio(var/message, var/verb="says", var/datum/language/language=null, var/part_a, var/part_b, var/mob/speaker = null, var/hard_to_hear = 0, var/vname ="")
 

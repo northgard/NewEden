@@ -14,9 +14,8 @@
 	throw_speed = 1
 	throw_range = 5
 	w_class = 2.0
-	m_amt = 50000
 	origin_tech = "engineering=5;materials=4"
-	var/matter = 120
+	var/matter2 = 120
 	var/maxmatter = 120
 	var/list/spawnlist = list("/obj/item/weapon/crowbar","/obj/item/device/flashlight","/obj/item/device/multitool","/obj/item/weapon/weldingtool","/obj/item/weapon/screwdriver","/obj/item/weapon/wirecutters","/obj/item/weapon/wrench","/obj/item/clothing/head/welding","/obj/item/stack/sheet/metal","/obj/item/stack/sheet/glass","/obj/item/weapon/reagent_containers/glass/beaker")
 	var/list/emaggedlist = list("/obj/item/weapon/handcuffs","/obj/item/ammo_magazine/a357","/obj/item/ammo_magazine/c45m","/obj/item/ammo_casing/shotgun","/obj/item/ammo_casing/shotgun/dart")
@@ -24,17 +23,17 @@
 	attackby(obj/item/weapon/W, mob/user)
 		..()
 		if(istype(W, /obj/item/weapon/rcd_ammo))
-			if((matter + 40) > maxmatter + 20)
+			if((matter2 + 40) > maxmatter + 20)
 				user << "<span class='notice'>The [src.name] cant hold any more matter-units.</span>"
 				return
 			user.drop_item()
 			del(W)
-			matter += 40
-			if(matter > maxmatter)
-				matter = maxmatter
+			matter2 += 40
+			if(matter2 > maxmatter)
+				matter2 = maxmatter
 			playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
-			user << "<span class='notice'>The [src.name] now holds [matter]/[maxmatter] matter-units.</span>"
-			desc = "A personal fabricator device. It currently holds [matter]/[maxmatter] matter-units."
+			user << "<span class='notice'>The [src.name] now holds [matter2]/[maxmatter] matter-units.</span>"
+			desc = "A personal fabricator device. It currently holds [matter2]/[maxmatter] matter-units."
 			return
 		else if(istype(W, /obj/item/weapon/card/emag) && emagged == 0)
 			emagged = 1
@@ -44,7 +43,7 @@
 
 	attack_self(mob/user)
 		//Create Items
-		if(matter >= 20)
+		if(matter2 >= 20)
 			var/list/matches = list()
 			for(var/o in spawnlist)
 				matches += text2path(o)
@@ -52,7 +51,7 @@
 			if(!chosen)
 				return
 			new chosen(user.loc)
-			matter -= 20
+			matter2 -= 20
 			return
 		else
 			user << "There is not enough matter-units to fabricate anything!"

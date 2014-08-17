@@ -69,9 +69,13 @@
 		else
 			message = trim(copytext(message,3))
 
-	if(message_mode && bot_type == IS_ROBOT && message_mode != "binary" && !R.is_component_functioning("radio"))
-		src << "\red Your radio isn't functional at this time."
-		return
+
+	if(copytext(message,1,2) == ";")
+		message_mode = "general"  			// I don't know why but regular radio = fuck you we ain't broadcasting, pAI mode was what was in old say code.
+		message = trim(copytext(message,2))
+		src.radiotalk = 1
+		spawn(25)
+			src.radiotalk = 0
 
 
 	//parse language key and consume it
