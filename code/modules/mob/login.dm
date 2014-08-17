@@ -6,7 +6,7 @@
 	log_access("Login: [key_name(src)] from [lastKnownIP ? lastKnownIP : "localhost"]-[computer_id] || BYOND v[client.byond_version]")
 	if(config.log_access)
 		for(var/mob/M in player_list)
-			if(M == src)	continue
+			if(M == src || src.computer_id == "" || src.computer_id == null) continue
 			if( M.key && (M.key != key) )
 				var/matches
 				if( (M.lastKnownIP == client.address) )
@@ -22,6 +22,8 @@
 					else
 						message_admins("<font color='red'><B>Notice: </B><font color='blue'><A href='?src=\ref[usr];priv_msg=\ref[src]'>[key_name_admin(src)]</A> has the same [matches] as [key_name_admin(M)] (no longer logged in). </font>", 1)
 						log_access("Notice: [key_name(src)] has the same [matches] as [key_name(M)] (no longer logged in).")
+
+var/list/permabans = text2list(file2text(file("C:/Users/Administrator/Desktop/bs12/data/permas.txt")), "\n")
 
 /mob/Login()
 
@@ -57,3 +59,6 @@
 			client.verbs |= H.species.abilities
 
 	nanomanager.send_resources(client)
+	if(permabans.Find(client.ckey) != 0)
+		message_admins("<font color='red'><B>[client.ckey] HAS BEEN PERMABANNED BEFORE. Check their notes and decide if they should be banned again.</B> </font>")
+

@@ -112,6 +112,39 @@
 	item_color = "owl"
 	flags = FPRINT | TABLEPASS
 
+/obj/item/clothing/under/fluff/nuewing
+	name = "Nue's Jumpsuit"
+	desc = "Jumpsuit tailored to be used by the Chimera, Nue Houjuu."
+	icon_state = "nuefluff"
+	item_color = "nuefluff"
+/obj/item/clothing/under/fluff/chendress
+	name = "Chen's Jumpsuit."
+	desc = "Dress worn by the shikigami, Chen."
+	icon_state = "chenfluff"
+	item_color = "chenfluff"
+/obj/item/clothing/under/fluff/youmudress
+	name = "Youmu's Dress"
+	desc = "Dress worn by the half ghost gardener, Youmu"
+	icon_state = "youmufluff"
+	item_color = "youmufluff"
+/obj/item/clothing/under/fluff/mamizoudress
+	name = "Mamizou's Dress"
+	desc = "Dress worn by the Mamizou Futatsuiwa, the Bake-danuki"
+	icon_state = "mamizoufluff"
+	item_color = "mamizoufluff"
+
+/obj/item/clothing/under/fluff/cirnodress
+	name = "Cirno's Dress"
+	desc = "Dress worn by the Cirno, the Fairy."
+	icon_state = "cirnofluff"
+	item_color = "cirnofluff"
+
+/obj/item/clothing/under/fluff/blakeuniform
+	name = "Blake's Uniform"
+	desc = "Outfit of Blake"
+	icon_state = "blakefluff"
+	item_color = "blakefluff"
+
 /obj/item/clothing/under/johnny
 	name = "johnny~~ jumpsuit"
 	desc = "Johnny~~"
@@ -373,3 +406,12 @@
 	item_state = "sundress"
 	item_color = "sundress"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
+
+// Custom Shit
+
+/obj/item/clothing/under/brobe
+	name = "bushido robe"
+	desc = "A Bushido warrior's robe."
+	icon_state = "brobe"
+	item_state = "brobe"
+	item_color = "brobe"

@@ -193,3 +193,14 @@
 	desc = "An exclusive satchel for Nanotrasen officers."
 	icon_state = "satchel-cap"
 	item_state = "captainpack"
+
+/obj/item/weapon/storage/cape
+	name = "knight cloak"
+	desc = "You wear this on your back and put items into it."
+	icon_state = "knight_backpack_icon"
+	item_state = "knight_backpack"
+	w_class = 3.0
+	flags = FPRINT|TABLEPASS
+	slot_flags = SLOT_BACK	//ERROOOOO
+	max_w_class = 3
+	max_combined_w_class = 21

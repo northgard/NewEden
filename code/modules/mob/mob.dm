@@ -1,3 +1,5 @@
+/mob/var/radiotalk = 0
+
 /mob/Del()//This makes sure that mobs with clients/keys are not just deleted from the game.
 	mob_list -= src
 	dead_mob_list -= src
@@ -1012,3 +1014,40 @@ mob/proc/yank_out_object()
 		if(!pinned.len)
 			anchored = 0
 	return 1
+
+
+/mob/verb/ChangePitch()
+	set category = "Voice"
+	set name = "Change voice pitch"
+	set desc = "Change your pitch."
+	if(src && src.client && src.client.prefs)
+		var/new_pitch = input(src, "Choose your character's pitch:\n(1-99)", "Voice Preference") as num|null
+		if(new_pitch)
+			src.client.prefs.pitch = max(min( round(text2num(new_pitch)), 99),1)
+
+/mob/verb/ChangeSpeed()
+	set category = "Voice"
+	set name = "Change voice talking speed"
+	set desc = "Change your talking speed."
+	if(src && src.client && src.client.prefs)
+		var/new_talkspeed = input(src, "Choose your character's voice talk speed:\n(140-240) Default is 175.", "Character Preference") as num|null
+		if(new_talkspeed)
+			src.client.prefs.talkspeed = max(min( round(text2num(new_talkspeed)), 240),140)
+
+/mob/verb/ChangeAccent()
+	set category = "Voice"
+	set name = "Change voice accent"
+	set desc = "Change your accent."
+	if(src && src.client && src.client.prefs)
+		var/new_accent = input(src, "Choose your accent. Note that mb- voices are gender-specfic", "Character Preference") as null|anything in list("en-us", "en", "en-sc", "mb-de2", "mb-de5", "mb-de6", "mb-ee1", "mb-es1", "mb-es2", "mb-fr1", "mb-sw1", "mb-sw2", "mb-us1", "mb-us2", "mb-us3", "mb-ro1", "mb-tr1", "mb-tr2", "mb-mx1", "mb-mx2", "mb-it3", "mb-it4", "mb-hu1", "mb-nl2")
+		if(new_accent)
+			src.client.prefs.accent = new_accent
+
+/mob/verb/ChangeVoice()
+	set category = "Voice"
+	set name = "Change voice"
+	set desc = "Change your voice."
+	if(src && src.client && src.client.prefs)
+		var/new_voice = input(src, "Choose your voice. f:Female, m:Male", "Character Preference") as null|anything in list("f1","m1","f2","m2","f3","m3","f4","m4","f5","m5","m6","m7")
+		if(new_voice)
+			src.client.prefs.voice = new_voice

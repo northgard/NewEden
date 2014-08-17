@@ -13,6 +13,7 @@ var/list/ai_list = list()
 
 
 /mob/living/silicon/ai
+	radiotalk = 1
 	name = "AI"
 	icon = 'icons/mob/AI.dmi'//
 	icon_state = "ai"

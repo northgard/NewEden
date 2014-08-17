@@ -4,6 +4,18 @@
 #define SYRINGE_DRAW 0
 #define SYRINGE_INJECT 1
 #define SYRINGE_BROKEN 2
+/obj/item/weapon/reagent_containers/syringe/half
+	name = "half-sized syringe"
+	desc = "A syringe that holds half of what a normal one does"
+	amount_per_transfer_from_this = 7
+	volume = 7
+	possible_transfer_amounts = list(7)
+
+/obj/item/weapon/reagent_containers/syringe/half/New()
+	..()
+	var/matrix/M = matrix()
+	M.Scale(0.6,0.6)
+	src.transform = M
 
 /obj/item/weapon/reagent_containers/syringe
 	name = "syringe"
@@ -403,6 +415,32 @@
 	New()
 		..()
 		reagents.add_reagent("inaprovaline", 15)
+		mode = SYRINGE_INJECT
+		update_icon()
+
+/obj/item/weapon/reagent_containers/syringe/slimetoxin
+	name = "Syringe (slimeperson)"
+	desc = "Contains mutation toxin"
+	New()
+		..()
+		reagents.add_reagent("mutationtoxin", 1)
+		mode = SYRINGE_INJECT
+		update_icon()
+
+/obj/item/weapon/reagent_containers/syringe/voxtoxin
+	name = "Syringe (vox)"
+	desc = "Contains voxtoxin"
+	New()
+		..()
+		reagents.add_reagent("vmutationtoxin", 1)
+		mode = SYRINGE_INJECT
+		update_icon()
+/obj/item/weapon/reagent_containers/syringe/xenotoxin
+	name = "Syringe (alien sentinel)"
+	desc = "Contains xenotoxin"
+	New()
+		..()
+		reagents.add_reagent("xmutationtoxin", 1)
 		mode = SYRINGE_INJECT
 		update_icon()
 

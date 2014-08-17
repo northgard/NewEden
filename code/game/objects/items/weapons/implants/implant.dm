@@ -186,11 +186,11 @@ Implant Specifics:<BR>"}
 					explosion(get_turf(T), -1, 0, 1, 6)
 					T.gib()
 				if (elevel == "Full Explosion")
-					explosion(get_turf(T), 0, 1, 3, 6)
+					explosion(get_turf(T), 1, 2, 4, 8)
 					T.gib()
 
 			else
-				explosion(get_turf(imp_in), 0, 1, 3, 6)
+				explosion(get_turf(imp_in), 1, 2, 4, 8)
 
 		if(need_gib)
 			imp_in.gib()

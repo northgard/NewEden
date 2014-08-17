@@ -1148,7 +1148,7 @@ window "chemdispenser_reagents"
 window "mainwindow"
 	elem "mainwindow"
 		type = MAIN
-		pos = 281,0
+		pos = 282,0
 		size = 640x440
 		anchor1 = none
 		anchor2 = none
@@ -1185,6 +1185,34 @@ window "mainwindow"
 		macro = "macro"
 		menu = "menu"
 		on-close = ""
+	elem "donate"
+		type = BUTTON
+		pos = 472,420
+		size = 48x20
+		anchor1 = 100,100
+		anchor2 = none
+		font-family = ""
+		font-size = 0
+		font-style = ""
+		text-color = #000000
+		background-color = none
+		is-visible = true
+		is-disabled = false
+		is-transparent = false
+		is-default = false
+		border = none
+		drop-zone = false
+		right-click = false
+		saved-params = "is-checked"
+		on-size = ""
+		text = "Donate"
+		image = ""
+		command = "donate"
+		is-flat = false
+		stretch = false
+		is-checked = false
+		group = ""
+		button-type = pushbox
 	elem "hotkey_toggle"
 		type = BUTTON
 		pos = 560,420
@@ -1242,7 +1270,7 @@ window "mainwindow"
 	elem "input"
 		type = INPUT
 		pos = 3,420
-		size = 517x20
+		size = 469x20
 		anchor1 = 0,100
 		anchor2 = 100,100
 		font-family = ""
@@ -1467,6 +1495,34 @@ window "rpane"
 		macro = ""
 		menu = ""
 		on-close = ""
+	elem "button6"
+		type = BUTTON
+		pos = 152,0
+		size = 60x16
+		anchor1 = none
+		anchor2 = none
+		font-family = ""
+		font-size = 0
+		font-style = ""
+		text-color = #000000
+		background-color = none
+		is-visible = true
+		is-disabled = false
+		is-transparent = false
+		is-default = false
+		border = none
+		drop-zone = false
+		right-click = false
+		saved-params = "is-checked"
+		on-size = ""
+		text = "Wiki"
+		image = ""
+		command = "wiki"
+		is-flat = false
+		stretch = false
+		is-checked = false
+		group = "rpanemode"
+		button-type = pushbutton
 	elem "rpanewindow"
 		type = CHILD
 		pos = 0,0

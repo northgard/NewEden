@@ -127,6 +127,17 @@ steam.start() -- spawns the effect
 	anchored = 1.0
 	mouse_opacity = 0
 
+/obj/effect/effect/sparks/unpooled()
+	playsound(src.loc, "sparks", 100, 1)
+	var/turf/T = src.loc
+	if (istype(T, /turf))
+		T.hotspot_expose(1000,100)
+	spawn (100)
+		pool("spark", src)
+
+/obj/effect/effect/sparks/proc/init(newLoc)
+	loc = newLoc
+
 /obj/effect/effect/sparks/New()
 	..()
 	playsound(src.loc, "sparks", 100, 1)
@@ -172,7 +183,8 @@ steam.start() -- spawns the effect
 			spawn(0)
 				if(holder)
 					src.location = get_turf(holder)
-				var/obj/effect/effect/sparks/sparks = new /obj/effect/effect/sparks(src.location)
+				var/obj/effect/effect/sparks/sparks = unpool("spark", /obj/effect/effect/sparks)
+				sparks.init(src.location)
 				src.total_sparks++
 				var/direction
 				if(src.cardinals)
@@ -184,7 +196,7 @@ steam.start() -- spawns the effect
 					step(sparks,direction)
 				spawn(20)
 					if(sparks)
-						sparks.delete()
+						pool("spark", sparks)
 					src.total_sparks--
 
 
@@ -619,7 +631,7 @@ steam.start() -- spawns the effect
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "metalfoam"
 	density = 1
-	opacity = 1 	// changed in New()
+	opacity = 1	// changed in New()
 	anchored = 1
 	name = "foamed metal"
 	desc = "A lightweight foamed metal wall."
@@ -706,7 +718,7 @@ steam.start() -- spawns the effect
 		return 1
 
 /datum/effect/effect/system/reagents_explosion
-	var/amount 						// TNT equivalent
+	var/amount						// TNT equivalent
 	var/flashing = 0			// does explosion creates flash effect?
 	var/flashing_factor = 0		// factor of how powerful the flash effect relatively to the explosion
 

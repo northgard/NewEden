@@ -79,7 +79,7 @@ var/diary = null
 var/diaryofmeanpeople = null
 var/href_logfile = null
 var/station_name = "NSS Exodus"
-var/game_version = "Baystation12"
+var/game_version = "Eden Station"
 var/changelog_hash = ""
 var/game_year = (text2num(time2text(world.realtime, "YYYY")) + 544)
 

@@ -3,7 +3,11 @@
 	set name = "Asay" //Gave this shit a shorter name so you only have to time out "asay" rather than "admin say" to use it --NeoFite
 	set hidden = 1
 	if(!check_rights(R_ADMIN))	return
-
+	var/list/irccommand = list()
+	irccommand["command"] = "privmsg"
+	irccommand["nick"] = "#admin"
+	irccommand["message"] = "ASAY: [key_name(src)] : [msg]"
+	IRCController.writeCommand(irccommand)
 	msg = copytext(sanitize(msg), 1, MAX_MESSAGE_LEN)
 	if(!msg)	return
 
@@ -23,7 +27,11 @@
 	set hidden = 1
 
 	if(!check_rights(R_ADMIN|R_MOD|R_MENTOR))	return
-
+	var/list/irccommand = list()
+	irccommand["command"] = "privmsg"
+	irccommand["nick"] = "#admin"
+	irccommand["message"] = "MSAY: [key_name(src)] : [msg]"
+	IRCController.writeCommand(irccommand)
 	msg = copytext(sanitize(msg), 1, MAX_MESSAGE_LEN)
 	log_admin("MOD: [key_name(src)] : [msg]")
 

@@ -241,6 +241,13 @@ datum
 			required_reagents = list("inaprovaline" = 1, "anti_toxin" = 1)
 			result_amount = 2
 
+		quadcordrazine
+			name = "Quadcordrazine"
+			id = "quadcordrazine"
+			result = "quadcordrazine"
+			required_reagents = list("inaprovaline" = 1, "tricordrazine" = 1, "mercury" = 1)
+			result_amount = 1
+
 		alkysine
 			name = "Alkysine"
 			id = "alkysine"

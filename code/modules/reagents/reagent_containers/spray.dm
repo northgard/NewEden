@@ -186,6 +186,19 @@
 	origin_tech = "combat=3;materials=3;engineering=3"
 
 
+/obj/item/weapon/reagent_containers/spray/chemsprayer/pip
+	name = "old certified chem sprayer"
+	desc = "An older model of the chem sprayer, it still works, though. Fully certified"
+	volume = 300
+	color = "#a64f4f"
+
+/obj/item/weapon/reagent_containers/spray/chemsprayer/pip/New()
+	..()
+	var/matrix/M = matrix()
+	M.Scale(0.8,0.8)
+	src.transform = M
+
+
 //this is a big copypasta clusterfuck, but it's still better than it used to be!
 /obj/item/weapon/reagent_containers/spray/chemsprayer/Spray_at(atom/A as mob|obj)
 	var/Sprays[3]

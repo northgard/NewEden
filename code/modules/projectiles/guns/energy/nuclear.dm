@@ -36,7 +36,17 @@
 			user.update_inv_r_hand()
 
 
+/obj/item/weapon/gun/energy/gun/future
+	name = "FNC-483"
+	desc = "A extremely lethal hybrid of human and alien-based technology packed inside a single gun"
+	icon_state = "future"
+	item_state = null	//so the human update icon uses the icon_state instead.
+	fire_sound = 'sound/weapons/laser3.ogg'
 
+	charge_cost = 500 //How much energy is needed to fire.
+	projectile_type = "/obj/item/projectile/beam/sniper"
+	origin_tech = "combat=3;magnets=2"
+	modifystate = "future"
 
 /obj/item/weapon/gun/energy/gun/nuclear
 	name = "Advanced Energy Gun"
