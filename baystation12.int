@@ -1,11 +1,11 @@
 // BEGIN_INTERNALS
 /*
 MAP_ICON_TYPE: 0
-WINDOW: maps\overmap\examples.dm;code\optimization\precache.dm;code\game\machinery\telecomms\broadcaster.dm;code\modules\admin\verbs\adminhelp.dm;code\modules\admin\verbs\adminpm.dm;code\modules\admin\verbs\playsound.dm;code\modules\client\preferences.dm;code\modules\client\preferences_toggles.dm;code\modules\power\apc.dm;code\modules\virus2\antibodies.dm;code\setup.dm;code\modules\mob\living\carbon\species.dm;code\modules\mob\living\carbon\human\whisper.dm;code\modules\mob\living\say.dm;code\game\objects\items\weapons\RCD.dm;code\modules\customitems\item_spawning.dm
+WINDOW: maps\overmap\examples.dm;code\optimization\precache.dm;code\game\machinery\telecomms\broadcaster.dm;code\modules\admin\verbs\adminhelp.dm;code\modules\admin\verbs\adminpm.dm;code\modules\admin\verbs\playsound.dm;code\modules\client\preferences.dm;code\modules\mob\living\carbon\human\whisper.dm;code\eden\pictaker.dm;code\controllers\emergency_shuttle_controller.dm;code\eden\scriptcontroller.dm;code\game\socket_talk.dm;code\eden\notifier.dm;code\game\sound.dm;code\game\area\Space Station 13 areas.dm;code\game\gamemodes\gameticker.dm;maps\tgstation2.dmm;maps\tgstation2-eden-new-5.dmm;code\game\dna\dna_modifier.dm;code\game\dna\dna.dm;code\game\objects\items\weapons\dna_injector.dm;code\modules\power\cable.dm;code\controllers\shuttle_controller.dm;code\modules\shuttles\shuttle_console.dm;code\modules\shuttles\shuttle_emergency.dm
 LAST_COMPILE_VERSION: 506.1247
-DIR: code code\eden code\game code\game\machinery code\game\machinery\telecomms code\game\objects code\game\objects\items code\game\objects\items\weapons code\modules code\modules\admin code\modules\admin\verbs code\modules\client code\modules\customitems code\modules\mob code\modules\mob\living code\modules\mob\living\carbon code\modules\mob\living\carbon\human code\modules\power code\modules\virus2 code\optimization maps maps\overmap 
-FILE: code\modules\mob\living\carbon\human\whisper.dm
-LAST_COMPILE_TIME: 1408235135
+DIR: code code\controllers code\game code\game\area code\game\dna code\game\gamemodes code\game\machinery code\game\machinery\telecomms code\game\objects code\game\objects\items code\game\objects\items\weapons code\modules code\modules\admin code\modules\admin\verbs code\modules\client code\modules\customitems code\modules\mob code\modules\mob\living code\modules\mob\living\carbon code\modules\mob\living\carbon\human code\modules\power code\modules\shuttles maps maps\overmap sound sound\AI sound\voice sound\voice\Serithi tools\AddToChangelog 
+FILE: code\modules\shuttles\shuttle_emergency.dm
+LAST_COMPILE_TIME: 1408302500
 AUTO_FILE_DIR: OFF
 */
 // END_INTERNALS

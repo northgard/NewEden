@@ -6,7 +6,7 @@
 	if (istype(in_use, /obj/machinery/computer/shuttle_control/emergency))
 		var/obj/machinery/computer/shuttle_control/emergency/C = in_use
 		C.reset_authorization()
-	
+
 	emergency_shuttle.shuttle_arrived()
 
 /datum/shuttle/ferry/emergency/long_jump(var/area/departing, var/area/destination, var/area/interim, var/travel_time, var/direction)
@@ -33,16 +33,12 @@
 	..(origin, destination)
 
 /datum/shuttle/ferry/emergency/can_launch(var/user)
-	if (istype(user, /obj/machinery/computer/shuttle_control/emergency))
-		var/obj/machinery/computer/shuttle_control/emergency/C = user
-		if (!C.has_authorization())
-			return 0
-	return ..()
+	return 1
 
 /datum/shuttle/ferry/emergency/can_force(var/user)
 	if (istype(user, /obj/machinery/computer/shuttle_control/emergency))
 		var/obj/machinery/computer/shuttle_control/emergency/C = user
-		
+
 		//initiating or cancelling a launch ALWAYS requires authorization, but if we are already set to launch anyways than forcing does not.
 		//this is so that people can force launch if the docking controller cannot safely undock without needing X heads to swipe.
 		if (process_state != WAIT_LAUNCH && !C.has_authorization())
@@ -226,7 +222,7 @@
 	if(href_list["removeid"])
 		var/dna_hash = href_list["removeid"]
 		authorized -= dna_hash
-	
+
 	if(!emagged && href_list["scanid"])
 		//They selected an empty entry. Try to scan their id.
 		if (ishuman(usr))

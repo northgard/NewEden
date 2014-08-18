@@ -8,14 +8,16 @@
 		src.enabled = 1
 
 		if(enabled)
-			call("DLLSocket.so","establish_connection")("127.0.0.1","8019")
+			call("DLLSocket.so","establish_connection")("127.0.0.1","12222")
 
 	proc
 		send_raw(message)
 			if(enabled)
+				call("DLLSocket.so","establish_connection")("127.0.0.1","12222")
 				return call("DLLSocket.so","send_message")(message)
 		receive_raw()
 			if(enabled)
+				call("DLLSocket.so","establish_connection")("127.0.0.1","12222")
 				return call("DLLSocket.so","recv_message")()
 		send_log(var/log, var/message)
 			return send_raw("type=log&log=[log]&message=[message]")
@@ -23,4 +25,4 @@
 			return send_raw("type=keepalive")
 
 
-var/global/datum/socket_talk/socket_talk
+var/global/datum/socket_talk/socket_talk = new()
