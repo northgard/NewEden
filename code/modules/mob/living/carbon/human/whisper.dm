@@ -136,10 +136,7 @@
 		M.hear_say(message, verb, speaking, alt_name, italics, src)
 		spawn(10)
 			if(fexists("sound/playervoices/[src.ckey].ogg"))
-				if(M.client)
-					if(M.client.prefs)
-						if(M.client.prefs.toggles & SOUND_VOICES)
-							playsound(src.loc, "sound/playervoices/[src.ckey].ogg", 70, 1)
+				M.playsound_local(src.loc, "sound/playervoices/[src.ckey].ogg", 70)
 
 
 	if (eavesdropping.len)

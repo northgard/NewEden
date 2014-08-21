@@ -158,15 +158,12 @@ turf/simulated/hotspot_expose(exposed_temperature, exposed_volume, soh)
 	dir = pick(cardinal)
 	SetLuminosity(3)
 	firelevel = fl
-	air_master.active_hotspots.Add(src)
-
 
 /obj/fire/Del()
 	if (istype(loc, /turf/simulated))
 		SetLuminosity(0)
 
 		loc = null
-	air_master.active_hotspots.Remove(src)
 
 	..()
 
@@ -174,7 +171,6 @@ turf/simulated/hotspot_expose(exposed_temperature, exposed_volume, soh)
 	if (istype(loc, /turf/simulated))
 		SetLuminosity(0)
 		loc = null
-	air_master.active_hotspots.Remove(src)
 
 
 

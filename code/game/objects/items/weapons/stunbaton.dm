@@ -124,17 +124,9 @@
 		H.visible_message("<span class='warning'>[H] has been prodded with [src] by [user]. Luckily it was off.</span>")
 		return
 
-	var/stunroll = (rand(1,100))
-
 	if(status)
 		user.lastattacked = H
 		H.lastattacker = user
-		if(user == H) // Attacking yourself can't miss
-			stunroll = 100
-		if(stunroll < 40)
-			H.visible_message("\red <B>[user] misses [H] with \the [src]!")
-			msg_admin_attack("[key_name(user)] attempted to stun [key_name(H)] with the [src].")
-			return
 		H.Stun(stunforce)
 		H.Weaken(stunforce)
 		H.apply_effect(STUTTER, stunforce)

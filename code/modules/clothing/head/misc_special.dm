@@ -173,3 +173,11 @@
 		var/icon/earbit2 = new/icon("icon" = 'icons/mob/head.dmi', "icon_state" = "kittyinner2")
 		mob.Blend(earbit, ICON_OVERLAY)
 		mob2.Blend(earbit2, ICON_OVERLAY)
+
+/obj/item/clothing/head/sombrero
+	name = "certified sombrero"
+	desc = "Don't worry, the wearer is most likely certified."
+	icon_state = "sombrero"
+	item_state = "sombrero"
+	flags = FPRINT | TABLEPASS
+	siemens_coefficient = 2.0

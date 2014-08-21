@@ -365,6 +365,19 @@
 	w_class = 3
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced")
 
+
+/obj/item/toy/bob_legs
+	name = "Bob Dolf's Legs"
+	desc = "Taken forcefully from Bob."
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "bob_legs"
+	item_state = "bob_legs"
+	flags = FPRINT | TABLEPASS | CONDUCT
+	force = 5
+	throwforce = 5
+	w_class = 3
+	attack_verb = list("bashed", "smacked", "whacked")
+
 /*
  * Crayons
  */

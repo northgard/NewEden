@@ -145,6 +145,12 @@
 	icon_state = "blakefluff"
 	item_color = "blakefluff"
 
+/obj/item/clothing/under/fluff/shrek
+	name = "Shrek's Tunic"
+	desc = "It's Shrek!"
+	icon_state = "shrek"
+	item_color = "shrek"
+
 /obj/item/clothing/under/johnny
 	name = "johnny~~ jumpsuit"
 	desc = "Johnny~~"

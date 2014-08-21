@@ -40,8 +40,8 @@ var/global/datum/emergency_shuttle_controller/emergency_shuttle
 	if (!shuttle.location)	//at station
 		if (autopilot)
 			set_launch_countdown(SHUTTLE_LEAVETIME)	//get ready to return
-			if (socket_talk)
-				socket_talk.send_raw("DOCKED")
+			if (global.socket_talk)
+				global.socket_talk.send_raw("DOCKED")
 			if (evac)
 				captain_announce("The Emergency Shuttle has docked with the station. You have approximately [round(estimate_launch_time()/60,1)] minutes to board the Emergency Shuttle.")
 				world << sound('sound/AI/shuttledock.ogg')

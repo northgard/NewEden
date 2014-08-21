@@ -38,7 +38,7 @@
 /mob/proc/ClickOn( var/atom/A, var/params )
 	if(world.time <= next_click)
 		return
-	next_click = world.time + 1
+	next_click = world.time + 0.5
 
 	if(client.buildmode)
 		build_click(src, client.buildmode, params, A)

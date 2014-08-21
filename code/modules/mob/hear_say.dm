@@ -14,12 +14,12 @@
 		return
 
 	var/style = "body"
-	
+
 	//non-verbal languages are garbled if you can't see the speaker. Yes, this includes if they are inside a closet.
 	if (language && (language.flags & NONVERBAL))
 		if (!speaker || (src.sdisabilities & BLIND || src.blinded) || !(speaker in view(src)))
 			message = stars(message)
-	
+
 	if(!say_understands(speaker,language))
 		if(istype(speaker,/mob/living/simple_animal))
 			var/mob/living/simple_animal/S = speaker
@@ -71,7 +71,7 @@
 						else
 							name = speaker.ckey
 						if(fexists("sound/playervoices/[name].ogg"))
-							playsound(src.loc, "sound/playervoices/[name].ogg", 90, 0, 5, 1)
+							src.playsound_local(speaker.loc, "sound/playervoices/[name].ogg", 90)
 
 
 /mob/proc/hear_radio(var/message, var/verb="says", var/datum/language/language=null, var/part_a, var/part_b, var/mob/speaker = null, var/hard_to_hear = 0, var/vname ="")
@@ -91,7 +91,7 @@
 	if (language && (language.flags & NONVERBAL))
 		if (!speaker || (src.sdisabilities & BLIND || src.blinded) || !(speaker in view(src)))
 			message = stars(message)
-	
+
 	if(!say_understands(speaker,language))
 		if(istype(speaker,/mob/living/simple_animal))
 			var/mob/living/simple_animal/S = speaker
@@ -193,7 +193,7 @@
 /mob/proc/hear_signlang(var/message, var/verb = "gestures", var/datum/language/language, var/mob/speaker = null)
 	if(!client)
 		return
-	
+
 	if(say_understands(speaker, language))
 		message = "<B>[src]</B> [verb], \"[message]\""
 	else

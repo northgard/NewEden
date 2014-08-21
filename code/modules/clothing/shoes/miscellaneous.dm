@@ -141,3 +141,21 @@
 	desc = "Japanese sandals."
 	icon_state = "bsandals"
 	item_state = "bsandals"
+
+
+
+/obj/item/clothing/shoes/usain
+	name = "usain boots"
+	desc = "FAST"
+	icon_state = "jackboots"
+	item_state = "jackboots"
+	item_color = "hosred"
+	color = "#FF0000"
+	slowdown = -3
+
+/obj/item/clothing/shoes/usain/equipped(var/mob/M)
+	M.color = "#010101"
+	M << "\red You suddenly feel fast... and \black BLACK"
+/obj/item/clothing/shoes/usain/dropped(var/mob/M)
+	M.color = "#CCCCCC"
+	M << "\red You suddenly feel slower again... and much less \black BLACK"

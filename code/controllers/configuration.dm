@@ -421,9 +421,6 @@
 				if("antag_hud_restricted")
 					config.antag_hud_restricted = 1
 
-				if("socket_talk")
-					socket_talk = text2num(value)
-
 				if("tickcomp")
 					Tickcomp = 1
 

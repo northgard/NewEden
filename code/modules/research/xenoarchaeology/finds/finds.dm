@@ -88,7 +88,7 @@
 	if(new_item_type)
 		find_type = new_item_type
 	else
-		find_type = rand(1,34)	//update this when you add new find types
+		find_type = rand(1,41)	//update this when you add new find types
 
 	var/item_type = "object"
 	icon_state = "unknown[rand(1,4)]"
@@ -299,7 +299,8 @@
 			var/list/possible_spawns = list(/obj/item/clothing/head/culthood,
 			/obj/item/clothing/head/magus,
 			/obj/item/clothing/head/culthood/alt,
-			/obj/item/clothing/head/helmet/space/cult)
+			/obj/item/clothing/head/helmet/space/cult,
+			/obj/item/clothing/shoes/usain)
 
 			var/new_type = pick(possible_spawns)
 			new_item = new new_type(src.loc)
@@ -401,7 +402,7 @@
 			//completely unknown alien device
 			if(prob(50))
 				apply_image_decorations = 0
-		if(29)
+		if(29,40,41)
 			//fossil bone/skull
 			//new_item = new /obj/item/weapon/fossil/base(src.loc)
 
@@ -415,7 +416,7 @@
 			additional_desc = "A fossilised part of an alien, long dead."
 			apply_image_decorations = 0
 			apply_material_decorations = 0
-		if(30)
+		if(30,36,37)
 			//fossil shell
 			new_item = new /obj/item/weapon/fossil/shell(src.loc)
 			apply_prefix = 0
@@ -424,7 +425,7 @@
 			apply_material_decorations = 0
 			if(prob(10))
 				apply_image_decorations = 1
-		if(31)
+		if(31,38,39)
 			//fossil plant
 			new_item = new /obj/item/weapon/fossil/plant(src.loc)
 			item_type = new_item.name

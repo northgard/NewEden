@@ -158,6 +158,7 @@ var/list/department_radio_keys = list(
 			else if(istype(I, /obj/))
 				var/obj/O = I
 				hearturfs += O.locs[1]
+				listening_obj += O
 
 		for(var/mob/M in player_list)
 			if(M.stat == DEAD && M.client && (M.client.prefs.toggles & CHAT_GHOSTEARS))

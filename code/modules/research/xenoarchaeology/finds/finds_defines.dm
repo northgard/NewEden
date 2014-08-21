@@ -34,7 +34,8 @@
 #define ARCHAEO_REMAINS_ROBOT 33
 #define ARCHAEO_REMAINS_XENO 34
 #define ARCHAEO_GASMASK 35
-#define MAX_ARCHAEO 35
+#define ARCHAEO_USAIN 36
+#define MAX_ARCHAEO 36
 //eggs
 //droppings
 //footprints
@@ -106,6 +107,8 @@
 			return "iron"
 		if(ARCHAEO_GUN)
 			return "iron"
+		if(ARCHAEO_USAIN)
+			return "potassium"
 		if(ARCHAEO_UNKNOWN)
 			return "mercury"
 		if(ARCHAEO_FOSSIL)
@@ -181,6 +184,7 @@
 			find_type = pick(\
 			200;ARCHAEO_CULTROBES,\
 			200;ARCHAEO_STATUETTE,\
+			200;ARCHAEO_USAIN,\
 			100;ARCHAEO_URN,\
 			100;ARCHAEO_BOWL,\
 			100;ARCHAEO_KNIFE,\
@@ -203,6 +207,7 @@
 			100;ARCHAEO_KNIFE,\
 			75;ARCHAEO_LASER,\
 			75;ARCHAEO_KATANA,\
+			75;ARCHAEO_USAIN,\
 			75;ARCHAEO_CLAYMORE,\
 			50;ARCHAEO_UNKNOWN,\
 			50;ARCHAEO_CULTROBES,\
@@ -271,6 +276,7 @@ var/list/finds_as_strings = list( \
 #undef ARCHAEO_REMAINS_ROBOT
 #undef ARCHAEO_REMAINS_XENO
 #undef ARCHAEO_GASMASK
+#undef ARCHAEO_USAIN
 #undef MAX_ARCHAEO
 
 #undef DIGSITE_GARDEN

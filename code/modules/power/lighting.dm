@@ -356,7 +356,10 @@
 				switchcount = L.switchcount
 				rigged = L.rigged
 				brightness = L.brightness
-				l_color = L.color
+				if(L.color == "#CCCCCC")
+					l_color = "#FFFFFF"
+				else
+					l_color = L.color
 				on = has_power()
 				update()
 

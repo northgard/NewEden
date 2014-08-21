@@ -32,10 +32,10 @@ datum/genesequence
 	var/list/accepted_fossil_types = list(/obj/item/weapon/fossil/plant)
 
 
-/obj/machinery/computer/reconstitutor/initialize()
-	if(!undiscovered_genesequences)
-		undiscovered_genesequences = master_controller.all_plant_genesequences.Copy()
+/obj/machinery/computer/reconstitutor/New()
 	..()
+	if(!undiscovered_genesequences || !undiscovered_genesequences.len && !istype(src, /obj/machinery/computer/reconstitutor/animal))
+		undiscovered_genesequences = master_controller.all_plant_genesequences.Copy()
 
 /obj/machinery/computer/reconstitutor/animal
 	name = "Fauna reconstitution console"
@@ -43,9 +43,11 @@ datum/genesequence
 	pod1 = null
 	circuit = "/obj/item/weapon/circuitboard/reconstitutor/animal"
 
-/obj/machinery/computer/reconstitutor/animal/initialize()
-	undiscovered_genesequences = master_controller.all_animal_genesequences.Copy()
+/obj/machinery/computer/reconstitutor/animal/New()
 	..()
+	if(!undiscovered_genesequences || !undiscovered_genesequences.len)
+		undiscovered_genesequences = master_controller.all_animal_genesequences.Copy()
+
 
 /obj/machinery/computer/reconstitutor/attackby(obj/item/W, mob/user)
 	if(istype(W,/obj/item/weapon/fossil))
@@ -264,16 +266,18 @@ datum/genesequence
 		undiscovered_genomes -= newly_discovered_genome
 		discovered_genomes.Add(newly_discovered_genome)
 
+		newly_discovered_genome = pick(undiscovered_genomes)
+		undiscovered_genomes -= newly_discovered_genome
+		discovered_genomes.Add(newly_discovered_genome)
+
+		newly_discovered_genome = pick(undiscovered_genomes)
+		undiscovered_genomes -= newly_discovered_genome
+		discovered_genomes.Add(newly_discovered_genome)
 		//chance to discover a second genome
-		if(prob(75))
+		if(prob(50))
 			newly_discovered_genome = pick(undiscovered_genomes)
 			undiscovered_genomes -= newly_discovered_genome
 			discovered_genomes.Add(newly_discovered_genome)
-			//chance to discover a third genome
-			if(prob(50))
-				newly_discovered_genome = pick(undiscovered_genomes)
-				undiscovered_genomes -= newly_discovered_genome
-				discovered_genomes.Add(newly_discovered_genome)
 
 	else if(undiscovered_genesequences.len)
 		//discover new gene sequence

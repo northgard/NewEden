@@ -32,7 +32,7 @@
 	"/obj/item/seeds/vale",\
 	"/obj/item/seeds/surik")
 
-#define XENOARCH_SPAWN_CHANCE 0.5
+#define XENOARCH_SPAWN_CHANCE 5
 #define DIGSITESIZE_LOWER 4
 #define DIGSITESIZE_UPPER 12
 #define ARTIFACTSPAWNNUM_LOWER 6
@@ -79,10 +79,15 @@ datum/controller/game_controller/proc/SetupXenoarch()
 				else if(prob(75))
 					archeo_turf.finds.Add(new /datum/find(digsite, rand(5,45)))
 					archeo_turf.finds.Add(new /datum/find(digsite, rand(55,95)))
+				else if(prob(95))
+					archeo_turf.finds.Add(new /datum/find(digsite, rand(5,30)))
+					archeo_turf.finds.Add(new /datum/find(digsite, rand(35,75)))
+					archeo_turf.finds.Add(new /datum/find(digsite, rand(75,95)))
 				else
 					archeo_turf.finds.Add(new /datum/find(digsite, rand(5,30)))
 					archeo_turf.finds.Add(new /datum/find(digsite, rand(35,75)))
 					archeo_turf.finds.Add(new /datum/find(digsite, rand(75,95)))
+					archeo_turf.finds.Add(new /datum/find(digsite, rand(95,120)))
 
 				//sometimes a find will be close enough to the surface to show
 				var/datum/find/F = archeo_turf.finds[1]

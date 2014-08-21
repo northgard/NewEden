@@ -80,6 +80,15 @@
 
 		usr << "You can't adjust this mask - it's a wig!"
 
+/obj/item/clothing/mask/breath/fluff/shrek
+	desc = "Shrek, the ogrelord"
+	name = "Shrek Mask"
+	icon_state = "shrek"
+	item_state = "shrek"
+	permeability_coefficient = 0.01
+	w_class = 2
+	flags = FPRINT|TABLEPASS|BLOCKHEADHAIR|MASKINTERNALS|MASKCOVERSMOUTH
+
 /obj/item/clothing/mask/breath/fluff/blake
 	desc = "A black wig with a bow"
 	name = "Blake's wig"

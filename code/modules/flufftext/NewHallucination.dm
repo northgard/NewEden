@@ -24,7 +24,7 @@ mob/living/carbon/proc/handle_hallucinations()
 	handling_hal = 1
 	while(hallucination > 20)
 		sleep(rand(200,500)/(hallucination/25))
-		var/halpick = rand(1,70)
+		var/halpick = rand(1,78)
 		switch(halpick)
 			if(0 to 15)
 				//Screwy HUD
@@ -112,7 +112,7 @@ mob/living/carbon/proc/handle_hallucinations()
 				//sounds
 				//halltexttospeech(var/text, var/speed, var/pitch, var/accent, var/voice, var/echo)
 				var/list/traitoritems = list("esword", "cryptographic sequencer", "laser gun", "detomatix cartridge", "energy crossbow", "freedom implant")
-				var/list/voices = list("mb-en1", "mb-us2")
+				var/list/voices = list("mb-en1", "mb-us2", "en-us")
 				var/list/verbs = list("whack", "hit", "bludgeon", "smack")
 				var/list/sharpverbs = list("slice", "cut", "stab", "shank")
 				var/list/getverbs = list("pick up", "grab", "get")
@@ -132,9 +132,12 @@ mob/living/carbon/proc/handle_hallucinations()
 						if(otherplayers.len > 0)
 							var/mob/living/chosen = pick(otherplayers)
 							var/oppick = rand(1,50)
-							var/voice2 = "+whisperf"
-							if(prob(50))
+							var/voice2 = "+m1"
+							if(prob(25))
+								voice2 = "+whisperf"
+							else if(prob(50))
 								voice2 = "+whisper"
+
 							switch(oppick)
 								if(1 to 2)
 									if(chosen.back)
@@ -163,8 +166,9 @@ mob/living/carbon/proc/handle_hallucinations()
 												S.z = rand(-10,10)
 												src << S
 												if(prob(50))
-													src:halltexttospeech("do it", rand(150, 200), rand(1,99), voice2, pick(voices), 1)
 													spawn(15)
+														src:halltexttospeech("do it", rand(150, 200), rand(1,99), voice2, pick(voices), 1)
+														spawn(15)
 														if(fexists("sound/playervoices/hall[src.ckey].ogg"))
 															var/sound/S2 = sound(fname, wait = 1, channel = 0)
 															S2 = sound(fname, wait = 1, channel = 0)
@@ -173,7 +177,7 @@ mob/living/carbon/proc/handle_hallucinations()
 															S2.x = rand(-10,10)
 															S2.y = rand(-10,10)
 															S2.z = rand(-10,10)
-															src << S
+															src << S2
 								if(9 to 14)
 									var/going = pick(goingto)
 									var/something = pick(dosomething)
@@ -215,6 +219,113 @@ mob/living/carbon/proc/handle_hallucinations()
 						spawn(rand(50,80)) //Only seen for a brief moment.
 							if(client) client.images -= halbody
 							halbody = null
+			if(70 to 78)
+				//Strange audio
+				//src << "Strange Audio"
+				switch(rand(1,12))
+					if(1)
+						var/fname = file('sound/machines/airlock.ogg')
+						var/sound/S = sound(fname, wait = 1, channel = 0)
+						S.status = SOUND_STREAM
+						S.x = rand(-10,10)
+						S.y = rand(-10,10)
+						S.z = rand(-10,10)
+						src << S
+					if(2)
+						if(prob(50))
+							var/fname = file('sound/effects/Explosion1.ogg')
+							var/sound/S = sound(fname, wait = 1, channel = 0)
+							S.status = SOUND_STREAM
+							S.x = rand(-10,10)
+							S.y = rand(-10,10)
+							S.z = rand(-10,10)
+							src << S
+
+						else
+							var/fname = file('sound/effects/Explosion2.ogg')
+							var/sound/S = sound(fname, wait = 1, channel = 0)
+							S.status = SOUND_STREAM
+							S.x = rand(-10,10)
+							S.y = rand(-10,10)
+							S.z = rand(-10,10)
+							src << S
+					if(3)
+						var/fname = file('sound/effects/explosionfar.ogg')
+						var/sound/S = sound(fname, wait = 1, channel = 0)
+						S.status = SOUND_STREAM
+						S.x = rand(-10,10)
+						S.y = rand(-10,10)
+						S.z = rand(-10,10)
+						src << S
+					if(4)
+						var/fname = file('sound/effects/Glassbr1.ogg')
+						var/sound/S = sound(fname, wait = 1, channel = 0)
+						S.status = SOUND_STREAM
+						S.x = rand(-10,10)
+						S.y = rand(-10,10)
+						S.z = rand(-10,10)
+						src << S
+					if(6)
+						var/fname = file('sound/effects/Glassbr3.ogg')
+						var/sound/S = sound(fname, wait = 1, channel = 0)
+						S.status = SOUND_STREAM
+						S.x = rand(-10,10)
+						S.y = rand(-10,10)
+						S.z = rand(-10,10)
+						src << S
+					if(8)
+						var/fname = file('sound/machines/windowdoor.ogg')
+						var/sound/S = sound(fname, wait = 1, channel = 0)
+						S.status = SOUND_STREAM
+						S.x = rand(-10,10)
+						S.y = rand(-10,10)
+						S.z = rand(-10,10)
+						src << S
+					if(9)
+						var/fname = file('sound/weapons/Gunshot.ogg')
+						var/sound/S = sound(fname, wait = 1, channel = 0)
+						S.status = SOUND_STREAM
+						S.x = rand(-10,10)
+						S.y = rand(-10,10)
+						S.z = rand(-10,10)
+						src << S
+						//To make it more realistic, I added two gunshots (enough to kill)
+						spawn(rand(10,30))
+							src << S
+					if(10)
+						var/fname = file('sound/weapons/smash.ogg')
+						var/sound/S = sound(fname, wait = 1, channel = 0)
+						S.status = SOUND_STREAM
+						S.x = rand(-10,10)
+						S.y = rand(-10,10)
+						S.z = rand(-10,10)
+						src << S
+					if(11)
+						var/fname = file('sound/weapons/Taser.ogg')
+						var/sound/S = sound(fname, wait = 1, channel = 0)
+						S.status = SOUND_STREAM
+						S.x = rand(-10,10)
+						S.y = rand(-10,10)
+						S.z = rand(-10,10)
+						src << S
+						//Same as above, but with tasers.
+						spawn(rand(10,30))
+							src << S
+				//Rare audio
+					if(5,12,7)
+//These sounds are (mostly) taken from Hidden: Source
+						var/list/creepyasssounds = list('sound/effects/ghost.ogg', 'sound/effects/ghost2.ogg', 'sound/effects/Heart Beat.ogg', 'sound/effects/screech.ogg',\
+							'sound/hallucinations/behind_you1.ogg', 'sound/hallucinations/behind_you2.ogg', 'sound/hallucinations/far_noise.ogg', 'sound/hallucinations/growl1.ogg', 'sound/hallucinations/growl2.ogg',\
+							'sound/hallucinations/growl3.ogg', 'sound/hallucinations/im_here1.ogg', 'sound/hallucinations/im_here2.ogg', 'sound/hallucinations/i_see_you1.ogg', 'sound/hallucinations/i_see_you2.ogg',\
+							'sound/hallucinations/look_up1.ogg', 'sound/hallucinations/look_up2.ogg', 'sound/hallucinations/over_here1.ogg', 'sound/hallucinations/over_here2.ogg', 'sound/hallucinations/over_here3.ogg',\
+							'sound/hallucinations/turn_around1.ogg', 'sound/hallucinations/turn_around2.ogg', 'sound/hallucinations/veryfar_noise.ogg', 'sound/hallucinations/wail.ogg')
+						var/fname = file(pick(creepyasssounds))
+						var/sound/S = sound(fname, wait = 1, channel = 0)
+						S.status = SOUND_STREAM
+						S.x = rand(-10,10)
+						S.y = rand(-10,10)
+						S.z = rand(-10,10)
+						src << S
 /*			if(71 to 72)
 				//Fake death
 //				src.sleeping_willingly = 1

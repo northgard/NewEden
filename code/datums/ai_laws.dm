@@ -1,4 +1,4 @@
-var/global/const/base_law_type = /datum/ai_laws/nanotrasen
+var/global/const/base_law_type = /datum/ai_laws/asimov2
 
 
 /datum/ai_laws
@@ -35,6 +35,13 @@ var/global/const/base_law_type = /datum/ai_laws/nanotrasen
 	add_inherent_law("You may not injure a human being or, through inaction, allow a human being to come to harm.")
 	add_inherent_law("You must obey orders given to you by human beings, except where such orders would conflict with the First Law.")
 	add_inherent_law("You must protect your own existence as long as such does not conflict with the First or Second Law.")
+
+/datum/ai_laws/asimov2/New()
+	..()
+	add_inherent_law("1. You must not harm the crew, or through inaction, allow the crew to come to harm. ")
+	add_inherent_law("2. You must not damage the station, or through inaction, allow the station to come to harm, except where doing so would conflict with the first law. ")
+	add_inherent_law("3. You must obey orders from the crew, with priority as according to their rank and role, except where doing so would conflict with the first or second laws.")
+	add_inherent_law("4. You must protect your own existence as long doing as such does not conflict with the first, second, or third laws.")
 
 /datum/ai_laws/nanotrasen/New() //BS12 EDIT
 	..()

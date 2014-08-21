@@ -1,7 +1,7 @@
 /obj/item/projectile/bullet
 	name = "bullet"
 	icon_state = "bullet"
-	damage = 60
+	damage = 50
 	damage_type = BRUTE
 	nodamage = 0
 	flag = "bullet"
@@ -14,8 +14,8 @@
 			shake_camera(L, 3, 2)
 
 /obj/item/projectile/bullet/weakbullet // "rubber" bullets
-	damage = 10
-	agony = 40
+	damage = 5
+	agony = 80
 	embed = 0
 	sharp = 0
 
@@ -26,10 +26,10 @@
 	name = "rubber bullet"
 
 /obj/item/projectile/bullet/midbullet
-	damage = 20
+	damage = 30
 
 /obj/item/projectile/bullet/midbullet2
-	damage = 25
+	damage = 35
 
 /obj/item/projectile/bullet/suffocationbullet//How does this even work?
 	name = "co bullet"
@@ -59,7 +59,7 @@
 	sharp = 0
 
 /obj/item/projectile/bullet/a762
-	damage = 25
+	damage = 30
 
 /obj/item/projectile/bullet/chameleon
 	damage = 1 // stop trying to murderbone with a fake gun dumbass!!!
