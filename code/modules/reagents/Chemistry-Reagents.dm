@@ -968,7 +968,7 @@ datum
 		fuel
 			name = "Welding fuel"
 			id = "fuel"
-			description = "Required for welders. Flamable."
+			description = "Required for welders. Flammable."
 			reagent_state = LIQUID
 			color = "#660000" // rgb: 102, 0, 0
 			overdose = REAGENTS_OVERDOSE
@@ -1270,6 +1270,68 @@ datum
 				..()
 				return
 
+		pentacordrazine
+			name = "Pentacordrazine"
+			id = "pentacordrazine"
+			description = "Pentacordrazine is a top-secret chemical manufactured by Zeng-Hu Pharmaceuticals. It is a more potent form of the more well-known Quadcordrazine."
+			reagent_state = LIQUID
+			color = "6#C8A5DC" // rgb: 200, 165, 220
+
+
+			on_mob_life(var/mob/living/M as mob)
+				if(M.stat == 2.0)
+					return
+				if(!M) M = holder.my_atom
+				var/amount = volume
+
+				switch(amount)
+					if(1 to 2)
+						if(M.getOxyLoss()) M.adjustOxyLoss(-20*amount)
+						if(M.getBruteLoss()) M.heal_organ_damage(20*amount,0)
+						if(M.getFireLoss()) M.heal_organ_damage(0,20*amount)
+						if(M.getToxLoss()) M.adjustToxLoss(-20*amount)
+						M.reagents.remove_all_type(/datum/reagent/pentacordrazine, volume + volume, 0, 1)
+					if(3 to 4)
+						if(!M) M = holder.my_atom ///This can even heal dead people.
+						M << "You feel rejuvenated."
+						if(M.getOxyLoss()) M.adjustOxyLoss(-60*amount)
+						if(M.getBruteLoss()) M.heal_organ_damage(60*amount,0)
+						if(M.getFireLoss()) M.heal_organ_damage(0,60*amount)
+						if(M.getToxLoss()) M.adjustToxLoss(-60*amount)
+						M.reagents.remove_all_type(/datum/reagent/toxin, 100*amount, 0, 1)
+						M.setCloneLoss(0)
+						M.setOxyLoss(0)
+						M.radiation = 0
+						M.hallucination = 0
+						M.setBrainLoss(0)
+						M.disabilities = 0
+						M.sdisabilities = 0
+						M.eye_blurry = 0
+						M.eye_blind = 0
+						M.SetWeakened(0)
+						M.SetStunned(0)
+						M.SetParalysis(0)
+						M.silent = 0
+						M.dizziness = 0
+						M.drowsyness = 0
+						M.stuttering = 0
+						M.confused = 0
+						M.sleeping = 0
+						M.jitteriness = 0
+						for(var/datum/disease/D in M.viruses)
+							D.spread = "Remissive"
+							D.stage--
+							if(D.stage < 1)
+								D.cure()
+						M.reagents.remove_all_type(/datum/reagent/pentacordrazine, volume + volume, 0, 1)
+
+					if(5 to INFINITY)
+						M << "You feel your body beginning to explode from the inside!"
+						M.gib()
+
+
+				..()
+				return
 
 		anti_toxin
 			name = "Anti-Toxin (Dylovene)"
@@ -2189,7 +2251,7 @@ datum
 			description = "This is what makes chilis hot."
 			reagent_state = LIQUID
 			color = "#B31008" // rgb: 179, 16, 8
-			
+
 			on_mob_life(var/mob/living/M as mob)
 				if(!M)
 					M = holder.my_atom
@@ -2203,7 +2265,7 @@ datum
 								H << "\red <b>Your insides feel uncomfortably hot !</b>"
 							if(2 to 20)
 								if(prob(5))
-									H << "\red <b>Your insides feel uncomfortably hot !</b>"									
+									H << "\red <b>Your insides feel uncomfortably hot !</b>"
 							if(20 to INFINITY)
 								H.apply_effect(2,AGONY,0)
 								if(prob(5))
@@ -2311,10 +2373,10 @@ datum
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M)
-					M = holder.my_atom				
-				M.bodytemperature = max(M.bodytemperature - 10 * TEMPERATURE_DAMAGE_COEFFICIENT, 0)				
+					M = holder.my_atom
+				M.bodytemperature = max(M.bodytemperature - 10 * TEMPERATURE_DAMAGE_COEFFICIENT, 0)
 				if(prob(1))
-					M.emote("shiver")				
+					M.emote("shiver")
 				if(istype(M, /mob/living/carbon/slime))
 					M.bodytemperature = max(M.bodytemperature - rand(10,20), 0)
 				holder.remove_reagent("capsaicin", 5)

@@ -122,7 +122,11 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 		if(word1 == cultwords["join"] && word2 == cultwords["blood"] && word3 == cultwords["self"])
 			return convert()
 		if(word1 == cultwords["hell"] && word2 == cultwords["join"] && word3 == cultwords["self"])
-			return tearreality()
+			if(user.x == src.x && user.y == src.y)
+				return tearreality()
+			else
+				user << "You have to be standing in the center of this rune to activate it."
+				return
 		if(word1 == cultwords["destroy"] && word2 == cultwords["see"] && word3 == cultwords["technology"])
 			return emp(src.loc,3)
 		if(word1 == cultwords["travel"] && word2 == cultwords["blood"] && word3 == cultwords["self"])

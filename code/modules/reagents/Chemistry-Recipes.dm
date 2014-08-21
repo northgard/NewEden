@@ -120,12 +120,12 @@ datum
 			required_catalysts = list("phoron" = 1)
 			result_amount = 1
 
-		//cyanide
-		//	name = "Cyanide"
-		//	id = "cyanide"
-		//	result = "cyanide"
-		//	required_reagents = list("hydrogen" = 1, "carbon" = 1, "nitrogen" = 1)
-		//	result_amount = 1
+		cyanide
+			name = "Cyanide"
+			id = "cyanide"
+			result = "cyanide"
+			required_reagents = list("hydrogen" = 1, "carbon" = 1, "nitrogen" = 1)
+			result_amount = 1
 
 		water //I can't believe we never had this.
 			name = "Water"
@@ -245,7 +245,14 @@ datum
 			name = "Quadcordrazine"
 			id = "quadcordrazine"
 			result = "quadcordrazine"
-			required_reagents = list("inaprovaline" = 1, "tricordrazine" = 1, "mercury" = 1)
+			required_reagents = list("anti_toxin" = 1, "tricordrazine" = 1, "mercury" = 1)
+			result_amount = 1
+
+		pentacordrazine
+			name = "Pentacordrazine"
+			id = "pentacordrazine"
+			result = "pentacordrazine"
+			required_reagents = list("quadcordrazine" = 1, "cyanide" = 1, "hyperzine" = 1)
 			result_amount = 1
 
 		alkysine
@@ -1237,7 +1244,7 @@ datum
 					O.show_message(text("\red The contents of the slime core harden and begin to emit a warm, bright light."), 1)
 				var/obj/item/device/flashlight/slime/F = new /obj/item/device/flashlight/slime
 				F.loc = get_turf(holder.my_atom)
-			
+
 //Purple
 
 		slimepsteroid
