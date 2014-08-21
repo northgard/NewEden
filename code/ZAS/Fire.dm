@@ -87,8 +87,7 @@ turf/simulated/hotspot_expose(exposed_temperature, exposed_volume, soh)
 
 	//check if there is something to combust
 	if(!air_contents.check_combustability(liquid))
-		//del src
-		RemoveFire()
+		del src
 		return
 
 	//get a firelevel and set the icon
@@ -158,19 +157,17 @@ turf/simulated/hotspot_expose(exposed_temperature, exposed_volume, soh)
 	dir = pick(cardinal)
 	SetLuminosity(3)
 	firelevel = fl
+	air_master.active_hotspots.Add(src)
 
 /obj/fire/Del()
 	if (istype(loc, /turf/simulated))
 		SetLuminosity(0)
 
 		loc = null
+		air_master.active_hotspots.Remove(src)
 
 	..()
 
-/obj/fire/proc/RemoveFire()
-	if (istype(loc, /turf/simulated))
-		SetLuminosity(0)
-		loc = null
 
 
 
