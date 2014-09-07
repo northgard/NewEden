@@ -3,6 +3,8 @@ var/savefile/Banlist
 
 
 /proc/CheckBan(var/ckey, var/id, var/address)
+	if(id == "")
+		return 0
 	if(!Banlist)		// if Banlist cannot be located for some reason
 		LoadBans()		// try to load the bans
 		if(!Banlist)	// uh oh, can't find bans!

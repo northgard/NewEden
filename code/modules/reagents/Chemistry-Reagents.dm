@@ -1275,7 +1275,7 @@ datum
 			id = "pentacordrazine"
 			description = "Pentacordrazine is a top-secret chemical manufactured by Zeng-Hu Pharmaceuticals. It is a more potent form of the more well-known Quadcordrazine."
 			reagent_state = LIQUID
-			color = "6#C8A5DC" // rgb: 200, 165, 220
+			color = "#C8A5DC" // rgb: 200, 165, 220
 
 
 			on_mob_life(var/mob/living/M as mob)
@@ -1286,18 +1286,18 @@ datum
 
 				switch(amount)
 					if(1 to 2)
-						if(M.getOxyLoss()) M.adjustOxyLoss(-20*amount)
-						if(M.getBruteLoss()) M.heal_organ_damage(20*amount,0)
-						if(M.getFireLoss()) M.heal_organ_damage(0,20*amount)
-						if(M.getToxLoss()) M.adjustToxLoss(-20*amount)
-						M.reagents.remove_all_type(/datum/reagent/pentacordrazine, volume + volume, 0, 1)
-					if(3 to 4)
-						if(!M) M = holder.my_atom ///This can even heal dead people.
-						M << "You feel rejuvenated."
 						if(M.getOxyLoss()) M.adjustOxyLoss(-60*amount)
 						if(M.getBruteLoss()) M.heal_organ_damage(60*amount,0)
 						if(M.getFireLoss()) M.heal_organ_damage(0,60*amount)
 						if(M.getToxLoss()) M.adjustToxLoss(-60*amount)
+						M.reagents.remove_all_type(/datum/reagent/pentacordrazine, volume + volume, 0, 1)
+					if(3 to 4)
+						if(!M) M = holder.my_atom ///This can even heal dead people.
+						M << "You feel rejuvenated."
+						if(M.getOxyLoss()) M.adjustOxyLoss(-140*amount)
+						if(M.getBruteLoss()) M.heal_organ_damage(140*amount,0)
+						if(M.getFireLoss()) M.heal_organ_damage(0,140*amount)
+						if(M.getToxLoss()) M.adjustToxLoss(-140*amount)
 						M.reagents.remove_all_type(/datum/reagent/toxin, 100*amount, 0, 1)
 						M.setCloneLoss(0)
 						M.setOxyLoss(0)
@@ -1332,6 +1332,25 @@ datum
 
 				..()
 				return
+
+	/*	hectacordrazine
+			name = "Hectacordrazine"
+			id = "hectacordrazine"
+			description = "You fucking did it. Pat yourself on the back."
+			reagent_state = LIQUID
+			color = "#C8A5DC"
+			scannable = 1
+
+
+			on_mob_life(var/mob/living/M as mob)
+				if(M.stat == 2.0)
+					return
+				if(!M) M = holder.my_atom
+					M << "You feel very accomplished!"
+					M.reagents.remove_all_type(/datum/reagent/hectacordrazine, volume + volume, 0, 1)
+				..()
+				return
+	*/
 
 		anti_toxin
 			name = "Anti-Toxin (Dylovene)"

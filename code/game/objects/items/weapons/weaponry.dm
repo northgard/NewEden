@@ -215,6 +215,8 @@
 	icon = 'icons/obj/buildingobject.dmi'
 	icon_state = "butterfly2"
 	matter = list("metal" = 5000)
+	force = 4
+	sharp = 1
 
 /obj/item/butterflyhandle
 	name = "concealed knife grip"

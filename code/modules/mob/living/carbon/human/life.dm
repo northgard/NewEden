@@ -70,7 +70,7 @@
 		hud_updateflag = 1022
 
 	voice = GetVoice()
-
+	handle_chemicals_in_body()
 	//No need to update all of these procs if the guy is dead.
 	if(stat != DEAD && !in_stasis)
 		if(air_master.current_cycle%4==2 || failed_last_breath || (health < config.health_threshold_crit)) 	//First, resolve location and get a breath
@@ -87,8 +87,9 @@
 		//Mutations and radiation
 		handle_mutations_and_radiation()
 
-		//Chemicals in the body
-		handle_chemicals_in_body()
+		//Chemicals in the body - MADE IT SO CHEMICALS METABOLIZE WHILE DEAD
+
+		//handle_chemicals_in_body()
 
 		//Disabilities
 		handle_disabilities()

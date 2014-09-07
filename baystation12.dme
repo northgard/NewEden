@@ -172,7 +172,6 @@
 #include "code\defines\procs\sd_Alert.dm"
 #include "code\defines\procs\statistics.dm"
 #include "code\eden\adminpanel.dm"
-#include "code\eden\custom.dm"
 #include "code\eden\irc.dm"
 #include "code\eden\pictaker.dm"
 #include "code\game\asteroid.dm"
@@ -1452,5 +1451,5 @@
 #include "code\ZAS\Zone.dm"
 #include "interface\interface.dm"
 #include "interface\skin.dmf"
-#include "maps\tgstation2-eden-new-5.dmm"
+#include "maps\tgstation2-eden-new-6.dmm"
 // END_INCLUDE

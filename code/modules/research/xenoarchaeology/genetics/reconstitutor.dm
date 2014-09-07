@@ -45,8 +45,7 @@ datum/genesequence
 
 /obj/machinery/computer/reconstitutor/animal/New()
 	..()
-	if(!undiscovered_genesequences || !undiscovered_genesequences.len)
-		undiscovered_genesequences = master_controller.all_animal_genesequences.Copy()
+	undiscovered_genesequences = master_controller.all_animal_genesequences.Copy()
 
 
 /obj/machinery/computer/reconstitutor/attackby(obj/item/W, mob/user)

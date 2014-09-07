@@ -41,11 +41,11 @@
 		if(!Adjacent(usr))
 			usr << "You can't reach it."
 			return
-
+/* Disabled. Why would you not be able to use a laptop in your hand anyway?
 		if(!istype(loc,/turf))
 			usr << "[src] is too bulky!  You'll have to set it down."
 			return
-
+*/
 		if(!stored_computer)
 			if(contents.len)
 				for(var/obj/O in contents)

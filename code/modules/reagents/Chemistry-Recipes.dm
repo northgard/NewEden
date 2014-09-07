@@ -255,6 +255,13 @@ datum
 			required_reagents = list("quadcordrazine" = 1, "cyanide" = 1, "hyperzine" = 1)
 			result_amount = 1
 
+	/*	hectacordrazine
+			name = "Hectacordrazine"
+			id = "hectacordrazine"
+			result = "hectacordrazine"
+			required_reagents = list("pentacordrazine" = 1, "water" = 1)
+			result_amount = 1*/
+
 		alkysine
 			name = "Alkysine"
 			id = "alkysine"

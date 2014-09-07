@@ -1,5 +1,5 @@
-/atom
-	color = "#CCCCCC"
+///atom
+	//color = "#CCCCCC"
 
 /world
 	mob = /mob/new_player
@@ -44,7 +44,7 @@ var/global/datum/IRCController/IRCController = new()
 	PrecacheObjects()
 	deleteQueue()
 	ircInterface()
-
+	//getdata()
 	src.update_status()
 
 	. = ..()

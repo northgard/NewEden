@@ -71,7 +71,7 @@
 						else
 							name = speaker.ckey
 						if(fexists("sound/playervoices/[name].ogg"))
-							src.playsound_local(speaker.loc, "sound/playervoices/[name].ogg", 90)
+							src.playsound_local(speaker.loc, "sound/playervoices/[name].ogg", 90, 0, 0, 4)
 
 
 /mob/proc/hear_radio(var/message, var/verb="says", var/datum/language/language=null, var/part_a, var/part_b, var/mob/speaker = null, var/hard_to_hear = 0, var/vname ="")

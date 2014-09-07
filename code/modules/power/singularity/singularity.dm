@@ -554,6 +554,95 @@ var/global/list/uneatable = list(
 	else
 		target << "\red <b>NAR-SIE HAS CHOSEN YOU TO LEAD HIM TO HIS NEXT MEAL</b>"
 
+/obj/machinery/singularity/brody
+	name = "BRODY"
+	desc = "Your mind begins to bubble and ooze as it tries to comprehend the nose it sees"
+	icon = 'icons/brody.gif'
+	current_size = 9 //It moves/eats like a max-size singulo, aside from range. --NEO
+	contained = 0 //Are we going to move around?
+	dissipate = 0 //Do we lose energy over time?
+	move_self = 1 //Do we move on our own?
+	grav_pull = 5 //How many tiles out do we pull?
+	consume_range = 3 //How many tiles out do we eat
+	pixel_x = -240
+	pixel_y = -135
+	var/curtrack = 1
+	var/nextsong = 0
+	var/extrarange = 5
+	var/falloff = 3
+
+/obj/machinery/singularity/brody/New()
+	..()
+	world << "<font size='28' color='red'><b>BRODY HAS RISEN</b></font>"
+	playsound(src, brodysounds[curtrack], 100, 0, extrarange, falloff)
+	curtrack = curtrack + 1
+	song()
+
+/obj/machinery/singularity/brody/ex_act() //No throwing bombs at it either. --NEO
+	return
+
+/obj/machinery/singularity/brody/proc/pickcultist() //Narsie rewards his cultists with being devoured first, then picks a ghost to follow. --NEO
+	var/list/cultists = list()
+
+	for(var/mob/dead/observer/ghost in player_list)
+		if(!ghost.client)
+			continue
+		var/turf/pos = get_turf(ghost)
+		if(pos.z != src.z)
+			continue
+		cultists += ghost
+	if(cultists.len)
+		acquire(pick(cultists))
+		return
+		//no living humans, follow a ghost instead.
+
+
+/obj/machinery/singularity/brody/proc/acquire(var/mob/food)
+	target << "\blue <b>ADRIAN BRODY HAS LOST INTEREST IN YOU</b>"
+	target = food
+	if(ishuman(target))
+		target << "\red <b>ADRIAN BRODY HUNGERS FOR YOUR SOUL</b>"
+	else
+		target << "\red <b>ADRIAN BRODY HAS CHOSEN YOU TO LEAD HIM ON HIS NEXT QUEST</b>"
+
+var/list/brodysounds = list('sound/music/brody-1.ogg','sound/music/brody-2.ogg','sound/music/brody-3.ogg','sound/music/brody-4.ogg','sound/music/brody-5.ogg','sound/music/brody-6.ogg','sound/music/brody-7.ogg','sound/music/brody-8.ogg','sound/music/brody-9.ogg','sound/music/brody-10.ogg','sound/music/brody-11.ogg','sound/music/brody-12.ogg','sound/music/brody-13.ogg','sound/music/brody-14.ogg','sound/music/brody-15.ogg','sound/music/brody-16.ogg','sound/music/brody-17.ogg','sound/music/brody-18.ogg','sound/music/brody-19.ogg','sound/music/brody-20.ogg','sound/music/brody-21.ogg','sound/music/brody-22.ogg')
+/obj/machinery/singularity/brody/proc/song()
+	spawn(98)
+		playsound(src, brodysounds[curtrack], 100, 0, extrarange, falloff)
+		curtrack = curtrack + 1
+		if(curtrack == 23)
+			curtrack = 1
+		song()
+
+/obj/machinery/singularity/brody/process()
+
+	eat()
+
+	if(!target || prob(10))
+		pickcultist()
+	move()
+	if(prob(30))
+		mezzer()
+
+/obj/machinery/singularity/brody/consume(var/atom/A) //Has its own consume proc because it doesn't need energy and I don't want BoHs to explode it. --NEO
+	if(is_type_in_list(A, uneatable))
+		return 0
+	if (istype(A,/mob/living))//Mobs get gibbed
+		A:gib()
+	else if(istype(A,/obj/))
+		A:ex_act(1.0)
+		if(A) addDeleteQueue(A)
+	else if(isturf(A))
+		var/turf/T = A
+		if(T.intact)
+			for(var/obj/O in T.contents)
+				if(O.level != 1)
+					continue
+				if(O.invisibility == 101)
+					src.consume(O)
+		A:ChangeTurf(/turf/space)
+	return
+
 //Wizard narsie
 
 /obj/machinery/singularity/narsie/wizard
