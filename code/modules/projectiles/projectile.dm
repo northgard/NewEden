@@ -51,6 +51,8 @@
 	var/agony = 0
 	var/embed = 0 // whether or not the projectile can embed itself in the mob
 
+	var/PROJECTILESPEED = 1 // Higher is slower
+
 	proc/on_hit(var/atom/target, var/blocked = 0)
 		if(blocked >= 2)		return 0//Full block
 		if(!isliving(target))	return 0
@@ -153,7 +155,7 @@
 				del(src)
 				return
 			step_towards(src, current)
-			sleep(1)
+			sleep(PROJECTILESPEED)
 			if(!bumped && !isturf(original))
 				if(loc == get_turf(original))
 					if(!(original in permutated))

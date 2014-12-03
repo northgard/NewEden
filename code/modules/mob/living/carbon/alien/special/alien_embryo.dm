@@ -8,6 +8,8 @@
 	icon_state = "larva0_dead"
 	var/mob/living/affected_mob
 	var/stage = 0
+	var/stage_age = 0
+	var/protect = 0
 
 /obj/item/alien_embryo/New()
 	if(istype(loc, /mob/living))
@@ -34,70 +36,127 @@
 			RemoveInfectionImages(affected_mob)
 			affected_mob = null
 		return
-
-	if(stage < 5 && prob(3))
+/*
+	if(affected_mob.stat == DEAD && !protect) //If the host of the xeno baby dies and the protect var = 0, kill the baby with them.
+		affected_mob.status_flags &= ~(XENO_HOST)
+		processing_objects.Remove(src)
+		spawn(0)
+			RemoveInfectionImages(affected_mob)
+			affected_mob = null
+		return*/
+	stage_age++
+	if(stage < 5 && stage_age > 40)
 		stage++
+		stage_age = 0
 		spawn(0)
 			RefreshInfectionImage(affected_mob)
 
 	switch(stage)
-		if(2, 3)
+		if(1)
+			if(prob(5))
+				affected_mob << "\red You taste blood in your mouth."
+			if(prob(5))
+				affected_mob << "\red You feel cold."
+				affected_mob.emote("shiver")
+		if(2)
 			if(prob(1))
 				affected_mob.emote("sneeze")
 			if(prob(1))
 				affected_mob.emote("cough")
 			if(prob(1))
 				affected_mob << "\red Your throat feels sore."
+		if(3)
 			if(prob(1))
 				affected_mob << "\red Mucous runs down the back of your throat."
+			if(prob(1))
+				affected_mob << "\red Your chest feels tight."
+			if(prob(3))
+				affected_mob << "\red Your chest aches."
+				if(istype(affected_mob, /mob/living/carbon/human))
+					affected_mob.take_organ_damage(5)
+			if(prob(10))
+				affected_mob << "\red You feel hungry."
+				affected_mob.nutrition -= 50
+			if(prob(20))
+				affected_mob << "\red <b>You black out.</b>"
+				affected_mob.paralysis += 5
 		if(4)
 			if(prob(1))
 				affected_mob.emote("sneeze")
 			if(prob(1))
 				affected_mob.emote("cough")
 			if(prob(2))
-				affected_mob << "\red Your muscles ache."
+				affected_mob << "\red Your chest hurts."
 				if(prob(20))
-					affected_mob.take_organ_damage(1)
+					if(istype(affected_mob, /mob/living/carbon/human))
+						affected_mob.take_organ_damage(10)
 			if(prob(2))
 				affected_mob << "\red Your stomach hurts."
 				if(prob(20))
-					affected_mob.adjustToxLoss(1)
-					affected_mob.updatehealth()
+					if(istype(affected_mob, /mob/living/carbon/human))
+						affected_mob.adjustToxLoss(1)
+						affected_mob.updatehealth()
 		if(5)
+			if(istype(affected_mob, /mob/living/carbon/human))
+				affected_mob.adjustToxLoss(2)
+
 			affected_mob << "\red You feel something tearing its way out of your stomach..."
-			affected_mob.adjustToxLoss(10)
-			affected_mob.updatehealth()
-			if(prob(50))
-				AttemptGrow()
+			AttemptGrow()
+			stage = 6
+			if(prob(70))
+				if(istype(affected_mob, /mob/living/carbon/human))
+					affected_mob.adjustBruteLoss(5)
+					affected_mob.updatehealth()
+
+
 
 /obj/item/alien_embryo/proc/AttemptGrow(var/gib_on_success = 1)
-	var/list/candidates = get_alien_candidates()
+	var/list/candidates = null
 	var/picked = null
 
-	// To stop clientless larva, we will check that our host has a client
-	// if we find no ghosts to become the alien. If the host has a client
-	// he will become the alien but if he doesn't then we will set the stage
-	// to 2, so we don't do a process heavy check everytime.
+	affected_mob.emote("scream")
 
-	if(candidates.len)
-		picked = pick(candidates)
-	else if(affected_mob.client)
-		picked = affected_mob.key
-	else
-		stage = 4 // Let's try again later.
-		return
+	spawn(20)
+		if(!affected_mob)//hopefully fix a runtime error
+			return
 
-	if(affected_mob.lying)
-		affected_mob.overlays += image('icons/mob/alien.dmi', loc = affected_mob, icon_state = "burst_lie")
-	else
-		affected_mob.overlays += image('icons/mob/alien.dmi', loc = affected_mob, icon_state = "burst_stand")
-	spawn(6)
-		var/mob/living/carbon/alien/larva/new_xeno = new(affected_mob.loc)
+		if(istype(affected_mob, /mob/living/carbon/human) && affected_mob.stat == DEAD)
+			return
+
+		candidates = get_alien_candidates()
+
+		// To stop clientless larva, we will check that our host has a client
+		// if we find no ghosts to become the alien. If the host has a client
+		// he will become the alien but if he doesn't then we will set the stage
+		// to 4, so we don't do a process heavy check everytime.
+
+		if(candidates.len)
+			picked = pick(candidates)
+		else if(affected_mob.client)
+			picked = affected_mob.key
+		else
+			stage = 4 // Let's try again later.
+			return
+
+		affected_mob.death()
+		affected_mob.stat = DEAD
+		src.protect = 1
+
+		var/turf/T = affected_mob.loc
+		var/mob/living/carbon/alien/larva/new_xeno = new(T)
+
 		new_xeno.key = picked
 		new_xeno << sound('sound/voice/hiss5.ogg',0,0,0,100)	//To get the player's attention
-		if(gib_on_success)
-			affected_mob.gib()
+
+		for(var/mob/L in range(src, 10))
+			L << "\red <b>[new_xeno] crawls out of [affected_mob]!</b>"
+
+		if(affected_mob.lying)
+			affected_mob.overlays += image('icons/mob/alien.dmi', loc = affected_mob, icon_state = "bursted_lie")
+		else
+			affected_mob.overlays += image('icons/mob/alien.dmi', loc = affected_mob, icon_state = "bursted_stand")
+	//	if(gib_on_success)
+		//	affected_mob.gib()
 		del(src)
 
 /*----------------------------------------

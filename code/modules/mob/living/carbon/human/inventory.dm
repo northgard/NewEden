@@ -321,6 +321,7 @@
 	var/obj/item/item = null
 	var/place = null
 
+
 /obj/effect/equip_e/human
 	name = "human"
 	var/mob/living/carbon/human/target = null
@@ -328,6 +329,10 @@
 /obj/effect/equip_e/monkey
 	name = "monkey"
 	var/mob/living/carbon/monkey/target = null
+
+/obj/effect/equip_e/alien
+	name = "xeno"
+	var/mob/living/carbon/alien/humanoid/target = null
 
 /obj/effect/equip_e/process()
 	return

@@ -94,7 +94,7 @@ var/list/adminhelp_ignored_words = list("unknown","the","a","an","of","monkey","
 	irccommand["message"] = "ADMINHELP: [usr.key]: [msg]"
 	irccommand["pointer"] = "\ref[mob]"
 	irccommand["key"] = "[usr.ckey]"
-	IRCController.writeCommand(irccommand)
+	//IRCController.writeCommand(irccommand)
 
 	var/ref_mob = "\ref[mob]"
 	var/mentor_msg = "\blue <b><font color=red>HELP: </font>[get_options_bar(mob, 2, 1, 1, 0)][ai_found ? " (<A HREF='?_src_=holder;adminchecklaws=[ref_mob]'>CL</A>)" : ""]:</b> [msg]"

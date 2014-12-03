@@ -234,7 +234,7 @@ Alien plants should do something if theres a lot of poison
 
 	if(!linked_node || (get_dist(linked_node, src) > linked_node.node_range) )
 		return
-	
+
 	direction_loop:
 		for(var/dirn in cardinal)
 			var/turf/T = get_step(src, dirn)
@@ -359,6 +359,62 @@ Alien plants should do something if theres a lot of poison
 		if(0 to 1)
 			visible_message("\green <B>[src.target] begins to crumble under the acid!</B>")
 	spawn(rand(150, 200)) tick()
+
+/obj/effect/alien/superacid
+	name = "super acid"
+	desc = "Burbling corrossive stuff. I wouldn't want to touch it."
+	icon_state = "acid"
+
+	density = 0
+	opacity = 0
+	anchored = 1
+
+	var/atom/target
+	var/ticks = 0
+	var/target_strength = 0
+
+/obj/effect/alien/superacid/New(loc, target)
+	..(loc)
+	src.target = target
+
+	if(isturf(target)) // Turf take twice as long to take down.
+		target_strength = 4
+	else
+		target_strength = 2
+	var/matrix/M = matrix()
+	M.Scale(1.4,1.4)
+	src.transform = M
+	tick()
+
+/obj/effect/alien/superacid/proc/tick()
+	if(!target)
+		del(src)
+
+	ticks += 1
+
+	if(ticks >= target_strength)
+
+		for(var/mob/O in hearers(src, null))
+			O.show_message("\green <B>[src.target] collapses under its own weight into a puddle of goop and undigested debris!</B>", 1)
+
+		if(istype(target, /turf/simulated/wall)) // I hate turf code.
+			var/turf/simulated/wall/W = target
+			W.dismantle_wall(1)
+		else
+			del(target)
+		del(src)
+		return
+
+	switch(target_strength - ticks)
+		if(6)
+			visible_message("\green <B>[src.target] is holding up against the acid!</B>")
+		if(4)
+			visible_message("\green <B>[src.target]\s structure is being melted by the acid!</B>")
+		if(2)
+			visible_message("\green <B>[src.target] is struggling to withstand the acid!</B>")
+		if(0 to 1)
+			visible_message("\green <B>[src.target] begins to crumble under the acid!</B>")
+	spawn(rand(125, 150)) tick()
 
 /*
  * Egg

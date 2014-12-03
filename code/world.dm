@@ -8,7 +8,7 @@
 	view = "15x15"
 	cache_lifespan = 30	//stops player uploaded stuff from being kept in the rsc past the current session
 
-var/global/datum/IRCController/IRCController = new()
+//var/global/datum/IRCController/IRCController = new()
 
 
 #define RECOMMENDED_VERSION 501
@@ -43,7 +43,7 @@ var/global/datum/IRCController/IRCController = new()
 	//end-emergency fix
 	PrecacheObjects()
 	deleteQueue()
-	ircInterface()
+	//ircInterface()
 	//getdata()
 	src.update_status()
 

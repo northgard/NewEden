@@ -333,11 +333,11 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 
 
 /proc/shake_camera(mob/M, duration, strength=1)
-	if(!M || !M.client || M.shakecamera)  
+	if(!M || !M.client || M.shakecamera || M.norecoil)
 		return
 	M.shakecamera = 1
 	spawn(1)
-		
+
 		var/atom/oldeye=M.client.eye
 		var/aiEyeFlag = 0
 		if(istype(oldeye, /mob/aiEye))

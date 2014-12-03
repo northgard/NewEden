@@ -6,7 +6,6 @@
 		script = replacetext(script, "/", "\\")
 
 	var/command = config.python_path + " " + script + " " + args
-
 	return shell(command)
 
 /*

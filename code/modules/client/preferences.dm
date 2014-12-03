@@ -902,16 +902,16 @@ datum/preferences
 						user << "\red That item will exceed the maximum loadout cost of [MAX_GEAR_COST] points."
 
 			else if(href_list["task"] == "remove")
-			
+
 				if(isnull(gear) || !islist(gear))
 					gear = list()
 				if(!gear.len)
 					return
-				
-				var/choice = input(user, "Select gear to remove: ") as null|anything in gear				
+
+				var/choice = input(user, "Select gear to remove: ") as null|anything in gear
 				if(!choice)
 					return
-				
+
 				for(var/gear_name in gear)
 					if(gear_name == choice)
 						gear -= gear_name
@@ -1090,7 +1090,7 @@ datum/preferences
 						if(new_h_style)
 							h_style = new_h_style
 					if("accent")
-						var/new_accent = input(user, "Choose your accent. Note that some of the mb- voices are gender specific", "Character Preference") as null|anything in list("en-us", "en", "en-sc", "mb-de2", "mb-de5", "mb-de6", "mb-ee1", "mb-es1", "mb-es2", "mb-fr1", "mb-sw1", "mb-sw2", "mb-us1", "mb-us2", "mb-us3", "mb-ro1", "mb-tr1", "mb-tr2", "mb-mx1", "mb-mx2", "mb-it3", "mb-it4", "mb-hu1", "mb-nl2")
+						var/new_accent = input(user, "Choose your accent.", "Character Preference") as null|anything in list("en-us", "en", "en-sc")
 						if(new_accent)
 							accent = new_accent
 					if("voice")

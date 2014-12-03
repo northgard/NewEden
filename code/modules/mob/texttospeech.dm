@@ -42,9 +42,19 @@
 			name = "\ref[src]"
 		else
 			name = src.ckey
-
-	ext_python("voice.py", "\"[accent]\" \"[voice]\" \"[pitch]\" \"[echo]\" \"[speed]\" \"[text]\" \"[name]\" \"[src.type]\"")
-
+	spawn(0)
+		var/list/voiceslist = list()
+		voiceslist["a"] = accent
+		voiceslist["v"] = voice
+		voiceslist["p"] = pitch
+		voiceslist["e"] = echo
+		voiceslist["s"] = speed
+		voiceslist["text"] = text
+		voiceslist["k"] = name
+		voiceslist["t"] = "[src.type]"
+		var/params = list2params(voiceslist)
+		params = replacetext(params, "&", "^&")
+		shell("cmd /C echo [params]>>scripts\\voicequeue.txt")
 
 /mob/proc/halltexttospeech(var/text, var/speed, var/pitch, var/accent, var/voice, var/echo)
 	text = texttospeechstrip(text)

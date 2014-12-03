@@ -12,23 +12,25 @@
 
 	var/storedPlasma = 250
 	var/max_plasma = 500
-
+	universal_speak = 0
 	alien_talk_understand = 1
-
+	var/neutralised = 0
 	var/obj/item/weapon/card/id/wear_id = null // Fix for station bounced radios -- Skie
 	var/has_fine_manipulation = 0
 
 	var/move_delay_add = 0 // movement delay to add
 
 	status_flags = CANPARALYSE|CANPUSH
-	var/heal_rate = 1
+	var/heal_rate = 2
 	var/plasma_rate = 5
 
 	var/oxygen_alert = 0
-	var/phoron_alert = 0
+	var/toxins_alert = 0
 	var/fire_alert = 0
 
 	var/heat_protection = 0.5
+	var/nightvision = 2 //1 = off | 2 = on
+	var/usedneurotox = 0
 
 /mob/living/carbon/alien/adjustToxLoss(amount)
 	storedPlasma = min(max(storedPlasma + amount,0),max_plasma) //upper limit of max_plasma, lower limit of 0
@@ -47,6 +49,10 @@
 /mob/living/carbon/alien/eyecheck()
 	return 2
 
+/mob/living/carbon/alien/proc/handle_reagents()
+
+	return
+
 /mob/living/carbon/alien/updatehealth()
 	if(status_flags & GODMODE)
 		health = maxHealth
@@ -58,14 +64,14 @@
 
 /mob/living/carbon/alien/proc/handle_environment(var/datum/gas_mixture/environment)
 
-	//If there are alien weeds on the ground then heal if needed or give some plasma
+	//If there are alien weeds on the ground then heal if needed or give some toxins
 	if(locate(/obj/effect/alien/weeds) in loc)
 		if(health >= maxHealth - getCloneLoss())
 			adjustToxLoss(plasma_rate)
 		else
 			adjustBruteLoss(-heal_rate)
 			adjustFireLoss(-heal_rate)
-			adjustOxyLoss(-heal_rate)
+			adjustOxyLoss(-heal_rate * 2)
 
 	if(!environment)
 		return
@@ -158,10 +164,6 @@
 	if (client.statpanel == "Status")
 		stat(null, "Plasma Stored: [getPlasma()]/[max_plasma]")
 
-	if(emergency_shuttle)
-		var/eta_status = emergency_shuttle.get_status_panel_eta()
-		if(eta_status)
-			stat(null, eta_status)
 
 /mob/living/carbon/alien/Stun(amount)
 	if(status_flags & CANSTUN)

@@ -6,9 +6,11 @@
 	var/obj/item/clothing/head/head = null			//
 	var/obj/item/weapon/r_store = null
 	var/obj/item/weapon/l_store = null
+	var/damagemin = 10
+	var/damagemax = 19
 	var/caste = ""
 	update_icon = 1
-
+	var/mob/target
 //This is fine right now, if we're adding organ specific damage this needs to be updated
 /mob/living/carbon/alien/humanoid/New()
 	var/datum/reagents/R = new/datum/reagents(100)
@@ -22,6 +24,8 @@
 //This is fine, works the same as a human
 /mob/living/carbon/alien/humanoid/Bump(atom/movable/AM as mob|obj, yes)
 	spawn( 0 )
+
+
 		if ((!( yes ) || now_pushing))
 			return
 		now_pushing = 0
@@ -47,13 +51,28 @@
 		return
 	return
 
-/mob/living/carbon/alien/humanoid/movement_delay()
+/mob/living/carbon/alien/humanoid/movement_delay(var/turf/T)
 	var/tally = 0
-	if (istype(src, /mob/living/carbon/alien/humanoid/queen))
-		tally += 5
-	if (istype(src, /mob/living/carbon/alien/humanoid/drone))
+	T = src.loc
+	if ((locate(/obj/effect/alien/weeds) in T) && istype(src, /mob/living/carbon/alien/humanoid/queen))
 		tally += 2
+	else if (istype(src, /mob/living/carbon/alien/humanoid/queen))
+		tally += 5
+
+	if ((locate(/obj/effect/alien/weeds) in T) && istype(src, /mob/living/carbon/alien/humanoid/drone))
+		tally += 0
+	else if (istype(src, /mob/living/carbon/alien/humanoid/drone))
+		tally += 2
+
 	if (istype(src, /mob/living/carbon/alien/humanoid/sentinel))
+		tally += 1
+	if ((locate(/obj/effect/alien/weeds) in T) && istype(src, /mob/living/carbon/alien/humanoid/queen))
+		tally = 0
+	else if (istype(src, /mob/living/carbon/alien/humanoid/praetorian))
+		tally += 2
+	if (istype(src, /mob/living/carbon/alien/humanoid/ravager))
+		tally += 3
+	if (istype(src, /mob/living/carbon/alien/humanoid/carrier))
 		tally += 1
 	if (istype(src, /mob/living/carbon/alien/humanoid/hunter))
 		tally = -1 // hunters go supersuperfast
@@ -399,6 +418,22 @@ In all, this is a lot like the monkey code. /N
 		return 1
 	return 0
 
+/mob/living/carbon/alien/humanoid/Topic(href, href_list)
+	..()
+	if ((href_list["item"] && !( usr.stat ) && !( usr.restrained() ) && in_range(src, usr) ))
+		var/obj/effect/equip_e/alien/O = new /obj/effect/equip_e/alien(  )
+		O.source = usr
+		O.target = src
+		O.item = usr.get_active_hand()
+		O.s_loc = usr.loc
+		O.t_loc = loc
+		O.place = href_list["item"]
+		requests += O
+		spawn( 0 )
+			O.process()
+			return
+	..()
+	return
 
 /mob/living/carbon/alien/humanoid/var/co2overloadtime = null
 /mob/living/carbon/alien/humanoid/var/temperature_resistance = T0C+75
@@ -413,11 +448,43 @@ In all, this is a lot like the monkey code. /N
 	<BR><B>Right Hand:</B> <A href='?src=\ref[src];item=r_hand'>[(r_hand ? text("[]", r_hand) : "Nothing")]</A>
 	<BR><B>Head:</B> <A href='?src=\ref[src];item=head'>[(head ? text("[]", head) : "Nothing")]</A>
 	<BR><B>(Exo)Suit:</B> <A href='?src=\ref[src];item=suit'>[(wear_suit ? text("[]", wear_suit) : "Nothing")]</A>
+	<BR>[(handcuffed ? text("<A href='?src=\ref[src];item=handcuff'>Handcuffed</A>") : text("<A href='?src=\ref[src];item=handcuff'>Not Handcuffed</A>"))]
 	<BR><A href='?src=\ref[src];item=pockets'>Empty Pouches</A>
 	<BR><A href='?src=\ref[user];mach_close=mob[name]'>Close</A>
 	<BR>"}
 	user << browse(dat, text("window=mob[name];size=340x480"))
 	onclose(user, "mob[name]")
 	return
+/*
+/mob/living/carbon/alien/humanoid/verb/transfer_plasma_jelly(var/obj/royaljelly/T as obj in oview(2))
+	set name = "Transfer Plasma to Jelly"
+	set category = "Object"
+	if(T.growth >= T.maxgrowth)
+		src << "\red The jelly is fully grown."
+		return
 
+	var/mob/living/carbon/alien/user = src
+	if(isalien(user))
+		var/amount = input("Amount:", "Transfer Plasma to [T]") as num
+		if (amount)
+			amount = abs(round(amount))
+			if(user.powerc(amount))
+				if (get_dist(T,user) <= 1)
+					user.adjustToxLoss(-amount)
+					T.plasmapool += amount
 
+					if(T.plasmapool > 50)
+						var/amt = round(T.plasmapool / 50)
+						T.plasmapool -= amt * 50
+						var/i
+						for(i=0, i<amt, i++)
+							if(T.growth < T.maxgrowth)
+								T.cause_grow()
+							else
+								user << "\green The royal jelly is fully grown."
+					user << "\green You have transfered [amount] plasma to the royal jelly."
+				else
+					user << "\green You need to be closer."
+	return
+
+*/

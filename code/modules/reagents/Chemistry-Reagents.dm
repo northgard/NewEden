@@ -1333,9 +1333,9 @@ datum
 				..()
 				return
 
-	/*	hectacordrazine
-			name = "Hectacordrazine"
-			id = "hectacordrazine"
+		hexacordrazine
+			name = "Hexacordrazine"
+			id = "hexacordrazine"
 			description = "You fucking did it. Pat yourself on the back."
 			reagent_state = LIQUID
 			color = "#C8A5DC"
@@ -1343,14 +1343,13 @@ datum
 
 
 			on_mob_life(var/mob/living/M as mob)
-				if(M.stat == 2.0)
-					return
-				if(!M) M = holder.my_atom
-					M << "You feel very accomplished!"
-					M.reagents.remove_all_type(/datum/reagent/hectacordrazine, volume + volume, 0, 1)
+				if(M.stat == 1.0)
+					M << "You feel your body beginning to explode from the inside!"
+					M.gib()
 				..()
 				return
-	*/
+
+
 
 		anti_toxin
 			name = "Anti-Toxin (Dylovene)"
@@ -2047,8 +2046,8 @@ datum
 			description = "A delicious salt that stops the heart when injected into cardiac muscle."
 			reagent_state = SOLID
 			color = "#FFFFFF" // rgb: 255,255,255
-			toxpwr = 0
-			overdose = 30
+			toxpwr = 1
+			overdose = 20
 
 			on_mob_life(var/mob/living/carbon/M as mob)
 				var/mob/living/carbon/human/H = M
@@ -2067,8 +2066,8 @@ datum
 			description = "A specific chemical based on Potassium Chloride to stop the heart for surgery. Not safe to eat!"
 			reagent_state = SOLID
 			color = "#FFFFFF" // rgb: 255,255,255
-			toxpwr = 2
-			overdose = 20
+			toxpwr = 0
+			overdose = 30
 
 			on_mob_life(var/mob/living/carbon/M as mob)
 				if(ishuman(M))

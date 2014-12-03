@@ -1,12 +1,16 @@
 /mob/living/carbon/alien/humanoid/queen
 	name = "alien queen"
 	caste = "q"
-	maxHealth = 250
-	health = 250
+	maxHealth = 500
+	health = 500
 	icon_state = "alienq_s"
 	status_flags = CANPARALYSE
 	heal_rate = 5
 	plasma_rate = 20
+	var/usedscreech = 0
+	damagemin = 20
+	damagemax = 25
+	icon = 'icons/mob/alien64.dmi'
 
 
 /mob/living/carbon/alien/humanoid/queen/New()
@@ -23,8 +27,12 @@
 			break
 
 	real_name = src.name
-	verbs.Add(/mob/living/carbon/alien/humanoid/proc/corrosive_acid,/mob/living/carbon/alien/humanoid/proc/neurotoxin,/mob/living/carbon/alien/humanoid/proc/resin)
+	verbs.Add(/mob/living/carbon/alien/humanoid/proc/corrosive_acid,/mob/living/carbon/alien/humanoid/proc/resin)
 	verbs -= /mob/living/carbon/alien/verb/ventcrawl
+	//var/matrix/M = matrix()
+	//M.Scale(1.3,1.45)
+	//src.transform = M
+	pixel_x = -16
 	..()
 
 
@@ -52,6 +60,13 @@
 			else
 				src.healths.icon_state = "health6"
 
+/mob/living/carbon/alien/humanoid/queen/Life()
+	..()
+
+	if(usedscreech <= 0)
+		usedscreech = 0
+	usedscreech--
+
 
 //Queen verbs
 /mob/living/carbon/alien/humanoid/queen/verb/lay_egg()
@@ -60,8 +75,8 @@
 	set desc = "Lay an egg to produce huggers to impregnate prey with."
 	set category = "Alien"
 
-	if(locate(/obj/effect/alien/egg) in get_turf(src))
-		src << "There's already an egg here."
+	if(locate(/obj/effect/alien/egg) in get_turf(src) || locate(/obj/royaljelly) in get_turf(src))
+		src << "There's already an egg or royal jelly here."
 		return
 
 	if(powerc(75,1))//Can't plant eggs on spess tiles. That's silly.
@@ -71,6 +86,51 @@
 		new /obj/effect/alien/egg(loc)
 	return
 
+/mob/living/carbon/alien/humanoid/queen/verb/lay_jelly()
+
+	set name = "Produce Royal Jelly (350)"
+	set desc = "Produce a sac of fluid which furthers the evolution of the hive."
+	set category = "Alien"
+
+	if(locate(/obj/royaljelly) in get_turf(src) || locate(/obj/effect/alien/egg) in get_turf(src))
+		src << "There's already royal jelly or egg here."
+		return
+
+	if(powerc(350,1))//Can't plant eggs on spess tiles. That's silly.
+		adjustToxLoss(-350)
+		for(var/mob/O in viewers(src, null))
+			O.show_message(text("\green <B>[src] has shaped a sac and filled it with a greenish fluid!</B>"), 1)
+		new /obj/royaljelly(loc)
+	return
+
+/mob/living/carbon/alien/humanoid/queen/verb/screech()
+	set name = "Screech (250)"
+	set desc = "Emit a screech that stuns prey."
+	set category = "Alien"
+
+	if(usedscreech >= 1)
+		src << "\red Our screech is not ready.."
+		return
+	if(powerc(250))
+		adjustToxLoss(-250)
+		for(var/mob/O in view())
+			playsound(loc, 'sound/effects/screech2.ogg', 25, 1, -1)
+			O << "\red [src] emits a paralyzing screech!"
+
+		for (var/mob/living/carbon/human/M in oview())
+			if(istype(M.l_ear, /obj/item/clothing/ears/earmuffs) || istype(M.r_ear, /obj/item/clothing/ears/earmuffs))
+				continue
+			if (get_dist(src.loc, M.loc) <= 4)
+				M.stunned += 3
+				M.drop_l_hand()
+				M.drop_r_hand()
+			else if(get_dist(src.loc, M.loc) >= 5)
+				M.stunned += 2
+
+		usedscreech = 30
+
+	return
+//End queen verbs
 
 /mob/living/carbon/alien/humanoid/queen/large
 	icon = 'icons/mob/alienqueen.dmi'

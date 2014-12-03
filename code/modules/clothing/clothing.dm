@@ -37,9 +37,9 @@
 	switch(target_species)
 		if("Human", "Skrell")	//humanoid bodytypes
 			species_restricted = list("exclude","Unathi","Tajaran","Diona","Vox")
-		else 
+		else
 			species_restricted = list(target_species)
-	
+
 	//Set icon
 	if (sprite_sheets_obj && (target_species in sprite_sheets_obj))
 		icon = sprite_sheets_obj[target_species]
@@ -53,9 +53,9 @@
 			species_restricted = list("exclude","Unathi","Tajaran","Diona","Vox")
 		if("Human")
 			species_restricted = list("exclude","Skrell","Unathi","Tajaran","Diona","Vox")
-		else 
+		else
 			species_restricted = list(target_species)
-	
+
 	//Set icon
 	if (sprite_sheets_obj && (target_species in sprite_sheets_obj))
 		icon = sprite_sheets_obj[target_species]
@@ -189,6 +189,11 @@ BLIND     // can't see anything
 	body_parts_covered = HEAD
 	slot_flags = SLOT_HEAD
 	w_class = 2.0
+	health = 50
+/obj/item/clothing/head/proc/take_damage(var/amt)
+	health = health - amt
+	if(health <= 0)
+		del src
 
 //Mask
 /obj/item/clothing/mask

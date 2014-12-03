@@ -67,6 +67,39 @@
 
 //this proc handles being hit by a thrown atom
 /mob/living/hitby(atom/movable/AM as mob|obj,var/speed = 5)//Standardization and logging -Sieve
+	var/mob/living/chargetarget = src
+	var/mob/living/AM2 = AM
+	if(AM2 && AM2.charging > 0 && chargetarget)
+		visible_message("\red <B>[AM2] smashes into [chargetarget]!</B>")
+		if(!istype(AM2, /mob/living/carbon/alien/humanoid/ravager))
+			if(istype(AM2, /mob/living/carbon/human))
+				AM2.stunned = AM2.charging / 3 + 1
+			if(istype(src, /mob/living/carbon/human))
+				src.stunned = AM2.charging / 1.5 + 1
+			AM2.take_organ_damage(AM2.charging * 8)
+			src.take_organ_damage(AM2.charging * 15)
+
+		if(istype(chargetarget, /mob/living/))
+			var/atom/T
+			var/throwdir = get_dir(AM2, chargetarget)
+			var/atom/object = get_step(chargetarget, throwdir)
+			object = get_step(object, throwdir)
+			object = get_step(object, throwdir)
+			object = get_step(object, throwdir)
+			object = get_step(object, throwdir)
+			object = get_step(object, throwdir)
+			T = get_step(object, throwdir)
+			chargetarget.throw_at(T, charging, 1 + (charging / 2))
+			chargetarget.charging = charging - 1
+			chargetarget.take_organ_damage(charging * 2)
+			spawn( 20 - (15 / charging) )
+				if(istype(chargetarget, /mob/living/carbon/human))
+					chargetarget.stunned = 1
+				chargetarget.charging = 0
+				chargetarget.take_organ_damage(charging * 3)
+
+			charging = 0
+		return
 	if(istype(AM,/obj/))
 		var/obj/O = AM
 		var/dtype = BRUTE
@@ -74,16 +107,16 @@
 			var/obj/item/weapon/W = O
 			dtype = W.damtype
 		var/throw_damage = O.throwforce*(speed/5)
-		
+
 		var/miss_chance = 15
 		if (O.throw_source)
 			var/distance = get_dist(O.throw_source, loc)
 			miss_chance = min(15*(distance-2), 0)
-		
+
 		if (prob(miss_chance))
 			visible_message("\blue \The [O] misses [src] narrowly!")
 			return
-		
+
 		src.visible_message("\red [src] has been hit by [O].")
 		var/armor = run_armor_check(null, "melee")
 
@@ -91,7 +124,7 @@
 			apply_damage(throw_damage, dtype, null, armor, is_sharp(O), has_edge(O), O)
 
 		O.throwing = 0		//it hit, so stop moving
-		
+
 		if(ismob(O.thrower))
 			var/mob/M = O.thrower
 			var/client/assailant = M.client
@@ -111,7 +144,7 @@
 			src.throw_at(get_edge_target_turf(src,dir),1,momentum)
 
 			if(!W || !src) return
-			
+
 			if(W.sharp) //Projectile is suitable for pinning.
 				//Handles embedding for non-humans and simple_animals.
 				O.loc = src

@@ -7,6 +7,27 @@
 	max_plasma = 250
 	icon_state = "aliens_s"
 	plasma_rate = 10
+	damagemin = 15
+	damagemax = 20
+	var/hasJelly = 0
+	var/jellyProgress = 0
+	var/jellyProgressMax = 900
+	Stat()
+		..()
+		stat(null, "Jelly Progress: [jellyProgress]/[jellyProgressMax]")
+	proc/growJelly()
+		spawn while(1)
+			if(hasJelly)
+				if(jellyProgress < jellyProgressMax)
+					jellyProgress = min(jellyProgress + 1, jellyProgressMax)
+			sleep(10)
+	proc/canEvolve()
+		if(!hasJelly)
+			return 0
+		if(jellyProgress < jellyProgressMax)
+			return 0
+		return 1
+
 
 /mob/living/carbon/alien/humanoid/sentinel/New()
 	var/datum/reagents/R = new/datum/reagents(100)
@@ -16,7 +37,42 @@
 		name = text("alien sentinel ([rand(1, 1000)])")
 	real_name = name
 	verbs.Add(/mob/living/carbon/alien/humanoid/proc/corrosive_acid,/mob/living/carbon/alien/humanoid/proc/neurotoxin)
+	var/matrix/M = matrix()
+	M.Scale(1.15,1.1)
+	src.transform = M
+	pixel_y = 3
+	growJelly()
 	..()
+
+
+/mob/living/carbon/alien/humanoid/sentinel/verb/evolve2() // -- TLE
+	set name = "Evolve (Jelly)"
+	set desc = "Evolve into a Praetorian"
+	set category = "Alien"
+	if(!canEvolve())
+		if(hasJelly)
+			src << "You are not ready to evolve yet"
+		else
+			src << "You need a mature royal jelly to evolve"
+		return
+	if(src.stat != CONSCIOUS)
+		src << "You are unable to do that now."
+		return
+	src << "\blue <b>You are growing into a Praetorian!</b>"
+
+	var/mob/living/carbon/alien/humanoid/new_xeno
+
+	new_xeno = new /mob/living/carbon/alien/humanoid/praetorian(loc)
+	src << "\green You begin to evolve!"
+
+	for(var/mob/O in viewers(src, null))
+		O.show_message(text("\green <B>[src] begins to twist and contort!</B>"), 1)
+	if(mind)	mind.transfer_to(new_xeno)
+
+	del(src)
+
+
+	return
 
 /mob/living/carbon/alien/humanoid/sentinel
 
@@ -42,22 +98,3 @@
 						healths.icon_state = "health5"
 			else
 				healths.icon_state = "health6"
-
-
-/mob/living/carbon/alien/humanoid/sentinel/alice
-	icon = 'icons/mob/ExtraXenos.dmi'
-	name = "Alice"
-	caste = "alice"
-	maxHealth = 250
-	health = 250
-	storedPlasma = 250
-	max_plasma = 500
-	icon_state = "alice_s"
-	plasma_rate = 10
-
-/mob/living/carbon/alien/humanoid/sentinel/alice/New()
-	var/datum/reagents/R = new/datum/reagents(250)
-	reagents = R
-	R.my_atom = src
-	verbs.Add(/mob/living/carbon/alien/humanoid/proc/corrosive_acid,/mob/living/carbon/alien/humanoid/proc/neurotoxin)
-	..()

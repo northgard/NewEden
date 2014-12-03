@@ -124,7 +124,7 @@ datum
 			name = "Cyanide"
 			id = "cyanide"
 			result = "cyanide"
-			required_reagents = list("hydrogen" = 1, "carbon" = 1, "nitrogen" = 1)
+			required_reagents = list("sacid" = 1, "chloralhydrate" = 1, "mutagen" = 1)
 			result_amount = 1
 
 		water //I can't believe we never had this.
@@ -245,22 +245,22 @@ datum
 			name = "Quadcordrazine"
 			id = "quadcordrazine"
 			result = "quadcordrazine"
-			required_reagents = list("anti_toxin" = 1, "tricordrazine" = 1, "mercury" = 1)
+			required_reagents = list("alkysine" = 1, "inaprovaline" = 1, "phoron" = 1)
 			result_amount = 1
 
 		pentacordrazine
 			name = "Pentacordrazine"
 			id = "pentacordrazine"
 			result = "pentacordrazine"
-			required_reagents = list("quadcordrazine" = 1, "cyanide" = 1, "hyperzine" = 1)
+			required_reagents = list("quadcordrazine" = 1, "mercury" = 1, "cryoxadone" = 1, "kelotane" = 1, "ethanol" = 1)
 			result_amount = 1
 
-	/*	hectacordrazine
-			name = "Hectacordrazine"
-			id = "hectacordrazine"
-			result = "hectacordrazine"
-			required_reagents = list("pentacordrazine" = 1, "water" = 1)
-			result_amount = 1*/
+		hexacordrazine
+			name = "Hexacordrazine"
+			id = "hexacordrazine"
+			result = "hexacordrazine"
+			required_reagents = list("pentacordrazine" = 1, "potassium_chloride" = 1, "chloralhydrate" = 1)
+			result_amount = 1
 
 		alkysine
 			name = "Alkysine"

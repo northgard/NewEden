@@ -20,3 +20,4 @@ text = urllib.urlencode(command) + "\n"
 f = open("C:/Users/Administrator/Desktop/bs12/scripts/voicequeue.txt", "a")
 f.write(text)
 f.close()
+sys.exit()

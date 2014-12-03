@@ -1,3 +1,4 @@
+/mob/living/var/charging = 0
 
 /mob/living/verb/succumb()
 	set hidden = 1

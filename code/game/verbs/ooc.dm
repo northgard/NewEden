@@ -1,5 +1,6 @@
 
 var/global/normal_ooc_colour = "#002eb8"
+var/global/normal_dreooc_colour = "#b82e00"
 
 /client/verb/ooc(msg as text)
 	set name = "OOC" //Gave this shit a shorter name so you only have to time out "ooc" rather than "ooc message" to use it --NeoFite
@@ -59,7 +60,7 @@ var/global/normal_ooc_colour = "#002eb8"
 	var/list/irccommand = list()
 	irccommand["command"] = "ooc"
 	irccommand["message"] = "OOC: [src.key]: [msg]"
-	IRCController.writeCommand(irccommand)
+	//IRCController.writeCommand(irccommand)
 	for(var/client/C in clients)
 		if(C.prefs.toggles & CHAT_OOC)
 			var/display_name = src.key
@@ -169,3 +170,85 @@ var/global/normal_ooc_colour = "#002eb8"
 			if (C.mob in heard)
 				prefix = "LOOC"
 			C << "<font color='#6699CC'><span class='ooc'><span class='prefix'>[prefix]:</span> <EM>[display_name]:</EM> <span class='message'>[msg]</span></span></font>"
+
+// ----------------------------------TROLL OF A CONCEPT--------YOLO--------------------------------------------------------
+// ----------------------------------Shamelessly copied from OOC, too lazy to rewrite--------------------------------------
+
+client/verb/dreooc(msg as text)
+	set name = "DreOOC"
+	set desc = "OOC, provided to you by Dre."
+	set category = "OOC"
+
+	if(say_disabled)	//This is here to try to identify lag problems
+		usr << "\red Speech is currently admin-disabled."
+		return
+
+	if(!mob)	return
+	if(IsGuestKey(key))
+		src << "Guests may not use OOC."
+		return
+
+	msg = copytext(sanitize(msg), 1, MAX_MESSAGE_LEN)
+	if(!msg)	return
+
+	if(!(prefs.toggles & CHAT_OOC))
+		src << "\red You have OOC muted."
+		return
+
+	if(!holder)
+		if(!ooc_allowed)
+			src << "\red OOC is globally muted"
+			return
+		if(!dooc_allowed && (mob.stat == DEAD))
+			usr << "\red OOC for dead mobs has been turned off."
+			return
+		if(prefs.muted & MUTE_OOC)
+			src << "\red You cannot use OOC (muted)."
+			return
+		if(handle_spam_prevention(msg,MUTE_OOC))
+			return
+		if(findtext(msg, "byond://"))
+			src << "<B>Advertising other servers is not allowed.</B>"
+			log_admin("[key_name(src)] has attempted to advertise in OOC: [msg]")
+			message_admins("[key_name_admin(src)] has attempted to advertise in OOC: [msg]")
+			return
+
+	log_ooc("[mob.name]/[key] : [msg]")
+
+	var/display_colour = normal_ooc_colour
+	if(holder && !holder.fakekey && !(holder.rights == R_MENTOR)) //Player Mentors do not get special colors
+		display_colour = "#0099cc"	//light blue
+		if(holder.rights & R_MOD && !(holder.rights & R_ADMIN))
+			display_colour = "#184880"	//dark blue
+		if(holder.rights & R_DEBUG && !(holder.rights & R_ADMIN))
+			display_colour = "#1b521f"	//dark green
+		else if(holder.rights & R_ADMIN)
+			if(config.allow_admin_ooccolor)
+				display_colour = src.prefs.ooccolor
+			else
+				display_colour = "#b82e00"	//orange
+
+	for(var/client/C in clients)
+		if(C.prefs.toggles & CHAT_OOC)
+			var/display_name = src.key
+			if(holder)
+				if(holder.fakekey)
+					if(C.holder)
+						display_name = "[holder.fakekey]/([src.key])"
+					else
+						display_name = holder.fakekey
+			C << "<font color='[display_colour]'><span class='ooc'><span class='prefix'>DreOOC:</span> <EM>[display_name]:</EM> <span class='message'>[msg]</span></span></font>"
+
+/*	var/display_colour = normal_ooc_colour
+	if(holder && !holder.fakekey)
+		display_colour = "#2e78d9"	//light blue
+		if(holder.rights & R_MOD && !(holder.rights & R_ADMIN))
+			display_colour = "#184880"	//dark blue
+		if(holder.rights & R_DEBUG && !(holder.rights & R_ADMIN))
+			display_colour = "#1b521f"	//dark green
+		else if(holder.rights & R_ADMIN)
+			if(config.allow_admin_ooccolor)
+				display_colour = src.prefs.ooccolor
+			else
+				display_colour = "#b82e00"	//orange
+				*/

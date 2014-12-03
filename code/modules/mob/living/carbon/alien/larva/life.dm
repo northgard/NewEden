@@ -152,7 +152,7 @@
 		//Partial pressure of the phoron in our breath
 		var/Toxins_pp = (breath.phoron/breath.total_moles())*breath_pressure
 
-		if(Toxins_pp) // Detect phoron in air
+		/*if(Toxins_pp) // Detect phoron in air
 
 			adjustToxLoss(breath.phoron*250)
 			phoron_alert = max(phoron_alert, 1)
@@ -161,7 +161,7 @@
 
 		else
 			phoron_alert = 0
-
+		*/
 		//Breathe in phoron and out oxygen
 		breath.phoron -= phoron_used
 		breath.oxygen += phoron_used
@@ -327,7 +327,7 @@ FUCK YOU MORE FAT CODE -Hawk*/
 		if(pullin)	pullin.icon_state = "pull[pulling ? 1 : 0]"
 
 
-		if (toxin)	toxin.icon_state = "tox[phoron_alert ? 1 : 0]"
+		//if (toxin)	toxin.icon_state = "tox[phoron_alert ? 1 : 0]"
 		if (oxygen) oxygen.icon_state = "oxy[oxygen_alert ? 1 : 0]"
 		if (fire) fire.icon_state = "fire[fire_alert ? 1 : 0]"
 		//NOTE: the alerts dont reset when youre out of danger. dont blame me,

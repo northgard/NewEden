@@ -2,18 +2,30 @@
 
 /mob/living/carbon/alien/humanoid
 	oxygen_alert = 0
-	phoron_alert = 0
+	toxins_alert = 0
 	fire_alert = 0
 
 	var/temperature_alert = 0
+	var/alien_crit = 0
+
+	New()
+		..()
 
 
 /mob/living/carbon/alien/humanoid/Life()
 	set invisibility = 0
 	set background = 1
 
+
+	if(usedneurotox <= 0)
+		usedneurotox = 0
+	usedneurotox--
+
 	if (monkeyizing)
 		return
+
+	if(storedPlasma < src.max_plasma)
+		storedPlasma++
 
 	..()
 
@@ -54,9 +66,14 @@
 	handle_stomach()
 
 
+	handle_secretion()
 	//Status updates, death etc.
 	handle_regular_status_updates()
 	update_canmove()
+
+	neutralised--
+	if(neutralised <= 0)
+		neutralised = 0
 
 	// Grabbing
 	for(var/obj/item/weapon/grab/G in src)
@@ -88,6 +105,8 @@
 			if (prob(10))
 				stuttering = max(10, stuttering)
 
+	proc/handle_secretion()
+		return
 
 	proc/breathe()
 		if(reagents)
@@ -128,14 +147,14 @@
 					breath = loc.remove_air(breath_moles)
 
 					// Handle chem smoke effect  -- Doohl
-					for(var/obj/effect/effect/smoke/chem/smoke in view(1, src))
+					/*for(var/obj/effect/effect/chem_smoke/smoke in view(1, src))
 						if(smoke.reagents.total_volume)
 							smoke.reagents.reaction(src, INGEST)
 							spawn(5)
 								if(smoke)
 									smoke.reagents.copy_to(src, 10) // I dunno, maybe the reagents enter the blood stream through the lungs?
 							break // If they breathe in the nasty stuff once, no need to continue checking
-
+					*/
 
 			else //Still give containing object the chance to interact
 				if(istype(loc, /obj/))
@@ -171,25 +190,25 @@
 			//Aliens breathe in vaccuum
 			return 0
 
-		var/phoron_used = 0
+		var/toxins_used = 0
 		var/breath_pressure = (breath.total_moles()*R_IDEAL_GAS_EQUATION*breath.temperature)/BREATH_VOLUME
 
-		//Partial pressure of the phoron in our breath
+		//Partial pressure of the toxins in our breath
 		var/Toxins_pp = (breath.phoron/breath.total_moles())*breath_pressure
 
-		if(Toxins_pp) // Detect phoron in air
+		if(Toxins_pp) // Detect toxins in air
 
 			adjustToxLoss(breath.phoron*250)
-			phoron_alert = max(phoron_alert, 1)
+			toxins_alert = max(toxins_alert, 1)
 
-			phoron_used = breath.phoron
+			toxins_used = breath.phoron
 
 		else
-			phoron_alert = 0
+			toxins_alert = 0
 
-		//Breathe in phoron and out oxygen
-		breath.phoron -= phoron_used
-		breath.oxygen += phoron_used
+		//Breathe in toxins and out oxygen
+		breath.phoron -= toxins_used
+		breath.oxygen += toxins_used
 
 		if(breath.temperature > (T0C+66) && !(COLD_RESISTANCE in mutations)) // Hot air hurts :(
 			if(prob(20))
@@ -309,10 +328,11 @@
 				blinded = 1
 				stat = DEAD
 				silent = 0
+				adjustOxyLoss(1000)
 				return 1
 
 			//UNCONSCIOUS. NO-ONE IS HOME
-			if( (getOxyLoss() > 50) || (config.health_threshold_crit > health) )
+			if( (getOxyLoss() > 50) || alien_crit > health)
 				if( health <= 20 && prob(1) )
 					spawn(0)
 						emote("gasp")
@@ -323,7 +343,14 @@
 			if(paralysis)
 				AdjustParalysis(-1)
 				blinded = 1
+				canmove = 0
+				lying = 1
 				stat = UNCONSCIOUS
+				update_icons()
+			else if(neutralised)
+				lying = 1
+				canmove = 0
+				update_icons()
 			else if(sleeping)
 				sleeping = max(sleeping-1, 0)
 				blinded = 1
@@ -334,6 +361,9 @@
 			//CONSCIOUS
 			else
 				stat = CONSCIOUS
+				lying = 0
+				canmove = 1
+				update_icons()
 
 			/*	What in the living hell is this?*/
 			if(move_delay_add > 0)
@@ -375,21 +405,22 @@
 				druggy = max(druggy-1, 0)
 		return 1
 
-
 	proc/handle_regular_hud_updates()
+		if (nightvision == 2)
 
-		if (stat == 2 || (XRAY in mutations))
-			sight |= SEE_TURFS
 			sight |= SEE_MOBS
-			sight |= SEE_OBJS
+
 			see_in_dark = 8
-			see_invisible = SEE_INVISIBLE_LEVEL_TWO
-		else if (stat != 2)
+			see_invisible = SEE_INVISIBLE_MINIMUM
+		else if (nightvision == 1)
 			sight |= SEE_MOBS
 			sight &= ~SEE_TURFS
 			sight &= ~SEE_OBJS
 			see_in_dark = 4
 			see_invisible = SEE_INVISIBLE_LEVEL_TWO
+		else
+			nightvision = 1
+
 
 		if (healths)
 			if (stat != 2)
@@ -409,10 +440,11 @@
 			else
 				healths.icon_state = "health6"
 
+
 		if(pullin)	pullin.icon_state = "pull[pulling ? 1 : 0]"
 
 
-		if (toxin)	toxin.icon_state = "tox[phoron_alert ? 1 : 0]"
+		if (toxin)	toxin.icon_state = "tox[toxins_alert ? 1 : 0]"
 		if (oxygen) oxygen.icon_state = "oxy[oxygen_alert ? 1 : 0]"
 		if (fire) fire.icon_state = "fire[fire_alert ? 1 : 0]"
 		//NOTE: the alerts dont reset when youre out of danger. dont blame me,
