@@ -1,11 +1,9 @@
 // BEGIN_INTERNALS
 /*
-LAST_COMPILE_TIME: 1417499668
-DIR: code code\datums\diseases code\datums\diseases\advance code\datums\diseases\advance\symptoms code\datums\helper_datums code\datums\spells code\defines\obj code\defines\procs code\eden code\game code\game\verbs code\modules code\modules\admin code\modules\admin\verbs code\modules\awaymissions code\modules\client code\modules\clothing code\modules\clothing\under code\modules\economy code\modules\ext_scripts data\player_saves\o icons icons\obj icons\obj\machines maps maps\RandomZLevels 
+LAST_COMPILE_TIME: 1418416608
+DIR: code code\__HELPERS code\_onclick code\_onclick\hud code\controllers code\datums code\datums\diseases code\datums\diseases\advance code\datums\diseases\advance\symptoms code\datums\helper_datums code\datums\spells code\defines code\defines\obj 
 AUTO_FILE_DIR: OFF
 MAP_ICON_TYPE: 0
 LAST_COMPILE_VERSION: 507.1263
-WINDOW: code\modules\ext_scripts\python.dm;code\modules\admin\verbs\adminpm.dm;code\modules\ext_scripts\irc.dm;code\eden\irc.dm;code\world.dm;code\modules\admin\verbs\adminsay.dm;code\modules\admin\admin.dm;code\game\verbs\ooc.dm;code\modules\admin\verbs\randomverbs.dm;code\modules\awaymissions\gateway.dm
-FILE: code\modules\awaymissions\gateway.dm
 */
 // END_INTERNALS

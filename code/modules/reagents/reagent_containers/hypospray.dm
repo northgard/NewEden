@@ -62,6 +62,7 @@
 	reagents.remove_reagent("tricordrazine", 30)
 	reagents.add_reagent("inaprovaline", 5)
 	update_icon()
+	flags &= ~OPENCONTAINER
 	return
 
 /obj/item/weapon/reagent_containers/hypospray/autoinjector/attack(mob/M as mob, mob/user as mob)

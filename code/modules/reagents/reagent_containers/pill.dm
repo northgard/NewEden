@@ -15,6 +15,7 @@
 		..()
 		if(!icon_state)
 			icon_state = "pill[rand(1,20)]"
+		flags &= ~OPENCONTAINER
 
 	attack_self(mob/user as mob)
 		return
